@@ -1,0 +1,12 @@
+SELECT
+	#convert(concat(dados_covid.`ano`,'-',dados_covid.`V1013`,'-01'), DATE) AS 'data',
+	(SELECT uf.`name` FROM uf WHERE uf.`uf_id` = dados_covid.`uf`) AS 'uf'
+	#(SELECT capital.`name` FROM capital WHERE capital.`capital_id` = dados_covid.`capital`) AS 'capital',
+	#(SELECT v1022.`name` FROM v1022 WHERE v1022.`V1022_id` = dados_covid.`V1022`) AS 'situacao_domicilio'
+FROM dados_covid
+
+
+SELECT 
+	uf.`name`
+FROM dados_covid
+left JOIN uf ON dados_covid.`uf` = uf.uf_id
