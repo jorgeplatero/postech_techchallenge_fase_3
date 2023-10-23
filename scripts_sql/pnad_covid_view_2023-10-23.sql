@@ -9,6 +9,7 @@
 
 -- INSERT INTO `depara_resultado_covid` VALUES (1,1,'Positivo'),(2,2,'Negativo'),(3,3,'Inconclusivo'),(4,4,'Ainda não recebeu o resultado'),(5,9,'Ignorado');
 
+create or replace view pnad_covid_view AS
 select 
 	cast(concat(`dc`.`Ano`,'-',`dc`.`V1013`,'-01') as date) as `data`,
 	ifnull(`uf`.`name`,'Não Identificado')  				as `uf`,
