@@ -10,81 +10,78 @@
 -- INSERT INTO `depara_resultado_covid` VALUES (1,1,'Positivo'),(2,2,'Negativo'),(3,3,'Inconclusivo'),(4,4,'Ainda não recebeu o resultado'),(5,9,'Ignorado');
 
 select 
-	cast(concat(`dc`.`Ano`,'-',`dc`.`V1013`,'-01') as date) AS `data`,
-	ifnull(`uf`.`name`,'Não Identificado')  				AS `uf`,
-	`situ_domi`.`name` 										AS `situacao_domicilio`,
-	`dc`.`A002` 											AS `idade`,
-	`sexo`.`name` 											AS `sexo`,
-	`raca`.`name` 											AS `cor_raca`,
-	`esco`.`name` 											AS `escolaridade`,
-	ifnull(`depara1`.`name`,'Não Aplicável') 				AS `questao_estabelecimento_saude`,
-	ifnull(`depara2`.`name`,'Não Aplicável') 				AS `questao_permaneceu_casa`,
-	ifnull(`depara3`.`name`,'Não Aplicável') 				AS `questao_remedio_conta_propria`,
-	ifnull(`depara4`.`name`,'Não Aplicável') 				AS `questao_remedio_orientacao_medica`,
-	ifnull(`depara5`.`name`,'Não Aplicável') 				AS `questao_hospital_SUS`,
-	ifnull(`depara6`.`name`,'Não Aplicável') 				AS `questao_hospital_privado`,
-    (case
-		when dc.B005 = 1 then 'Sim'
-		when dc.B005 = 3 then 'Não foi atendido'
-			else 'Não' end)									AS `questao_internado`,
-	ifnull(`depara7`.`name`,'Não Aplicável') 				AS `questao_internacao_ajuda_respirar`,
-	ifnull(`motivo_afast`.`name`,'Não Aplicável') 			AS `questao_motivo_afastamento`,
-	ifnull(`afastado`.`name`,'Não Aplicável') 				AS `questao_tempo_afastado_trab`,
-	ifnull(`descr_tipo_trab`.`name`,'Não Aplicável') 		AS `questao_tipo_trabalho_realizado`,
+	cast(concat(`dc`.`Ano`,'-',`dc`.`V1013`,'-01') as date) as `data`,
+	ifnull(`uf`.`name`,'Não Identificado')  				as `uf`,
+	`situ_domi`.`name` 										as `situacao_domicilio`,
+	`dc`.`A002` 											as `idade`,
+	`sexo`.`name` 											as `sexo`,
+	`raca`.`name` 											as `cor_raca`,
+	`esco`.`name` 											as `escolaridade`,
+	ifnull(`depara1`.`name`,'Não Aplicável') 				as `questao_estabelecimento_saude`,
+	ifnull(`depara2`.`name`,'Não Aplicável') 				as `questao_permaneceu_casa`,
+	ifnull(`depara3`.`name`,'Não Aplicável') 				as `questao_remedio_conta_propria`,
+	ifnull(`depara4`.`name`,'Não Aplicável') 				as `questao_remedio_orientacao_medica`,
+	ifnull(`depara5`.`name`,'Não Aplicável') 				as `questao_hospital_SUS`,
+	ifnull(`depara6`.`name`,'Não Aplicável') 				as `questao_hospital_privado`,
+	ifnull(`depara7`.`name`, 'Não Aplicável')				as `questao_internado`,
+	ifnull(`depara8`.`name`,'Não Aplicável') 				as `questao_internacao_ajuda_respirar`,
+	ifnull(`motivo_afast`.`name`,'Não Aplicável') 			as `questao_motivo_afastamento`,
+	ifnull(`afastado`.`name`,'Não Aplicável') 				as `questao_tempo_afastado_trab`,
+	ifnull(`descr_tipo_trab`.`name`,'Não Aplicável') 		as `questao_tipo_trabalho_realizado`,
 	(case 
 		when (`dc`.`C010` = 1) then `rendimento`.`name` 
-			else 'Não aplicável' end) 						AS `faixa_rendimento`,
+			else 'Não aplicável' end) 						as `faixa_rendimento`,
 	(case 
 		when ((`dc`.`D0011` = 1) and (`dc`.`D0013` is not null)) then `dc`.`D0013` 
 		when (`dc`.`D0011` = 2) then 'Não' 
-			else 'Não aplicável' end) 						AS `rendimento_aposentadoria_pensao`,
+			else 'Não aplicável' end) 						as `rendimento_aposentadoria_pensao`,
 	(case 
 		when ((`dc`.`D0031` = 1) and (`dc`.`D0033` is not null)) then `dc`.`D0033` 
 		when (`dc`.`D0031` = 2) then 'Não' 
-			else 'Não aplicável' end) 						AS `rendimento_bolsa_familia`,
+			else 'Não aplicável' end) 						as `rendimento_bolsa_familia`,
 	(case 
 		when ((`dc`.`D0041` = 1) and (`dc`.`D0043` is not null)) then `dc`.`D0043` 
 		when (`dc`.`D0041` = 2) then 'Não' 
-			else 'Não aplicável' end) 						AS `rendimento_beneficios`,
+			else 'Não aplicável' end) 						as `rendimento_beneficios`,
 	(case 
 		when ((`dc`.`D0051` = 1) and (`dc`.`D0053` is not null)) then `dc`.`D0053` 
 		when (`dc`.`D0051` = 2) then 'Não' 
-			else 'Não aplicável' end) 						AS `auxlio_emergencia_covid`,
+			else 'Não aplicável' end) 						as `auxlio_emergencia_covid`,
 	(case 
 		when ((`dc`.`D0061` = 1) and (`dc`.`D0063` is not null)) then `dc`.`D0063` 
 		when (`dc`.`D0061` = 2) then 'Não' 
-			else 'Não aplicável' end) 						AS `seguro_desemprego`,
-	ifnull(`domicilio`.`name`, 'Não Aplicável') 			AS `tipo_domicilio`,
-	ifnull(`dc`.`F0021`,'Não Aplicável') 					AS `valor_pago_domicilio`,
+			else 'Não aplicável' end) 						as `seguro_desemprego`,
+	ifnull(`domicilio`.`name`, 'Não Aplicável') 			as `tipo_domicilio`,
+	ifnull(`dc`.`F0021`,'Não Aplicável') 					as `valor_pago_domicilio`,
 	(case
-		when dc.B0011  = 1 then depara8.name
-		when dc.B0012  = 1 then depara9.name
-		when dc.B0013  = 1 then depara10.name
-		when dc.B0014  = 1 then depara11.name
-		when dc.B0015  = 1 then depara12.name
-		when dc.B0016  = 1 then depara13.name
-		when dc.B0017  = 1 then depara14.name
-		when dc.B0018  = 1 then depara15.name
-		when dc.B0019  = 1 then depara16.name
-		when dc.B00110 = 1 then depara17.name
-		when dc.B00111 = 1 then depara18.name
-		when dc.B00112 = 1 then depara19.name
-		when dc.B00113 = 1 then depara20.name
-			else 'Não Aplicável' end) 								AS `sintoma_covid`,
-	ifnull(depara21.name,'Não Aplicável')					AS `teste_covid`, 
+		when `dc`.`B0011`  = 1 then `depara9`.`name`
+		when `dc`.`B0012`  = 1 then `depara10`.`name`
+		when `dc`.`B0013`  = 1 then `depara11`.`name`
+		when `dc`.`B0014`  = 1 then `depara12`.`name`
+		when `dc`.`B0015`  = 1 then `depara13`.`name`
+		when `dc`.`B0016`  = 1 then `depara14`.`name`
+		when `dc`.`B0017`  = 1 then `depara15`.`name`
+		when `dc`.`B0018`  = 1 then `depara16`.`name`
+		when `dc`.`B0019`  = 1 then `depara17`.`name`
+		when `dc`.`B00110` = 1 then `depara18`.`name`
+		when `dc`.`B00111` = 1 then `depara19`.`name`
+		when `dc`.`B00112` = 1 then `depara20`.`name`
+		when `dc`.`B00113` = 1 then `depara21`.`name`
+			else 'Não Aplicável' end) 								as `sintoma_covid`,
+	ifnull(`depara22`.`name`,'Não Aplicável')					as `teste_covid`, 
 	(case
-		when dc.B009A = 1 then depara22.name
-		when dc.B009C = 1 then depara23.name
-		when dc.B009E = 1 then depara24.name
-			else 'Não Aplicável'  end) 						AS `tipo_teste`,
+		when `dc`.`B009A` = 1 then 'SWAB'
+		when `dc`.`B009C` = 1 then 'Sangue - Furo Dedo'
+		when `dc`.`B009E` = 1 then 'Sangue - Veia do Braço'
+			else 'Não Aplicável'  end) 						as `tipo_teste`,
     (case
-		when dc.B0101 = 1 then depara25.name
-		when dc.B0102 = 1 then depara26.name
-		when dc.B0103 = 1 then depara27.name
-        when dc.B0104 = 1 then depara28.name
-		when dc.B0106 = 1 then depara29.name
-		when dc.A002 >= 60 then 'Sim'
-			else 'Não Aplicável' end) 						AS `fator_risco_covid`
+		when `dc`.`B0101` = 1 then `depara26`.`name`
+		when `dc`.`B0102` = 1 then `depara27`.`name`
+		when `dc`.`B0103` = 1 then `depara28`.`name`
+        when `dc`.`B0104` = 1 then `depara29`.`name`
+		when `dc`.`B0106` = 1 then `depara30`.`name`
+		when `dc`.`A002` >= 60 then 'Sim'
+			else 'Não Aplicável' end) 						as `fator_risco_covid`
 	from (((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
 	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 
@@ -102,7 +99,8 @@ select
 	left join `depara_respostas` `depara4` on((`dc`.`B0034` 	= `depara4`.`RESPOSTAS_id`))) 
 	left join `depara_respostas` `depara5` on((`dc`.`B0043` 	= `depara5`.`RESPOSTAS_id`))) 
 	left join `depara_respostas` `depara6` on((`dc`.`B0046` 	= `depara6`.`RESPOSTAS_id`))) 
-	left join `depara_respostas` `depara7` on((`dc`.`B006` 	    = `depara7`.`RESPOSTAS_id`))) 
+	left join `depara_respostas` `depara7` on((`dc`.`B005` 	    = `depara7`.`RESPOSTAS_id`))) 
+	left join `depara_respostas` `depara8` on((`dc`.`B006` 	    = `depara8`.`RESPOSTAS_id`))) 
 	left join `c003` `motivo_afast` 		on((`dc`.`C003` 	= `motivo_afast`.`C003_id`))) 
 	left join `c004` `remunerado` 			on((`dc`.`C004` 	= `remunerado`.`C004_id`))) 
 	left join `c005` `afastado` 			on((`dc`.`C005` 	= `afastado`.`C005_id`))) 
@@ -116,25 +114,25 @@ select
 	left join `c011a11` `remuneracao_trab` 	on((`dc`.`C011A11` 	= `remuneracao_trab`.`C011A11_id`))) 
 	left join `c016` `moti_n_trab` 			on((`dc`.`C016` 	= `moti_n_trab`.`C016_id`)))
 	left join `f001` `domicilio` 			on((`dc`.`F001` 	= `domicilio`.`F001_id`)))
-    left join `depara_respostas` `depara8`	on((`dc`.`B0011` 	= `depara8`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara9`	on((`dc`.`B0012` 	= `depara9`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara10`	on((`dc`.`B0013` 	= `depara10`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara11`	on((`dc`.`B0014` 	= `depara11`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara12`	on((`dc`.`B0015` 	= `depara12`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara13`	on((`dc`.`B0016` 	= `depara13`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara14`	on((`dc`.`B0017` 	= `depara14`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara15`	on((`dc`.`B0018` 	= `depara15`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara16`	on((`dc`.`B0019` 	= `depara16`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara17`	on((`dc`.`B00110` 	= `depara17`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara18`	on((`dc`.`B00111` 	= `depara18`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara19`	on((`dc`.`B00112` 	= `depara19`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara20`	on((`dc`.`B00113` 	= `depara20`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara21`	on((`dc`.`B008` 	= `depara21`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara22`	on((`dc`.`B009A` 	= `depara22`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara23`	on((`dc`.`B009C` 	= `depara23`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara24`	on((`dc`.`B009E` 	= `depara24`.`RESPOSTAS_id`)))
-	left join `depara_respostas` `depara25`	on((`dc`.`B0101` 	= `depara25`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara26`	on((`dc`.`B0102` 	= `depara26`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara27`	on((`dc`.`B0103` 	= `depara27`.`RESPOSTAS_id`)))
-	left join `depara_respostas` `depara28`	on((`dc`.`B0104` 	= `depara28`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara29`	on((`dc`.`B0106` 	= `depara29`.`RESPOSTAS_id`)));
+    left join `depara_respostas` `depara9`	on((`dc`.`B0011` 	= `depara9`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara10`	on((`dc`.`B0012` 	= `depara10`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara11`	on((`dc`.`B0013` 	= `depara11`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara12`	on((`dc`.`B0014` 	= `depara12`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara13`	on((`dc`.`B0015` 	= `depara13`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara14`	on((`dc`.`B0016` 	= `depara14`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara15`	on((`dc`.`B0017` 	= `depara15`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara16`	on((`dc`.`B0018` 	= `depara16`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara17`	on((`dc`.`B0019` 	= `depara17`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara18`	on((`dc`.`B00110` 	= `depara18`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara19`	on((`dc`.`B00111` 	= `depara19`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara20`	on((`dc`.`B00112` 	= `depara20`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara21`	on((`dc`.`B00113` 	= `depara21`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara22`	on((`dc`.`B008` 	= `depara22`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara23`	on((`dc`.`B009A` 	= `depara23`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara24`	on((`dc`.`B009C` 	= `depara24`.`RESPOSTAS_id`)))
+    left join `depara_respostas` `depara25`	on((`dc`.`B009E` 	= `depara25`.`RESPOSTAS_id`)))
+	left join `depara_respostas` `depara26`	on((`dc`.`B0101` 	= `depara26`.`RESPOSTAS_id`)))	
+	left join `depara_respostas` `depara27`	on((`dc`.`B0102` 	= `depara27`.`RESPOSTAS_id`)))	
+	left join `depara_respostas` `depara28`	on((`dc`.`B0103` 	= `depara28`.`RESPOSTAS_id`)))
+	left join `depara_respostas` `depara29`	on((`dc`.`B0104` 	= `depara29`.`RESPOSTAS_id`)))	
+	left join `depara_respostas` `depara30`	on((`dc`.`B0106` 	= `depara30`.`RESPOSTAS_id`));
