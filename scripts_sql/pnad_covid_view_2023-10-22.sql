@@ -119,24 +119,27 @@ select
 		when dc.B00111 = 1 then 'Sim'
 		when dc.B00112 = 1 then 'Sim'
 		when dc.B00113 = 1 then 'Sim'
-			else 'Não' end) 								AS `sintomas_covid`,
+			else 'Não' end) 								AS `sintoma_covid`,
 	ifnull(depara35.name,'Não Aplicável')					AS `teste_covid`, 
 	(case
 		when dc.B009A = 1 then 'SWAB'
 		when dc.B009C = 1 then 'Sangue - Furo Dedo'
 		when dc.B009E = 1 then 'Sangue - Veia do Braço'
-			else 'Não Aplicável'  end) 						AS `Tipo_Teste`,
-	(case
-		when B009A = 1 then depara36.name
-		when B009C = 1 then depara37.name
-		when B009E = 1 then depara38.name
-			else 'Não Aplicável' end) 						AS `resultado_teste`,
+			else 'Não Aplicável'  end) 						AS `tipo_teste`,
+    (case
+		when dc.B0101 = 1 then 'Sim'
+		when dc.B0102 = 1 then 'Sim'
+		when dc.B0103 = 1 then 'Sim'
+        when dc.B0104 = 1 then 'Sim'
+		when dc.B0106 = 1 then 'Sim'
+		when dc.A002 >= 60 then 'Sim'
+			else 'Não' end) 						AS `fator_risco_covid`,
 	(case
 		when dc.B005 = 1 then 'Sim'
 		when dc.B005 = 3 then 'Não foi atendido'
 			else 'Não'end)									AS `internado`,
 	ifnull(`depara34`.`name`,'Não Aplicável')				AS `internado_ajuda_respirar`
-	from ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((
+	from (((((((((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
 	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 
 	left join `capital` `cap` 				on((`dc`.`CAPITAL` 	= `cap`.`CAPITAL_id`))) 
@@ -194,8 +197,4 @@ select
 	left join `depara_respostas` `depara33` on((`dc`.`B00113` 	= `depara33`.`RESPOSTAS_id`)))
 	left join `depara_respostas` `depara34` on((`dc`.`B006` 	= `depara34`.`RESPOSTAS_id`)))
 	left join `f001` `domicilio` 			on((`dc`.`F001` 	= `domicilio`.`F001_id`)))
-	left join `depara_respostas` `depara35`	on((`dc`.`B008` 	= `depara35`.`RESPOSTAS_id`)))
-	left join `depara_respostas` `depara36`	on((`dc`.`B009B` 	= `depara36`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara37`	on((`dc`.`B009D` 	= `depara37`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara38`	on((`dc`.`B009F` 	= `depara38`.`RESPOSTAS_id`)));
-	
+	left join `depara_respostas` `depara35`	on((`dc`.`B008` 	= `depara35`.`RESPOSTAS_id`)));
