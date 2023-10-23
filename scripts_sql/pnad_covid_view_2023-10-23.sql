@@ -12,23 +12,23 @@
 create or replace view pnad_covid_view AS
 select 
 	cast(concat(`dc`.`Ano`,'-',`dc`.`V1013`,'-01') as date) as `data`,
-	ifnull(`uf`.`name`,'Não Identificado')  				as `uf`,
+	ifnull(`uf`.`name`,'Não identificado')  				as `uf`,
 	`situ_domi`.`name` 										as `situacao_domicilio`,
 	`dc`.`A002` 											as `idade`,
 	`sexo`.`name` 											as `sexo`,
 	`raca`.`name` 											as `cor_raca`,
 	`esco`.`name` 											as `escolaridade`,
-	ifnull(`depara1`.`name`,'Não Aplicável') 				as `questao_estabelecimento_saude`,
-	ifnull(`depara2`.`name`,'Não Aplicável') 				as `questao_permaneceu_casa`,
-	ifnull(`depara3`.`name`,'Não Aplicável') 				as `questao_remedio_conta_propria`,
-	ifnull(`depara4`.`name`,'Não Aplicável') 				as `questao_remedio_orientacao_medica`,
-	ifnull(`depara5`.`name`,'Não Aplicável') 				as `questao_hospital_SUS`,
-	ifnull(`depara6`.`name`,'Não Aplicável') 				as `questao_hospital_privado`,
-	ifnull(`depara7`.`name`, 'Não Aplicável')				as `questao_internado`,
-	ifnull(`depara8`.`name`,'Não Aplicável') 				as `questao_internacao_ajuda_respirar`,
-	ifnull(`motivo_afast`.`name`,'Não Aplicável') 			as `questao_motivo_afastamento`,
-	ifnull(`afastado`.`name`,'Não Aplicável') 				as `questao_tempo_afastado_trab`,
-	ifnull(`descr_tipo_trab`.`name`,'Não Aplicável') 		as `questao_tipo_trabalho_realizado`,
+	ifnull(`depara1`.`name`,'Não aplicável') 				as `questao_estabelecimento_saude`,
+	ifnull(`depara2`.`name`,'Não aplicável') 				as `questao_permaneceu_casa`,
+	ifnull(`depara3`.`name`,'Não aplicável') 				as `questao_remedio_conta_propria`,
+	ifnull(`depara4`.`name`,'Não aplicável') 				as `questao_remedio_orientacao_medica`,
+	ifnull(`depara5`.`name`,'Não aplicável') 				as `questao_hospital_SUS`,
+	ifnull(`depara6`.`name`,'Não aplicável') 				as `questao_hospital_privado`,
+	ifnull(`depara7`.`name`, 'Não aplicável')				as `questao_internacao`,
+	ifnull(`depara8`.`name`,'Não aplicável') 				as `questao_internacao_ajuda_respirar`,
+	ifnull(`motivo_afast`.`name`,'Não aplicável') 			as `questao_motivo_afastamento`,
+	ifnull(`afastado`.`name`,'Não aplicável') 				as `questao_tempo_afastado_trab`,
+	ifnull(`descr_tipo_trab`.`name`,'Não aplicável') 		as `questao_tipo_trabalho_realizado`,
 	(case 
 		when (`dc`.`C010` = 1) then `rendimento`.`name` 
 			else 'Não aplicável' end) 						as `faixa_rendimento`,
@@ -52,8 +52,8 @@ select
 		when ((`dc`.`D0061` = 1) and (`dc`.`D0063` is not null)) then `dc`.`D0063` 
 		when (`dc`.`D0061` = 2) then 'Não' 
 			else 'Não aplicável' end) 						as `seguro_desemprego`,
-	ifnull(`domicilio`.`name`, 'Não Aplicável') 			as `tipo_domicilio`,
-	ifnull(`dc`.`F0021`,'Não Aplicável') 					as `valor_pago_domicilio`,
+	ifnull(`domicilio`.`name`, 'Não aplicável') 			as `tipo_domicilio`,
+	ifnull(`dc`.`F0021`,'Não aplicável') 					as `valor_pago_domicilio`,
 	(case
 		when `dc`.`B0011`  = 1 then `depara9`.`name`
 		when `dc`.`B0012`  = 1 then `depara10`.`name`
@@ -68,8 +68,8 @@ select
 		when `dc`.`B00111` = 1 then `depara19`.`name`
 		when `dc`.`B00112` = 1 then `depara20`.`name`
 		when `dc`.`B00113` = 1 then `depara21`.`name`
-			else 'Não Aplicável' end) 								as `sintoma_covid`,
-	ifnull(`depara22`.`name`,'Não Aplicável')					as `teste_covid`, 
+			else 'Não aplicável' end) 								as `sintoma_covid`,
+	ifnull(`depara22`.`name`,'Não aplicável')					as `teste_covid`, 
 	(case
 		when `dc`.`B009A` = 1 then 'SWAB'
 		when `dc`.`B009C` = 1 then 'Sangue - Furo Dedo'
