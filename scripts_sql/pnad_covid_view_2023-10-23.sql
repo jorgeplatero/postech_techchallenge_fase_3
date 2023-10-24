@@ -9,7 +9,7 @@
 
 -- INSERT INTO `depara_resultado_covid` VALUES (1,1,'Positivo'),(2,2,'Negativo'),(3,3,'Inconclusivo'),(4,4,'Ainda não recebeu o resultado'),(5,9,'Ignorado');
 
-create or replace view pnad_covid_view AS
+create or replace view pnad_covid_view as
 select 
 	cast(concat(`dc`.`Ano`,'-',`dc`.`V1013`,'-01') as date) as `data`,
 	ifnull(`uf`.`name`,'Não identificado')  				as `uf`,
@@ -70,7 +70,7 @@ select
 		when `dc`.`B00113` = 1 then `depara21`.`name`
 			else 'Não aplicável' end) 								as `sintoma_covid`,
 	
-	--> incluir tabela com sintomas concatenados  
+	-- incluir tabela com sintomas concatenados  
 
 	ifnull(`depara22`.`name`,'Não aplicável')					as `teste_covid`, 
 	(case
@@ -87,7 +87,7 @@ select
 		when `dc`.`A002` >= 60 then 'Sim'
 			else 'Não Aplicável' end) 						as `fator_risco_covid`
 
-	--> incluir tabela com fatores de riscos concatenados
+	-- incluir tabela com fatores de riscos concatenados
 
 	from (((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
@@ -142,4 +142,8 @@ select
 	left join `depara_respostas` `depara27`	on((`dc`.`B0102` 	= `depara27`.`RESPOSTAS_id`)))	
 	left join `depara_respostas` `depara28`	on((`dc`.`B0103` 	= `depara28`.`RESPOSTAS_id`)))
 	left join `depara_respostas` `depara29`	on((`dc`.`B0104` 	= `depara29`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara30`	on((`dc`.`B0106` 	= `depara30`.`RESPOSTAS_id`));
+	left join `depara_respostas` `depara30`	on((`dc`.`B0106` 	= `depara30`.`RESPOSTAS_id`))
+where 
+	`dc`.`V1013` >= 09
+order by 
+	`dc`.`V1013`;

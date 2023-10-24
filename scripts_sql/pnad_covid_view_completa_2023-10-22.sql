@@ -51,7 +51,7 @@ select
 		when `dc`.`B00113` = 1 then `depara13`.`name`
 			else 'Não aplicável' end) 						as `sintoma_covid`,
 
-	--> incluir tabela com sintomas concatenados  
+	-- incluir tabela com sintomas concatenados  
 
 	ifnull(`depara14`.`name`,'Não aplicável') 				as `questao_estabelecimento_saude`,
 	ifnull(`depara15`.`name`,'Não aplicável') 				as `questao_permaneceu_casa`,
@@ -132,7 +132,7 @@ select
 		when `dc`.`A002` >= 60 then 'Sim'
 			else 'Não' end) 								as `fator_risco_covid`,
 
-	--> incluir tabela com fatores de riscos concatenados
+	-- incluir tabela com fatores de riscos concatenados
 
 	(case
 		when `dc`.`B005` = 1 then 'Sim'
