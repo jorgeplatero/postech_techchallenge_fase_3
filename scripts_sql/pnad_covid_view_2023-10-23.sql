@@ -144,6 +144,6 @@ select
 	left join `depara_respostas` `depara29`	on((`dc`.`B0104` 	= `depara29`.`RESPOSTAS_id`)))	
 	left join `depara_respostas` `depara30`	on((`dc`.`B0106` 	= `depara30`.`RESPOSTAS_id`))
 where 
-	`dc`.`V1013` >= 09
+	`dc`.`Ano` = 2020 and `dc`.`V1013` >= 09
 order by 
 	`dc`.`V1013`;

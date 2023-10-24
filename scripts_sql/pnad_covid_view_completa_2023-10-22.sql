@@ -50,9 +50,6 @@ select
 		when `dc`.`B00112` = 1 then `depara12`.`name`
 		when `dc`.`B00113` = 1 then `depara13`.`name`
 			else 'Não aplicável' end) 						as `sintoma_covid`,
-
-	-- incluir tabela com sintomas concatenados  
-
 	ifnull(`depara14`.`name`,'Não aplicável') 				as `questao_estabelecimento_saude`,
 	ifnull(`depara15`.`name`,'Não aplicável') 				as `questao_permaneceu_casa`,
 	ifnull(`depara16`.`name`,'Não aplicável') 				as `questao_contato_saude`,
@@ -131,9 +128,6 @@ select
 		when `dc`.`B0106` = 1 then 'Sim'
 		when `dc`.`A002` >= 60 then 'Sim'
 			else 'Não' end) 								as `fator_risco_covid`,
-
-	-- incluir tabela com fatores de riscos concatenados
-
 	(case
 		when `dc`.`B005` = 1 then 'Sim'
 		when `dc`.`B005` = 2 then 'Não'
@@ -147,7 +141,7 @@ select
 		when `dc`.`B009C` = 1 then 'Sangue - Furo Dedo'
 		when `dc`.`B009E` = 1 then 'Sangue - Veia do Braço'
 			else 'Não aplicável'  end) 						as `tipo_teste`
-	from (((((((((((((((((((((((((((((((((((((((((((((((((((((((((
+from (((((((((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
 	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 
 	left join `capital` `cap` 				on((`dc`.`CAPITAL` 	= `cap`.`CAPITAL_id`))) 
@@ -205,4 +199,8 @@ select
 	left join `depara_respostas` `depara33` on((`dc`.`C017A` 	= `depara33`.`RESPOSTAS_id`)))
 	left join `depara_respostas` `depara34` on((`dc`.`B006` 	= `depara34`.`RESPOSTAS_id`)))
 	left join `f001` `domicilio` 			on((`dc`.`F001` 	= `domicilio`.`F001_id`)))
-	left join `depara_respostas` `depara35`	on((`dc`.`B008` 	= `depara35`.`RESPOSTAS_id`)));
+	left join `depara_respostas` `depara35`	on((`dc`.`B008` 	= `depara35`.`RESPOSTAS_id`)))
+where 
+	`dc`.`Ano` = 2020 and `dc`.`V1013` >= 09
+order by 
+	`dc`.`V1013`;
