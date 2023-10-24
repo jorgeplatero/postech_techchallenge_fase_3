@@ -69,12 +69,15 @@ select
 		when `dc`.`B00112` = 1 then `depara20`.`name`
 		when `dc`.`B00113` = 1 then `depara21`.`name`
 			else 'Não aplicável' end) 								as `sintoma_covid`,
+	
+	--> incluir tabela com sintomas concatenados  
+
 	ifnull(`depara22`.`name`,'Não aplicável')					as `teste_covid`, 
 	(case
 		when `dc`.`B009A` = 1 then 'SWAB'
 		when `dc`.`B009C` = 1 then 'Sangue - Furo Dedo'
 		when `dc`.`B009E` = 1 then 'Sangue - Veia do Braço'
-			else 'Não Aplicável'  end) 						as `tipo_teste`,
+			else 'Não aplicável'  end) 						as `tipo_teste`,
     (case
 		when `dc`.`B0101` = 1 then `depara26`.`name`
 		when `dc`.`B0102` = 1 then `depara27`.`name`
@@ -83,6 +86,9 @@ select
 		when `dc`.`B0106` = 1 then `depara30`.`name`
 		when `dc`.`A002` >= 60 then 'Sim'
 			else 'Não Aplicável' end) 						as `fator_risco_covid`
+
+	--> incluir tabela com fatores de riscos concatenados
+
 	from (((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
 	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 

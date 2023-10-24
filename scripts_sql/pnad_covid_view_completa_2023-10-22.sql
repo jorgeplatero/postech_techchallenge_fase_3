@@ -50,6 +50,9 @@ select
 		when `dc`.`B00112` = 1 then `depara12`.`name`
 		when `dc`.`B00113` = 1 then `depara13`.`name`
 			else 'Não aplicável' end) 						as `sintoma_covid`,
+
+	--> incluir tabela com sintomas concatenados  
+
 	ifnull(`depara14`.`name`,'Não aplicável') 				as `questao_estabelecimento_saude`,
 	ifnull(`depara15`.`name`,'Não aplicável') 				as `questao_permaneceu_casa`,
 	ifnull(`depara16`.`name`,'Não aplicável') 				as `questao_contato_saude`,
@@ -128,6 +131,9 @@ select
 		when `dc`.`B0106` = 1 then 'Sim'
 		when `dc`.`A002` >= 60 then 'Sim'
 			else 'Não' end) 								as `fator_risco_covid`,
+
+	--> incluir tabela com fatores de riscos concatenados
+
 	(case
 		when `dc`.`B005` = 1 then 'Sim'
 		when `dc`.`B005` = 2 then 'Não'
@@ -187,9 +193,9 @@ select
 	left join `c004` `remunerado` 			on((`dc`.`C004` 	= `remunerado`.`C004_id`))) 
 	left join `c005` `afastado` 			on((`dc`.`C005` 	= `afastado`.`C005_id`))) 
 	left join `depara_respostas` `depara32` on((`dc`.`C006` 	= `depara32`.`RESPOSTAS_id`))) 
-	left join `c007` `descr_trab` 			on((`dc`.`C007` 	= `descr_trab`.`C007_id`))) 
-	left join `c007a` `area_trab` 			on((`dc`.`C007A` 	= `area_trab`.`C007A_id`))) 
-	left join `c007b` `tipo_trab` 			on((`dc`.`C007B` 	= `tipo_trab`.`C007B_id`))) 
+	left join `c007` `descr_trab` 			on((`dc`.`C007` 	= `descr_trab`.`C007_id`)))
+	left join `c007a` `area_trab` 			on((`dc`.`C007A` 	= `area_trab`.`C007A_id`)))
+	left join `c007b` `tipo_trab` 			on((`dc`.`C007B` 	= `tipo_trab`.`C007B_id`)))
 	left join `c007c` `descr_tipo_trab` 	on((`dc`.`C007C` 	= `descr_tipo_trab`.`C007C_id`))) 
 	left join `c01011` `rendimento` 		on((`dc`.`C01011`	= `rendimento`.`C01011_id`))) 
 	left join `c0102` `rendimento_prod` 	on((`dc`.`C0102` 	= `rendimento_prod`.`C0102_id`))) 
