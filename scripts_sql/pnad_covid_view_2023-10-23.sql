@@ -85,7 +85,7 @@ select
         when `dc`.`B0104` = 1 then `depara29`.`name`
 		when `dc`.`B0106` = 1 then `depara30`.`name`
 		when `dc`.`A002` >= 60 then 'Sim'
-			else 'Não Aplicável' end) 						as `fator_risco_covid`
+			else 'Não aplicável' end) 						as `fator_risco_covid`
 
 	-- incluir tabela com fatores de riscos concatenados
 
