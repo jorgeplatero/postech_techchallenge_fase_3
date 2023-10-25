@@ -49,7 +49,37 @@ select
 		when `dc`.`B00111` = 1 then `depara11`.`name`
 		when `dc`.`B00112` = 1 then `depara12`.`name`
 		when `dc`.`B00113` = 1 then `depara13`.`name`
-			else 'Não aplicável' end) 						as `sintoma_covid`,
+			else 'Não' end) 						as `sintoma_covid`,
+	replace(
+		replace(
+			replace(
+				concat(
+				if(B0011 = 1, 'Febre', '-'),
+				',', 
+				if(B0012 = 1, 'Tosse', '-'),
+				',', 
+				if(B0013 = 1, 'Dor de garganta', '-'),
+				',', 
+				if(B0014 = 1, 'Dificuldade para respirar', '-'),
+				',', 
+				if(B0015 = 1, 'Dor de cabeça', '-'),
+				',', 
+				if(B0016 = 1, 'Dor no peito', '-'),
+				',', 
+				if(B0017 = 1, 'Nausea', '-'),
+				',', 
+				if(B0018 = 1, 'Coriza', '-'),
+				',', 
+				if(B0019 = 1, 'Fadiga', '-'),
+				',', 
+				if(B00110 = 1, 'Dor nos olhos', '-'),
+				',', 
+				if(B00111 = 1, 'Perda de olfato ou paladar', '-'),
+				',', 
+				if(B00112 = 1, 'Dor muscular', '-'),
+				',', 
+				if(B00113 = 1, 'Diarreia', '-')
+			), ',-',''), '-,', ''), '-', '')                as 'descricao_sintoma_covid',
 	ifnull(`depara14`.`name`,'Não aplicável') 				as `questao_estabelecimento_saude`,
 	ifnull(`depara15`.`name`,'Não aplicável') 				as `questao_permaneceu_casa`,
 	ifnull(`depara16`.`name`,'Não aplicável') 				as `questao_contato_saude`,
@@ -136,11 +166,34 @@ select
 			else 'Não aplicável' end)						as `questao_internacao`,
 	ifnull(`depara34`.`name`,'Não aplicável')				as `questao_internacao_ajuda_respirar`,
 	ifnull(`depara35`.`name`,'Não aplicável')				as `teste_covid`, 
+	replace(
+		replace(
+			replace(
+				concat(
+				if(B0101 = 1, 'Diabetes', '-'),
+				',', 
+				if(B0102 = 1, 'Hipertensao', '-'),
+				',', 
+				if(B0103 = 1, 'Doenca respiratoria', '-'),
+				',', 
+				if(B0104 = 1, 'Doenca cardiaca', '-'),
+				',', 
+				if(B0105 = 1, 'Depressao', '-'),
+				',', 
+				if(B0106 = 1, 'Cancer', '-'),
+				',', 
+				if(A002 >= 60, 'Idoso', '-')
+				), ',-',''), '-,', ''), '-', '')            as 'descricao_fator_risco_covid',
 	(case
 		when `dc`.`B009A` = 1 then 'SWAB'
 		when `dc`.`B009C` = 1 then 'Sangue - Furo Dedo'
 		when `dc`.`B009E` = 1 then 'Sangue - Veia do Braço'
-			else 'Não aplicável'  end) 						as `tipo_teste`
+			else 'Não aplicável'  end) 						as `tipo_teste`,
+	(case
+        when `dc`.`B009A` = 1 then `depara31`.`name`
+        when `dc`.`B009C` = 1 then `depara32`.`name`
+        when `dc`.`B009E` = 1 then `depara33`.`name`
+            else 'Não aplicável' end)                       as `resultado_teste`
 from (((((((((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
 	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 
@@ -200,6 +253,9 @@ from (((((((((((((((((((((((((((((((((((((((((((((((((((((((((
 	left join `depara_respostas` `depara34` on((`dc`.`B006` 	= `depara34`.`RESPOSTAS_id`)))
 	left join `f001` `domicilio` 			on((`dc`.`F001` 	= `domicilio`.`F001_id`)))
 	left join `depara_respostas` `depara35`	on((`dc`.`B008` 	= `depara35`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara36` on((`dc`.`B009B` = `depara36`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara37` on((`dc`.`B009D` = `depara37`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara38` on((`dc`.`B009F` = `depara38`.`RESPOSTAS_id`))
 where 
 	`dc`.`Ano` = 2020 and `dc`.`V1013` >= 09
 order by 

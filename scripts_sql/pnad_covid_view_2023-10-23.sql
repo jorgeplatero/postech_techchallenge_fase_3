@@ -68,11 +68,56 @@ select
 		when `dc`.`B00111` = 1 then `depara19`.`name`
 		when `dc`.`B00112` = 1 then `depara20`.`name`
 		when `dc`.`B00113` = 1 then `depara21`.`name`
-			else 'Não aplicável' end) 								as `sintoma_covid`,
-	
-	-- incluir tabela com sintomas concatenados  
-
-	ifnull(`depara22`.`name`,'Não aplicável')					as `teste_covid`, 
+			else 'Não' end) 								as `sintoma_covid`,
+	replace(
+		replace(
+			replace(
+				concat(
+				if(B0011 = 1, 'Febre', '-'),
+				',', 
+				if(B0012 = 1, 'Tosse', '-'),
+				',', 
+				if(B0013 = 1, 'Dor de garganta', '-'),
+				',', 
+				if(B0014 = 1, 'Dificuldade para respirar', '-'),
+				',', 
+				if(B0015 = 1, 'Dor de cabeça', '-'),
+				',', 
+				if(B0016 = 1, 'Dor no peito', '-'),
+				',', 
+				if(B0017 = 1, 'Nausea', '-'),
+				',', 
+				if(B0018 = 1, 'Coriza', '-'),
+				',', 
+				if(B0019 = 1, 'Fadiga', '-'),
+				',', 
+				if(B00110 = 1, 'Dor nos olhos', '-'),
+				',', 
+				if(B00111 = 1, 'Perda de olfato ou paladar', '-'),
+				',', 
+				if(B00112 = 1, 'Dor muscular', '-'),
+				',', 
+				if(B00113 = 1, 'Diarreia', '-')
+			), ',-',''), '-,', ''), '-', '')                as 'descricao_sintoma_covid',
+	ifnull(`depara22`.`name`,'Não aplicável')				as `teste_covid`, 
+	replace(
+		replace(
+			replace(
+				concat(
+				if(B0101 = 1, 'Diabetes', '-'),
+				',', 
+				if(B0102 = 1, 'Hipertensao', '-'),
+				',', 
+				if(B0103 = 1, 'Doenca respiratoria', '-'),
+				',', 
+				if(B0104 = 1, 'Doenca cardiaca', '-'),
+				',', 
+				if(B0105 = 1, 'Depressao', '-'),
+				',', 
+				if(B0106 = 1, 'Cancer', '-'),
+				',', 
+				if(A002 >= 60, 'Idoso', '-')
+				), ',-',''), '-,', ''), '-', '')            as 'descricao_fator_risco_covid',
 	(case
 		when `dc`.`B009A` = 1 then 'SWAB'
 		when `dc`.`B009C` = 1 then 'Sangue - Furo Dedo'
@@ -85,11 +130,13 @@ select
         when `dc`.`B0104` = 1 then `depara29`.`name`
 		when `dc`.`B0106` = 1 then `depara30`.`name`
 		when `dc`.`A002` >= 60 then 'Sim'
-			else 'Não aplicável' end) 						as `fator_risco_covid`
-
-	-- incluir tabela com fatores de riscos concatenados
-
-	from (((((((((((((((((((((((((((((((((((((((((((((((((((
+			else 'Não aplicável' end) 						as `fator_risco_covid`,
+	(case
+        when `dc`.`B009A` = 1 then `depara31`.`name`
+        when `dc`.`B009C` = 1 then `depara32`.`name`
+        when `dc`.`B009E` = 1 then `depara33`.`name`
+            else 'Não aplicável' end)                       as `resultado_teste`
+	from ((((((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
 	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 
 	left join `capital` `cap` 				on((`dc`.`CAPITAL` 	= `cap`.`CAPITAL_id`))) 
@@ -142,7 +189,10 @@ select
 	left join `depara_respostas` `depara27`	on((`dc`.`B0102` 	= `depara27`.`RESPOSTAS_id`)))	
 	left join `depara_respostas` `depara28`	on((`dc`.`B0103` 	= `depara28`.`RESPOSTAS_id`)))
 	left join `depara_respostas` `depara29`	on((`dc`.`B0104` 	= `depara29`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara30`	on((`dc`.`B0106` 	= `depara30`.`RESPOSTAS_id`))
+	left join `depara_respostas` `depara30`	on((`dc`.`B0106` 	= `depara30`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara31` on((`dc`.`B009B` = `depara31`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara32` on((`dc`.`B009D` = `depara32`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara33` on((`dc`.`B009F` = `depara33`.`RESPOSTAS_id`))
 where 
 	`dc`.`Ano` = 2020 and `dc`.`V1013` >= 09
 order by 
