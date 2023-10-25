@@ -196,7 +196,7 @@ select
             else 'Não aplicável' end)                       as `resultado_teste`
 from (((((((((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
-	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 
+	left join `uf` 							on((`dc`.`UF` 		= `uf`.`UF_id`))) 
 	left join `capital` `cap` 				on((`dc`.`CAPITAL` 	= `cap`.`CAPITAL_id`))) 
 	left join `v1022` `situ_domi` 			on((`dc`.`V1022` 	= `situ_domi`.`V1022_id`))) 
 	left join `rm_ride` `reg_metro` 		on((`dc`.`RM_RIDE`	= `reg_metro`.`RM_RIDE_id`))) 

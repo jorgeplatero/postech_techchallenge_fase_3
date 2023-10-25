@@ -73,50 +73,50 @@ select
 		replace(
 			replace(
 				concat(
-				if(B0011 = 1, 'Febre', '-'),
+				if(`dc`.`B0011` = 1, 'Febre', '-'),
 				',', 
-				if(B0012 = 1, 'Tosse', '-'),
+				if(`dc`.`B0012` = 1, 'Tosse', '-'),
 				',', 
-				if(B0013 = 1, 'Dor de garganta', '-'),
+				if(`dc`.`B0013` = 1, 'Dor de garganta', '-'),
 				',', 
-				if(B0014 = 1, 'Dificuldade para respirar', '-'),
+				if(`dc`.`B0014` = 1, 'Dificuldade para respirar', '-'),
 				',', 
-				if(B0015 = 1, 'Dor de cabeça', '-'),
+				if(`dc`.`B0015` = 1, 'Dor de cabeça', '-'),
 				',', 
-				if(B0016 = 1, 'Dor no peito', '-'),
+				if(`dc`.`B0016` = 1, 'Dor no peito', '-'),
 				',', 
-				if(B0017 = 1, 'Nausea', '-'),
+				if(`dc`.`B0017` = 1, 'Nausea', '-'),
 				',', 
-				if(B0018 = 1, 'Coriza', '-'),
+				if(`dc`.`B0018` = 1, 'Coriza', '-'),
 				',', 
-				if(B0019 = 1, 'Fadiga', '-'),
+				if(`dc`.`B0019` = 1, 'Fadiga', '-'),
 				',', 
-				if(B00110 = 1, 'Dor nos olhos', '-'),
+				if(`dc`.`B00110` = 1, 'Dor nos olhos', '-'),
 				',', 
-				if(B00111 = 1, 'Perda de olfato ou paladar', '-'),
+				if(`dc`.`B00111` = 1, 'Perda de olfato ou paladar', '-'),
 				',', 
-				if(B00112 = 1, 'Dor muscular', '-'),
+				if(`dc`.`B00112` = 1, 'Dor muscular', '-'),
 				',', 
-				if(B00113 = 1, 'Diarreia', '-')
+				if(`dc`.`B00113` = 1, 'Diarreia', '-')
 			), ',-',''), '-,', ''), '-', '')                as 'descricao_sintoma_covid',
 	ifnull(`depara22`.`name`,'Não aplicável')				as `teste_covid`, 
 	replace(
 		replace(
 			replace(
 				concat(
-				if(B0101 = 1, 'Diabetes', '-'),
+				if(`dc`.`B0101` = 1, 'Diabetes', '-'),
 				',', 
-				if(B0102 = 1, 'Hipertensao', '-'),
+				if(`dc`.`B0102` = 1, 'Hipertensao', '-'),
 				',', 
-				if(B0103 = 1, 'Doenca respiratoria', '-'),
+				if(`dc`.`B0103` = 1, 'Doenca respiratoria', '-'),
 				',', 
-				if(B0104 = 1, 'Doenca cardiaca', '-'),
+				if(`dc`.`B0104` = 1, 'Doenca cardiaca', '-'),
 				',', 
-				if(B0105 = 1, 'Depressao', '-'),
+				if(`dc`.`B0105` = 1, 'Depressao', '-'),
 				',', 
-				if(B0106 = 1, 'Cancer', '-'),
+				if(`dc`.`B0106` = 1, 'Cancer', '-'),
 				',', 
-				if(A002 >= 60, 'Idoso', '-')
+				if(`dc`.`A002` >= 60, 'Idoso', '-')
 				), ',-',''), '-,', ''), '-', '')            as 'descricao_fator_risco_covid',
 	(case
 		when `dc`.`B009A` = 1 then 'SWAB'
@@ -124,21 +124,21 @@ select
 		when `dc`.`B009E` = 1 then 'Sangue - Veia do Braço'
 			else 'Não aplicável'  end) 						as `tipo_teste`,
     (case
-		when `dc`.`B0101` = 1 then `depara26`.`name`
-		when `dc`.`B0102` = 1 then `depara27`.`name`
-		when `dc`.`B0103` = 1 then `depara28`.`name`
-        when `dc`.`B0104` = 1 then `depara29`.`name`
-		when `dc`.`B0106` = 1 then `depara30`.`name`
+		when `dc`.`B0101` = 1 then `depara23`.`name`
+		when `dc`.`B0102` = 1 then `depara24`.`name`
+		when `dc`.`B0103` = 1 then `depara25`.`name`
+        when `dc`.`B0104` = 1 then `depara26`.`name`
+		when `dc`.`B0106` = 1 then `depara27`.`name`
 		when `dc`.`A002` >= 60 then 'Sim'
 			else 'Não aplicável' end) 						as `fator_risco_covid`,
 	(case
-        when `dc`.`B009A` = 1 then `depara31`.`name`
-        when `dc`.`B009C` = 1 then `depara32`.`name`
-        when `dc`.`B009E` = 1 then `depara33`.`name`
+        when `dc`.`B009A` = 1 then `depara28`.`name`
+        when `dc`.`B009C` = 1 then `depara29`.`name`
+        when `dc`.`B009E` = 1 then `depara30`.`name`
             else 'Não aplicável' end)                       as `resultado_teste`
-	from ((((((((((((((((((((((((((((((((((((((((((((((((((((((
+	from (((((((((((((((((((((((((((((((((((((((((((((((((((
 	`dados_covid` `dc` 
-	left join `uf` 							on((`dc`.`UF` 		= `uf`.`id`))) 
+	left join `uf` 							on((`dc`.`UF` 		= `uf`.`UF_id`))) 
 	left join `capital` `cap` 				on((`dc`.`CAPITAL` 	= `cap`.`CAPITAL_id`))) 
 	left join `v1022` `situ_domi` 			on((`dc`.`V1022` 	= `situ_domi`.`V1022_id`))) 
 	left join `rm_ride` `reg_metro` 		on((`dc`.`RM_RIDE`	= `reg_metro`.`RM_RIDE_id`))) 
@@ -182,17 +182,14 @@ select
     left join `depara_respostas` `depara20`	on((`dc`.`B00112` 	= `depara20`.`RESPOSTAS_id`)))
     left join `depara_respostas` `depara21`	on((`dc`.`B00113` 	= `depara21`.`RESPOSTAS_id`)))
     left join `depara_respostas` `depara22`	on((`dc`.`B008` 	= `depara22`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara23`	on((`dc`.`B009A` 	= `depara23`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara24`	on((`dc`.`B009C` 	= `depara24`.`RESPOSTAS_id`)))
-    left join `depara_respostas` `depara25`	on((`dc`.`B009E` 	= `depara25`.`RESPOSTAS_id`)))
-	left join `depara_respostas` `depara26`	on((`dc`.`B0101` 	= `depara26`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara27`	on((`dc`.`B0102` 	= `depara27`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara28`	on((`dc`.`B0103` 	= `depara28`.`RESPOSTAS_id`)))
-	left join `depara_respostas` `depara29`	on((`dc`.`B0104` 	= `depara29`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara30`	on((`dc`.`B0106` 	= `depara30`.`RESPOSTAS_id`)))
-	left join `depara_resultado_covid` `depara31` on((`dc`.`B009B` = `depara31`.`RESPOSTAS_id`)))
-	left join `depara_resultado_covid` `depara32` on((`dc`.`B009D` = `depara32`.`RESPOSTAS_id`)))
-	left join `depara_resultado_covid` `depara33` on((`dc`.`B009F` = `depara33`.`RESPOSTAS_id`))
+	left join `depara_respostas` `depara23`	on((`dc`.`B0101` 	= `depara23`.`RESPOSTAS_id`)))	
+	left join `depara_respostas` `depara24`	on((`dc`.`B0102` 	= `depara24`.`RESPOSTAS_id`)))	
+	left join `depara_respostas` `depara25`	on((`dc`.`B0103` 	= `depara25`.`RESPOSTAS_id`)))
+	left join `depara_respostas` `depara26`	on((`dc`.`B0104` 	= `depara26`.`RESPOSTAS_id`)))	
+	left join `depara_respostas` `depara37`	on((`dc`.`B0106` 	= `depara27`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara28` on((`dc`.`B009B` = `depara28`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara29` on((`dc`.`B009D` = `depara29`.`RESPOSTAS_id`)))
+	left join `depara_resultado_covid` `depara30` on((`dc`.`B009F` = `depara30`.`RESPOSTAS_id`))
 where 
 	`dc`.`Ano` = 2020 and `dc`.`V1013` >= 09
 order by 
