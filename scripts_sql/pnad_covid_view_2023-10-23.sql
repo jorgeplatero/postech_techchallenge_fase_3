@@ -30,7 +30,7 @@ select
 	ifnull(`afastado`.`name`,'Não aplicável') 				as `questao_tempo_afastado_trab`,
 	ifnull(`descr_tipo_trab`.`name`,'Não aplicável') 		as `questao_tipo_trabalho_realizado`,
 	(case 
-		when (`dc`.`C010` = 1) then `rendimento`.`name` 
+		when (`dc`.`C01011` = 1) then `rendimento`.`name` 
 			else 'Não aplicável' end) 						as `faixa_rendimento`,
 	(case 
 		when ((`dc`.`D0011` = 1) and (`dc`.`D0013` is not null)) then `dc`.`D0013` 
