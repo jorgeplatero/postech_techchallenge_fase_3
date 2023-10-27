@@ -29,9 +29,7 @@ select
 	ifnull(`motivo_afast`.`name`,'Não aplicável') 			as `questao_motivo_afastamento`,
 	ifnull(`afastado`.`name`,'Não aplicável') 				as `questao_tempo_afastado_trab`,
 	ifnull(`descr_tipo_trab`.`name`,'Não aplicável') 		as `questao_tipo_trabalho_realizado`,
-	(case 
-		when (`dc`.`C01011` = 1) then `rendimento`.`name` 
-			else 'Não aplicável' end) 						as `faixa_rendimento`,
+	`rendimento`.`name`										as `faixa_rendimento`,
 	(case 
 		when ((`dc`.`D0011` = 1) and (`dc`.`D0013` is not null)) then `dc`.`D0013` 
 		when (`dc`.`D0011` = 2) then 'Não' 
@@ -112,8 +110,6 @@ select
 				',', 
 				if(`dc`.`B0104` = 1, 'Doenca cardiaca', '-'),
 				',', 
-				if(`dc`.`B0105` = 1, 'Depressao', '-'),
-				',', 
 				if(`dc`.`B0106` = 1, 'Cancer', '-'),
 				',', 
 				if(`dc`.`A002` >= 60, 'Idoso', '-')
@@ -186,7 +182,7 @@ select
 	left join `depara_respostas` `depara24`	on((`dc`.`B0102` 	= `depara24`.`RESPOSTAS_id`)))	
 	left join `depara_respostas` `depara25`	on((`dc`.`B0103` 	= `depara25`.`RESPOSTAS_id`)))
 	left join `depara_respostas` `depara26`	on((`dc`.`B0104` 	= `depara26`.`RESPOSTAS_id`)))	
-	left join `depara_respostas` `depara37`	on((`dc`.`B0106` 	= `depara27`.`RESPOSTAS_id`)))
+	left join `depara_respostas` `depara27`	on((`dc`.`B0106` 	= `depara27`.`RESPOSTAS_id`)))
 	left join `depara_resultado_covid` `depara28` on((`dc`.`B009B` = `depara28`.`RESPOSTAS_id`)))
 	left join `depara_resultado_covid` `depara29` on((`dc`.`B009D` = `depara29`.`RESPOSTAS_id`)))
 	left join `depara_resultado_covid` `depara30` on((`dc`.`B009F` = `depara30`.`RESPOSTAS_id`))
