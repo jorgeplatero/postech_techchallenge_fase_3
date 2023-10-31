@@ -21,14 +21,14 @@ def formata_numero(valor, prefixo = ''):
     return f'{prefixo} {valor:.2f} milhões'
 
 
-def _initialize_spark() -> SparkSession:
+def iniciando_spark():
     conf = SparkConf().setAppName('Dashboard').setMaster('local')
     spark = SparkSession.builder.config(conf=conf).getOrCreate()
     return spark
 
 
 #iniciando sessão
-spark = _initialize_spark()
+spark = iniciando_spark()
 
 #layout
 st.set_page_config(layout = 'wide')
