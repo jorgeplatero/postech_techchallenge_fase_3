@@ -23,7 +23,6 @@ def formata_numero(valor, prefixo = ''):
 
 
 #iniciando sessão
-os.environ['SPARK_HOME'] = '/opt/spark/'
 findspark.init()
 spark = SparkSession.builder.master('local[*]').getOrCreate()
 
@@ -80,7 +79,7 @@ fig_mapa_de_risco = px.choropleth(
 fig_mapa_de_risco.add_scattergeo(
     geojson=geojson,
     locations = df_taxa_de_contagio_estado['sigla'],
-    text = df_taxa_de_contagio_estado[f'sigla'],
+    text = df_taxa_de_contagio_estado['sigla'],
     textposition='middle center',
     mode = 'text',
     textfont=dict(
