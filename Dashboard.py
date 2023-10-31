@@ -5,8 +5,6 @@ import streamlit as st
 import pandas as pd
 import json
 from pyspark.sql import SparkSession
-import findspark
-import os
 
 #libs gráficas
 import plotly.express as px
@@ -23,7 +21,6 @@ def formata_numero(valor, prefixo = ''):
 
 
 #iniciando sessão
-findspark.init()
 spark = SparkSession.builder.master('local[*]').getOrCreate()
 
 #layout
