@@ -5,7 +5,7 @@ import streamlit as st
 import pandas as pd
 import json
 from pyspark.sql import SparkSession
-from pyspark import SparkConf
+import findspark
 
 #libs gráficas
 import plotly.express as px
@@ -21,14 +21,9 @@ def formata_numero(valor, prefixo = ''):
     return f'{prefixo} {valor:.2f} milhões'
 
 
-def iniciando_spark():
-    conf = SparkConf().setAppName('Dashboard').setMaster('local')
-    spark = SparkSession.builder.config(conf=conf).getOrCreate()
-    return spark
-
-
 #iniciando sessão
-spark = iniciando_spark()
+findspark.init()
+spark = SparkSession.builder.master('local[*]').getOrCreate()
 
 #layout
 st.set_page_config(layout = 'wide')
