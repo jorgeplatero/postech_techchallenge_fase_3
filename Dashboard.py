@@ -93,7 +93,6 @@ fig_mapa_de_risco.update_layout(
         l=0,
         r=0,
         b=0,
-        t=50,
         autoexpand=True
     )
 )
