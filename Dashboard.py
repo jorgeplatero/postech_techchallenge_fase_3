@@ -30,7 +30,8 @@ spark = SparkSession.builder.master('local[*]').getOrCreate()
 st.set_page_config(layout = 'wide')
 
 #lendo a base de dados
-df = spark.read.csv('dados/dados_exportados/dados_uteis/2023-10-31_pnad_covid_view.csv', sep=',', inferSchema=True, header=True)
+df = spark.read.csv('dados/dados_exportados/dados_uteis/dados_uteis_gz/2023-10-31_pnad_covid_view.csv.gz', sep=',', inferSchema=True, header=True)
+#df = spark.read.csv('dados/dados_exportados/dados_uteis/2023-10-31_pnad_covid_view.zip', compression='zip', sep=',', inferSchema=True, header=True)
 df_temp = df.createOrReplaceTempView('df_temp') #criando view temporária na sessão Spark SQL
 
 #tabelas
