@@ -29,7 +29,7 @@ spark = SparkSession.builder.master('local[*]').getOrCreate()
 st.set_page_config(layout = 'wide')
 
 #lendo a base de dados
-df = spark.read.csv('dados/dados_exportados/dados_uteis/dados_uteis_gz/2023-10-31_pnad_covid_view.csv.gz', sep=',', inferSchema=True, header=True)
+df = spark.read.csv('dados/dados_exportados/dados_uteis/dados_uteis_gz/2023-11-01_pnad_covid_view.csv.gz', sep=',', inferSchema=True, header=True)
 df_temp = df.createOrReplaceTempView('df_temp') #criando view temporária na sessão Spark SQL
 
 #tabelas
@@ -98,6 +98,9 @@ fig_mapa_de_risco.update_layout(
 )
 
 #visualização no streamlit
+
+#logo fiap
+st.image('img/fiap.png')
 
 #título
 st.title('DASHBOARD PNAD_COVID 19 IBGE :mask:')
