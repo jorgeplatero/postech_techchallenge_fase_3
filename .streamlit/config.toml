@@ -1,9 +1,9 @@
 [server]
-maxMessageSize = 1000
+maxMessageSize=1000
+maxToStringFields=1000
 
 [theme]
-primaryColor="#000000"
-textColor="000000"
+primaryColor='#000000'
+textColor='000000'
 backgroundColor='#FFFFFF'
-secondaryBackgroundColor="#8B0000"
-
+secondaryBackgroundColor='#8B0000'

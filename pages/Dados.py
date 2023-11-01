@@ -12,7 +12,6 @@ def mensagem_sucesso():
     time.sleep(3)
     sucesso.empty()
 
-
 #lendo a base de dados
 df = pd.read_csv('dados/dados_exportados/dados_uteis/2023-10-31_pnad_covid_view.zip', compression='zip', sep=',')
 df['data'] = pd.to_datetime(df['data'])
