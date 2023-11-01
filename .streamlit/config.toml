@@ -3,7 +3,7 @@ maxMessageSize = 1000
 
 [theme]
 primaryColor="#000000"
-textColor="FFFFFF"
+textColor="000000"
 backgroundColor='#FFFFFF'
 secondaryBackgroundColor="#8B0000"
 
