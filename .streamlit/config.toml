@@ -1,6 +1,5 @@
 [server]
 maxMessageSize=1000
-maxToStringFields=1000
 
 [theme]
 primaryColor='#000000'

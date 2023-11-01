@@ -24,6 +24,7 @@ def formata_numero(valor, prefixo = ''):
 #iniciando sessão
 findspark.init()
 spark = SparkSession.builder.master('local[*]').getOrCreate()
+spark.conf().set('spark.debug.maxToStringFields', 50);
 
 #layout
 st.set_page_config(layout = 'wide')
