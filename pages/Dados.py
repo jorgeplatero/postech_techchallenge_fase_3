@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import time
-from pyspark.sql import SparkSession
-import findspark
 
 
 @st.cache_data
@@ -21,9 +19,7 @@ df['data'] = pd.to_datetime(df['data'])
 
 with st.expander('Colunas'):
     colunas = st.multiselect('Selecione as colunas', list(df.columns), list(df.columns))
-
 st.sidebar.title('Filtros')
-
 with st.sidebar.expander('UF'):
     uf = st.multiselect('Selecione o UF', df['uf'].unique(), df['uf'].unique())
 with st.sidebar.expander('Período de referência'):
