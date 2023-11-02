@@ -12,89 +12,62 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 
 
-#funções
-def formata_numero(valor, prefixo = ''):
-    for unidade in ['', 'mil']:
-        if valor < 1000:
-            return f'{prefixo} {valor:.2f} {unidade}'
-        valor /= 1000
-    return f'{prefixo} {valor:.2f} milhões'
-
-
 #iniciando sessão
-findspark.init()
 spark = SparkSession.builder.master('local[*]').getOrCreate()
 
 #layout
 st.set_page_config(layout = 'wide')
 
+
 #lendo a base de dados
-df = spark.read.csv('dados/dados_exportados/dados_uteis/dados_uteis_gz/2023-11-01_pnad_covid_view.csv.gz', sep=',', inferSchema=True, header=True)
-df_temp = df.createOrReplaceTempView('df_temp') #criando view temporária na sessão Spark SQL
+@st.cache(suppress_st_warning=True)
+def expensive_computation():
+    df = spark.read.csv('dados/dados_exportados/dados_uteis/dados_uteis_gz/2023-11-01_pnad_covid_view.csv.gz', sep=',', inferSchema=True, header=True)
+    return df.createOrReplaceTempView('df_temp')
+
+
+df_temp = expensive_computation()
 
 #tabelas
 
-#aba geral
-
-#mapa de risco
-geojson = json.load(open('dados/dados_importados/brasil_estados.json'))
-df_qtd_testes_validos_estado = spark.sql(
+#economia
+df_testes_validos_sexo = spark.sql(
     '''
-        SELECT uf, sigla, count(teste_covid) AS qtd_testes_validos
+        SELECT sexo, count(resultado_teste) AS qtd_testes_validos
         FROM df_temp 
-        WHERE teste_covid = 'Sim' AND (resultado_teste = 'Positivo' OR resultado_teste = 'Negativo')
-        GROUP BY uf, sigla
+        WHERE resultado_teste = 'Positivo' OR resultado_teste = 'Negativo' 
+        GROUP BY sexo
     '''
-).toPandas()
-df_qtd_testes_positivos_estado = spark.sql(
+    ).toPandas()
+
+df_testes_positivos_sexo = spark.sql(
     '''
-        SELECT sigla, count(resultado_teste) AS qtd_testes_positivos
+        SELECT sexo, count(resultado_teste) AS qtd_testes_positivos
         FROM df_temp 
         WHERE resultado_teste = 'Positivo'
-        GROUP BY sigla
+        GROUP BY sexo
     '''
 ).toPandas()
-df_taxa_de_contagio_estado = pd.merge(df_qtd_testes_validos_estado, df_qtd_testes_positivos_estado, on='sigla')
-df_taxa_de_contagio_estado['taxa_de_contagio_mil_habitantes'] = ((df_taxa_de_contagio_estado['qtd_testes_positivos'] / df_taxa_de_contagio_estado['qtd_testes_validos']) * 1000).round().astype(int)
 
-#figuras
+df_infectados_sexo = pd.merge(df_testes_validos_sexo, df_testes_positivos_sexo, on='sexo')
+df_infectados_sexo['percentual_testes_positivos'] = ((df_infectados_sexo.qtd_testes_positivos / df_infectados_sexo.qtd_testes_validos) * 100).round(decimals=2)
 
-#aba geral
-
-#mapa de risco
-fig_mapa_de_risco = px.choropleth(
-    data_frame=df_taxa_de_contagio_estado,
-    geojson=geojson,
-    locations='sigla',
-    color='taxa_de_contagio_mil_habitantes',
-    hover_name='sigla',
-    scope='south america',
-    color_continuous_scale=px.colors.sequential.Reds,
+fig = px.pie(
+    data_frame=df_infectados_sexo.sort_values('percentual_testes_positivos', ascending=False), 
+    values = 'percentual_testes_positivos', 
+    names = 'sexo',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
     labels={
-        'taxa_de_contagio_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
-        'sigla': 'Estado'
+        'percentual_testes_positivos':'Percentual de testes positivos',
+        'sexo':'Sexo'
     }
 )
-fig_mapa_de_risco.add_scattergeo(
-    geojson=geojson,
-    locations = df_taxa_de_contagio_estado['sigla'],
-    text = df_taxa_de_contagio_estado['sigla'],
-    textposition='middle center',
-    mode = 'text',
-    textfont=dict(
-        size=14,
-        color='black',
-    )
-)
-fig_mapa_de_risco.update_layout(
-    title='<b>Mapa de risco conforme taxa de incidência nos estados</b>',
-    autosize=False,
-    margin = dict(
-        l=0,
-        r=0,
-        b=0,
-        autoexpand=True
-    )
+
+fig.update_layout(
+    title='<b>Porcentagem de infectados por sexo</b>',
+    legend_title='Legenda',
+    width=800, 
+    height=600
 )
 
 #visualização no streamlit
@@ -103,18 +76,13 @@ fig_mapa_de_risco.update_layout(
 st.image('img/fiap.png')
 
 #título
-st.title('DASHBOARD PNAD_COVID 19 IBGE :mask:')
+st.title('DASHBOARD PNAD-COVID-19 IBGE :mask:')
 
 #layout do aplicativo
-aba1 , aba2, aba3, aba4 = st.tabs(['Geral', 'Características clínicas', 'Características comportamentais', 'Características econômicas'])
-
-#aba geral
-with aba1:
-    #mapa de risco
-    st.plotly_chart(fig_mapa_de_risco, use_container_width = True)
+aba1, aba2, aba3 = st.tabs(['Características clínicas', 'Características comportamentais', 'Características econômicas'])
 
 #aba características clínicas
-
+with aba3:
+    #mapa de risco
+    st.plotly_chart(fig, use_container_width = True)
 #aba características comportamentais
-
-#aba características econômicas
