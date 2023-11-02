@@ -48,3 +48,4 @@ Em síntese, o banco de dados foi modelado visando integridade e flexibilidade p
 '''
 )
 st.image('img/diagrama.png')
+st.markdown('Repositório no **GitHub**: https://github.com/jorgeplatero/postech_techchallenge_fase_3')
