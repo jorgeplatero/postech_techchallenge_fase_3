@@ -627,7 +627,6 @@ fig_testes_positivos_medicacao.data[0].marker.color = ['#67000d',] * 2
 fig_testes_positivos_medicacao.data[1].marker.color = ['#A50F15',] * 2 
 fig_testes_positivos_medicacao.data[2].marker.color = ['#FB6A4A',] * 2 
 
-
 #características clínicas
 
 #sintomátios e assintomáticos
@@ -646,7 +645,7 @@ df_percentual_testes_positivos_sintomaticos = spark.sql(
     '''
 ).toPandas()
 fig_percentual_testes_positivos_sintomaticos = px.pie(
-    data_frame=df_qtd_testes_positivos_sintomaticos.sort_values('qtd_testes_positivos', ascending=False),
+    data_frame=df_percentual_testes_positivos_sintomaticos.sort_values('qtd_testes_positivos', ascending=False),
     values = 'qtd_testes_positivos',
     names = 'sintoma_covid',
     color_discrete_sequence=px.colors.sequential.Reds_r,
@@ -707,7 +706,6 @@ with aba1:
             Verifica-se que houve mais contaminação no grupo de mulheres validamente testadas.
         '''
     )
-
     st.plotly_chart(fig_qtd_testes_positivos_escolaridade, use_container_width =False)
     st.plotly_chart(fig_taxa_incidencia_escolaridade, use_container_width =False)
 
