@@ -874,6 +874,64 @@ fig_testes_positivos_respiracao_artificial.update_layout(
     height=400
 )
 
+#esquema vacinal
+
+#taxa de infectados
+df_qtd_testes_validos_faixa_etaria_esquema_vacinal = spark.sql(
+    '''
+        SELECT
+                (CASE
+                    WHEN idade BETWEEN  1 AND 4 THEN '6 meses a 4 anos de idade'
+                    WHEN idade BETWEEN 3 AND 4 THEN '3 e 4 anos de idade'
+                    WHEN idade BETWEEN 5 AND 11 THEN '5 a 11 anos de idade'
+                    WHEN idade BETWEEN 12 AND 39 THEN '12 a 39 anos de idade'
+                    WHEN idade BETWEEN 40 AND 59 THEN '40 a 59 anos de idade'
+                    WHEN idade >= 60 THEN 'Mais de 60 anos de idade'
+                END) AS faixa_etaria,
+                count(teste_covid) AS qtd_testes_validos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND (resultado_teste = 'Positivo' OR resultado_teste = 'Negativo')
+        GROUP BY faixa_etaria
+    '''
+).toPandas()
+df_qtd_testes_positivos_faixa_etaria_esquema_vacinal = spark.sql(
+    '''
+        SELECT
+                (CASE
+                    WHEN idade BETWEEN  1 AND 4 THEN '6 meses a 4 anos de idade'
+                    WHEN idade BETWEEN 3 AND 4 THEN '3 e 4 anos de idade'
+                    WHEN idade BETWEEN 5 AND 11 THEN '5 a 11 anos de idade'
+                    WHEN idade BETWEEN 12 AND 39 THEN '12 a 39 anos de idade'
+                    WHEN idade BETWEEN 40 AND 59 THEN '40 a 59 anos de idade'
+                    WHEN idade >= 60 THEN 'Mais de 60 anos de idade'
+                END) AS faixa_etaria,
+                count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo'
+        GROUP BY faixa_etaria
+    '''
+).toPandas()
+df_taxa_incidencia_faixa_etaria_esquema_vacinal = pd.merge(df_qtd_testes_validos_faixa_etaria_esquema_vacinal, df_qtd_testes_positivos_faixa_etaria_esquema_vacinal, on='faixa_etaria')
+df_taxa_incidencia_faixa_etaria_esquema_vacinal ['taxa_de_contagio_mil_habitantes']= ((df_taxa_incidencia_faixa_etaria_esquema_vacinal['qtd_testes_positivos'] / df_taxa_incidencia_faixa_etaria_esquema_vacinal['qtd_testes_validos']) * 1000).round().astype(int)
+fig_taxa_incidencia_faixa_etaria_esquema_vacinal = px.bar(
+    data_frame=df_taxa_incidencia_faixa_etaria_esquema_vacinal.sort_values('taxa_de_contagio_mil_habitantes', ascending=False),
+    x='faixa_etaria',
+    y='taxa_de_contagio_mil_habitantes',
+    color='faixa_etaria',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'taxa_de_contagio_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
+        'faixa_etaria': 'Faixa etária'
+    }
+)
+fig_taxa_incidencia_faixa_etaria_esquema_vacinal.update_layout(
+    title='<b>Taxa de incidência por faixa etária do esquema vacinal</b>',
+    showlegend=False,
+    width=800, 
+    height=600
+)
+fig_taxa_incidencia_faixa_etaria_esquema_vacinal.update_xaxes(tickangle=45)
+
 #características econômicas
 
 #faixa de rendimento
@@ -1061,6 +1119,173 @@ fig_percentual_motivo_afastamento.update_layout(
     height=600
 )
 
+#tipo teste
+
+#qtd de testes aplicados
+df_qtd_tipo_teste = spark.sql(
+    '''
+        SELECT tipo_teste, count(tipo_teste) AS qtd_tipo_teste
+        FROM df_temp 
+        WHERE tipo_teste != 'Não aplicável'
+        GROUP BY tipo_teste
+    '''
+).toPandas()
+fig_qtd_tipo_teste = px.bar(
+    data_frame=df_qtd_tipo_teste_covid.sort_values('qtd_tipo_teste', ascending=False), 
+    x='tipo_teste',
+    y='qtd_tipo_teste',
+    color='tipo_teste',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'qtd_tipo_teste': 'Quantidade',
+        'tipo_teste': 'Tipo de teste'
+    }
+)
+fig_qtd_tipo_teste.update_layout(
+    title='<b>Quantidade de teste por tipo de teste</b>',
+    legend_title='Legenda',
+    width=600, 
+    height=400
+)
+fig_qtd_tipo_teste.update_xaxes(tickangle=45)
+#diferença percentual de testes aplicados
+fig_percentual_tipo_teste = px.pie(
+    data_frame=df_qtd_tipo_teste_covid.sort_values('qtd_tipo_teste', ascending=False), 
+    values='qtd_tipo_teste',
+    names='tipo_teste',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'qtd_tipo_teste': 'Quantidade',
+        'tipo_teste': 'Tipo de teste'
+    }
+)
+fig_percentual_tipo_teste.update_layout(
+    title='<b>Diferença percentual de testes aplicados por tipo de teste</b>',
+    legend_title='Legenda',
+    width=600, 
+    height=400
+)
+fig_percentual_tipo_teste.update_xaxes(tickangle=45)
+#qtd de infectados
+df_qtd_testes_positivos_tipo_teste = spark.sql(
+    '''
+        SELECT tipo_teste, count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo'
+        GROUP BY tipo_teste
+    '''
+).toPandas()
+fig_qtd_testes_positivos_tipo_teste = px.bar(
+    data_frame=df_qtd_testes_positivos_tipo_teste.sort_values('qtd_testes_positivos', ascending=False), 
+    x='tipo_teste',
+    y='qtd_testes_positivos',
+    color='tipo_teste',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'qtd_testes_validos': 'Quantidade',
+        'tipo_teste': 'Tipo de teste'
+    }
+)
+fig.update_layout(
+    title='<b>Quantidade de testes positivos por tipo de teste</b>',
+    legend_title='Legenda',
+    yaxis_title='%',
+    width=600, 
+    height=400
+)
+fig.update_xaxes(tickangle=45)
+#taxa de incidência
+df_qtd_testes_validos_tipo_teste = spark.sql(
+    '''
+        SELECT tipo_teste, count(teste_covid) AS qtd_testes_validos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND (resultado_teste = 'Positivo' OR resultado_teste = 'Negativo')
+        GROUP BY tipo_teste
+
+    '''
+).toPandas()
+df_taxa_incidencia_tipo_teste = pd.merge(df_qtd_testes_validos_tipo_teste, df_qtd_testes_positivos_tipo_teste, on='tipo_teste')
+df_taxa_incidencia_tipo_teste['taxa_incidencia_mil_habitantes'] = ((df_taxa_incidencia_tipo_teste['qtd_testes_positivos'] / df_taxa_incidencia_tipo_teste['qtd_testes_validos']) * 1000).round().astype(int)
+fig_taxa_incidencia_tipo_teste= px.pie(
+    data_frame=df_taxa_incidencia_tipo_teste.sort_values('taxa_incidencia_mil_habitantes', ascending=False), 
+    values='taxa_incidencia_mil_habitantes',
+    names='tipo_teste',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'taxa_incidencia_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
+        'tipo_teste': 'Tipo de teste'
+    }
+)
+fig_taxa_incidencia_tipo_teste.update_layout(
+    title='<b>Diferença percentual da taxa de incidência por tipo de teste</b>',
+    legend_title='Legenda',
+    yaxis_title='%',
+    width=600, 
+    height=400
+)
+
+#qtd de inconclusivos
+df_qtd_testes_inconclusivos_tipo_teste = spark.sql(
+    '''
+        SELECT tipo_teste, count(teste_covid) AS qtd_testes_inconclusivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Inconclusivo'
+        GROUP BY tipo_teste
+
+    '''
+).toPandas()
+fig_qtd_testes_inconclusivos_tipo_teste = px.bar(
+    data_frame=df_qtd_testes_inconclusivos_tipo_teste_inconclusivo.sort_values('qtd_testes_inconclusivos', ascending=False), 
+    x='tipo_teste',
+    y='qtd_testes_inconclusivos',
+    color='tipo_teste',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'qtd_testes_validos': 'Quantidade',
+        'tipo_teste': 'Tipo de teste'
+    }
+)
+fig_qtd_testes_inconclusivos_tipo_teste.update_layout(
+    title='<b>Quantidade de testes inconclusivo</b>',
+    legend_title='Legenda',
+    width=600, 
+    height=400
+)
+#taxa de inconclusivos
+df_qtd_testes_validos_inconclusivos_tipo_teste = spark.sql(
+    '''
+        SELECT tipo_teste, count(teste_covid) AS qtd_testes_validos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND (resultado_teste = 'Positivo' OR resultado_teste = 'Negativo' OR resultado_teste = 'Inconclusivo')
+        GROUP BY tipo_teste
+
+    '''
+).toPandas()
+df_taxa_incidencia_tipo_teste_inconclusivo = pd.merge(df_qtd_testes_validos_inconclusivos_tipo_teste, df_qtd_testes_inconclusivos_tipo_teste, on='tipo_teste')
+df_taxa_incidencia_tipo_teste_inconclusivo['taxa_incidencia_mil_habitantes'] = ((df_taxa_incidencia_tipo_teste_inconclusivo['qtd_testes_inconclusivos'] / df_taxa_incidencia_tipo_teste_inconclusivo['qtd_testes_validos']) * 1000).round().astype(int)
+fig_taxa_incidencia_tipo_teste_inconclusivo = px.pie(
+    data_frame=df_taxa_incidencia_tipo_teste_inconclusivo.sort_values('taxa_incidencia_mil_habitantes', ascending=False), 
+    values='taxa_incidencia_mil_habitantes',
+    names='tipo_teste',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'taxa_incidencia_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
+        'tipo_teste': 'Tipo de teste'
+    }
+)
+fig_taxa_incidencia_tipo_teste_inconclusivo.update_layout(
+    title='<b>Diferença percentual de testes com resultado inconclusivo por tipo de teste</b>',
+    legend_title='Legenda',
+    width=600, 
+    height=400
+)
+
+#qtd
+fig_qtd_tipo_teste, fig_percentual_tipo_teste
+fig_qtd_testes_positivos_tipo_teste, fig_taxa_incidencia_tipo_teste
+fig_qtd_testes_inconclusivos_tipo_teste,  fig_taxa_incidencia_tipo_teste_inconclusivo
+#taxa
+
 #visualização no streamlit
 
 #logo fiap
@@ -1139,6 +1364,14 @@ with aba2:
             texto.
         '''
     )
+    #taxa de infectados por faixa etária esquema vacinal
+    st.plotly_chart(fig_taxa_incidencia_faixa_etaria_esquema_vacinal, use_container_width=True)
+    st.markdown(
+        '''
+            texto.
+        '''
+    )
+
 
 #aba características comportamentais
 with aba3:
@@ -1190,16 +1423,42 @@ with aba4:
     #motivo_afastamento
     st.plotly_chart(fig_percentual_motivo_afastamento, use_container_width=True)
     #tipo teste
-    with coluna3:
+    coluna1, coluna2 = st.columns(2)
+    with coluna1:
         #bar
-        st.plotly_chart(fig_qtd_sintomaticos_permaneceu_casa, use_container_width=True)
-    with coluna4:
+        st.plotly_chart(fig_qtd_tipo_teste, use_container_width=True)
+    with coluna2:
         #pie
-        st.plotly_chart(fig_percentual_sintomaticos_permaneceu_casa, use_container_width=True)
+        st.plotly_chart(fig_percentual_tipo_teste, use_container_width=True)
     st.markdown(
         '''
             texto.
         '''
+    )
+    coluna3, coluna4 = st.columns(2)
+    with coluna3:
+        #bar
+        st.plotly_chart(fig_qtd_testes_positivos_tipo_teste, use_container_width=True)
+    with coluna4:
+        #pie
+        st.plotly_chart(fig_taxa_incidencia_tipo_teste, use_container_width=True)
+    st.markdown(
+        '''
+            texto.
+        '''
+    )
+    coluna5, coluna6 = st.columns(2)
+    with coluna5:
+        #bar
+        st.plotly_chart(fig_qtd_testes_inconclusivos_tipo_teste, use_container_width=True)
+    with coluna6:
+        #pie
+        st.plotly_chart(fig_taxa_incidencia_tipo_teste_inconclusivo, use_container_width=True)
+    st.markdown(
+        '''
+            texto.
+        '''
+    )
 
 #aba características geoespaciais
 with aba5:
@@ -1233,6 +1492,7 @@ with aba5:
             As regiões norte obtev...
         '''
     )
+
     #estado
     st.metric('Média da taxa de incidência nos estados', df_taxa_incidencia_estado['taxa_incidencia_mil_habitantes'].mean().astype(int))
     #bar
