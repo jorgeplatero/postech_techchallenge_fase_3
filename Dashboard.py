@@ -28,6 +28,56 @@ df_temp = df.createOrReplaceTempView('df_temp')
 
 #características gerais
 
+#qtd de infectados
+df_qtd_testes_positivos = spark.sql(
+    '''
+        SELECT count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo'
+    '''
+).toPandas()
+
+#qtd de infectados sintomáticos
+df_qtd_infectados_sintomaticos = spark.sql(
+    '''
+        SELECT count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo' AND sintoma_covid = 'Sim'
+
+    '''
+).toPandas()
+
+#qtd de infectados assintomáticos
+df_qtd_infectados_assintomaticos = spark.sql(
+    '''
+        SELECT count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo' AND sintoma_covid != 'Sim'
+
+    '''
+).toPandas()
+
+#qtd de infectados internados
+df_qtd_infectados_internados = spark.sql(
+    '''
+        SELECT count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo' AND questao_internacao = 'Sim'
+
+    '''
+).toPandas()
+
+#qtd de infectados internados com respiração artificial
+df_qtd_infectados_internados_respiracao_artificial = spark.sql(
+    '''
+        SELECT count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo' AND questao_internacao = 'Sim'
+
+    '''
+).toPandas()
+
+
 #sexo
 
 #qtd
@@ -630,6 +680,7 @@ fig_testes_positivos_medicacao.data[2].marker.color = ['#FB6A4A',] * 2
 #características clínicas
 
 #sintomátios e assintomáticos
+
 #percentual
 df_percentual_testes_positivos_sintomaticos = spark.sql(
     '''
@@ -665,7 +716,350 @@ fig_percentual_testes_positivos_sintomaticos.update_layout(
     height=400
 )
 
+#fator de risco
+
+#percentual 
+df_percentual_testes_positivos_fator_risco = spark.sql(
+'''
+    SELECT
+        (sum(CASE WHEN descricao_fator_risco_covid LIKE '%Diabetes%' THEN 1 ELSE 0 END) /sum(CASE WHEN fator_risco_covid = 'Sim' THEN 1 ELSE 0 END)) * 100 AS Diabetes,
+        (sum(CASE WHEN descricao_fator_risco_covid LIKE '%Hipertensao%' THEN 1 ELSE 0 END) / sum(CASE WHEN fator_risco_covid = 'Sim' THEN 1 ELSE 0 END)) * 100  AS Hipertensao,
+        (sum(CASE WHEN descricao_fator_risco_covid LIKE '%Doenca respiratoria%' THEN 1 else 0 END) / sum(CASE WHEN fator_risco_covid = 'Sim' THEN 1 ELSE 0 END)) * 100 as Doenca_respiratoria,
+        (sum(CASE WHEN descricao_fator_risco_covid LIKE '%Idoso%' THEN 1 ELSE 0 END) / sum(CASE WHEN fator_risco_covid = 'Sim' THEN 1 ELSE 0 END)) * 100  AS Idoso,
+        (sum(CASE WHEN descricao_fator_risco_covid LIKE '%Cancer%' THEN 1 ELSE 0 END) / sum(CASE WHEN fator_risco_covid = 'Sim' THEN 1 ELSE 0 END)) * 100  as Cancer,
+        (sum(CASE WHEN descricao_fator_risco_covid LIKE '%Doenca cardiaca%' THEN 1 ELSE 0 END) / sum(CASE WHEN fator_risco_covid = 'Sim' THEN 1 ELSE 0 END)) * 100  AS Doenca_cardiaca
+    FROM df_temp
+    WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo'
+'''
+).toPandas()
+df_percentual_testes_positivos_fator_risco = df_percentual_testes_positivos_fator_risco.T.reset_index().rename(columns={0: 'percentual_testes_positivos', 'index': 'fator_risco_covid'})
+df_percentual_testes_positivos_fator_risco['fator_risco_covid'] = [i.replace('_', ' ') for i in df_percentual_testes_positivos_fator_risco.fator_risco_covid.values]
+df_percentual_testes_positivos_fator_risco.sort_values('percentual_testes_positivos', ascending=False, inplace=True)
+fig_percentual_testes_positivos_fator_risco = px.bar(
+    data_frame = df_percentual_testes_positivos_fator_risco,
+    x = 'fator_risco_covid',
+    y = 'percentual_testes_positivos',
+    color= 'fator_risco_covid',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'percentual_testes_positivos': 'Percentual de testes positivos',
+        'fator_risco_covid': 'Fator de risco'
+    }
+)
+fig_percentual_testes_positivos_fator_risco.update_layout(
+    title='<b>Percentual de infectados por fator de risco</b>',
+    showlegend=False,
+    yaxis_title='%',
+    width=800,
+    height=600
+)
+fig_percentual_testes_positivos_fator_risco.update_xaxes(tickangle=45)
+
+#sintoma
+
+#percentual
+df_percentual_testes_positivos_tipo_sintoma = spark.sql(
+    '''
+    SELECT
+          (sum(CASE WHEN descricao_sintoma_covid LIKE '%Febre%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END)) * 100 AS Febre,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Tosse%'THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Tosse,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Dor de garganta%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Dor_de_garganta,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Dificuldade para respirar%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Dificuldade_de_respirar,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Dor de cabeça%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Dor_de_cabeca,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Dor no peito%'THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Dor_no_peito,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Nausea%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Nausea,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Fadiga%'THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Fadiga,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Dor nos olhos%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Dor_nos_olhos,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Perda de olfato ou paladar%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Perda_de_olfato_ou_paladar,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Dor muscular%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Dor_muscular,
+          sum(CASE WHEN descricao_sintoma_covid LIKE '%Diarreia%' THEN 1 ELSE 0 END) / sum(CASE WHEN descricao_sintoma_covid IS NOT NULL THEN 1 ELSE 0 END) * 100 AS Diarreia
+    FROM df_temp
+    WHERE resultado_teste = 'Positivo'
+    '''
+).toPandas()
+df_percentual_testes_positivos_tipo_sintoma = df_percentual_testes_positivos_tipo_sintoma.T.reset_index().rename(columns={0: 'percentual_testes_positivos', 'index':'sintoma'})
+df_percentual_testes_positivos_tipo_sintoma['sintoma'] = [i.replace('_', ' ') for i in df_percentual_testes_positivos_tipo_sintoma.sintoma.values]
+df_percentual_testes_positivos_tipo_sintoma.sort_values('percentual_testes_positivos', ascending=False, inplace=True)
+fig_percentual_testes_positivos_tipo_sintoma = px.bar(
+    data_frame = df_percentual_testes_positivos_tipo_sintoma,
+    x = 'sintoma',
+    y = 'percentual_testes_positivos',
+    color= 'sintoma',
+    color_discrete_sequence=['#67000D'],
+    labels={
+        'percentual_testes_positivos': 'Percentual de testes positivos',
+        'sintoma': 'Sintoma'
+    }
+)
+fig_percentual_testes_positivos_tipo_sintoma.update_layout(
+    title='<b>Percentual de infectados por tipo de sintoma</b>',
+    showlegend=False,
+    yaxis_title='%',
+    width=800,
+    height=600
+)
+fig_percentual_testes_positivos_tipo_sintoma.update_xaxes(tickangle=45)
+
+#internação
+
+#percentual internados
+df_qtd_testes_positivos_internacao = spark.sql(
+
+    '''
+        SELECT
+            count(teste_covid) AS qtd_testes_positivos,
+            CASE
+            WHEN questao_internacao = 'Sim' THEN 'Internado'
+            ELSE 'Não internado' 
+            END AS questao_internacao
+        FROM df_temp
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo'
+        GROUP BY questao_internacao
+    '''
+).toPandas()
+fig = px.pie(
+    data_frame=df_qtd_testes_positivos_internacao.sort_values('qtd_testes_positivos', ascending=False),
+    values='qtd_testes_positivos',
+    names='questao_internacao',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'qtd_testes_positivos':'Quantidade',
+        'questao_internacao':'Condição'
+    }
+)
+fig.update_traces(
+    pull=[0.3, 0],
+    texttemplate='%{percent:.2%}'
+)
+fig.update_layout(
+    title='<b>Percentual de infectados internados</b>',
+    legend_title='Legenda',
+    width=800,
+    height=600
+)
+#percentual internados respiração artificial
+df_testes_positivos_respiracao_artificial = spark.sql( 
+    '''
+        SELECT
+            count(teste_covid) AS qtd_testes_positivos,
+            CASE
+            WHEN questao_internacao_ajuda_respirar = 'Sim' THEN 'Respiração artificial'
+            WHEN questao_internacao_ajuda_respirar = 'Não' THEN 'Respiração natural'
+            WHEN questao_internacao_ajuda_respirar = 'Ignorado' THEN 'Respiração natural'
+            ELSE 'Não aplicável'
+            END AS questao_internacao_ajuda_respirar
+        FROM df_temp
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo' AND questao_internacao_ajuda_respirar != 'Não aplicável'
+        GROUP BY questao_internacao_ajuda_respirar
+    '''
+).toPandas()
+df_testes_positivos_respiracao_artificial.groupby('questao_internacao_ajuda_respirar').sum().reset_index(inplace=True)
+fig_testes_positivos_respiracao_artificial = px.pie(
+    data_frame=df_testes_positivos_respiracao_artificial.sort_values('qtd_testes_positivos', ascending=False),
+    values='qtd_testes_positivos',
+    names='questao_internacao_ajuda_respirar',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'qtd_testes_positivos':'Quantidade',
+        'questao_internacao_ajuda_respirar':'Condição'
+    }
+)
+fig_testes_positivos_respiracao_artificial.update_traces(
+    texttemplate='%{percent:.2%}'
+)
+fig_testes_positivos_respiracao_artificial.update_layout(
+    title='<b>Percentual de infectados internados com respiração articial</b>',
+    legend_title='Legenda',
+    width=600,
+    height=400
+)
+
 #características econômicas
+
+#faixa de rendimento
+
+#qtd
+df_qtd_testes_positivos_faixa_rendimento = spark.sql(
+    '''
+        SELECT faixa_rendimento, count(resultado_teste) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE resultado_teste = 'Positivo'
+        GROUP BY faixa_rendimento
+    '''
+).toPandas()
+fig_qtd_testes_positivos_faixa_rendimento = px.bar(
+    data_frame=df_qtd_testes_positivos_faixa_rendimento.sort_values('qtd_testes_positivos', ascending=False),
+    x='faixa_rendimento',
+    y='qtd_testes_positivos', 
+    color='faixa_rendimento',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'qtd_testes_positivos': 'Quantidade',
+        'faixa_rendimento': 'Faixa de rendimento (R$)'
+    }
+)
+fig_qtd_testes_positivos_faixa_rendimento.update_layout(
+    title='<b>Quantidade de infectados por faixa de rendimento</b>',
+    showlegend=False,
+    width=800, 
+    height=600
+)
+fig_qtd_testes_positivos_faixa_rendimento.update_xaxes(tickangle=45)
+#taxa de incidência
+df_qtd_testes_validos_faixa_rendimento = spark.sql(
+    '''
+        SELECT faixa_rendimento, count(teste_covid) AS qtd_testes_validos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND (resultado_teste = 'Positivo' OR resultado_teste = 'Negativo') AND faixa_rendimento != 'None'
+        GROUP BY faixa_rendimento
+    '''
+).toPandas()
+df_qtd_testes_positivos_faixa_rendimento = spark.sql(
+    '''
+        SELECT faixa_rendimento, count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo' AND faixa_rendimento != 'None'
+        GROUP BY faixa_rendimento
+    '''
+).toPandas()
+df_taxa_incidencia_faixa_rendimento = pd.merge(df_qtd_testes_validos_faixa_rendimento, df_qtd_testes_positivos_faixa_rendimento, on='faixa_rendimento')
+df_taxa_incidencia_faixa_rendimento['taxa_incidencia_mil_habitantes'] = ((df_taxa_incidencia_faixa_rendimento['qtd_testes_positivos'] / df_taxa_incidencia_faixa_rendimento['qtd_testes_validos']) * 1000).round().astype(int)
+fig_taxa_incidencia_faixa_rendimento = px.bar(
+    data_frame=df_taxa_incidencia_faixa_rendimento.sort_values('taxa_incidencia_mil_habitantes', ascending=False),
+    x='faixa_rendimento',
+    y='taxa_incidencia_mil_habitantes', 
+    color='faixa_rendimento',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'taxa_incidencia_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
+        'faixa_rendimento': 'Faixa de rendimento (R$)'
+    }
+)
+fig_taxa_incidencia_faixa_rendimento.update_layout(
+    title='<b>Taxa de incidência por faixa de rendimento</b>',
+    showlegend=False,
+    width=800,  
+    height=600
+)
+fig_taxa_incidencia_faixa_rendimento.update_xaxes(tickangle=45)
+#valor médio auxílio entre infectados
+df_testes_positivos_valor_medio_auxilio_emergencial = spark.sql(
+    '''
+        SELECT faixa_rendimento, sum(auxlio_emergencia_covid) as soma_auxlio_covid_faixa_rendimento, count(resultado_teste) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE resultado_teste = 'Positivo' AND auxlio_emergencia_covid != 'Não aplicável' AND auxlio_emergencia_covid != 'Não' AND faixa_rendimento != 'None'
+        GROUP BY faixa_rendimento
+    '''
+).toPandas()
+df_testes_positivos_valor_medio_auxilio_emergencial['media_auxlio_covid_faixa_rendimento'] = (df_testes_positivos_valor_medio_auxilio_emergencial.soma_auxlio_covid_faixa_rendimento / df_testes_positivos_valor_medio_auxilio_emergencial.qtd_testes_positivos).round(decimals=2)
+fig_testes_positivos_valor_medio_auxilio_emergencial = px.bar(
+    data_frame=df_testes_positivos_valor_medio_auxilio_emergencial.sort_values('media_auxlio_covid_faixa_rendimento', ascending=False),
+    x='faixa_rendimento',
+    y='media_auxlio_covid_faixa_rendimento', 
+    color='faixa_rendimento',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'media_auxlio_covid_faixa_rendimento': 'Valor (R$)',
+        'faixa_rendimento': 'Faixa de rendimento (R$)'
+    }
+)
+fig_testes_positivos_valor_medio_auxilio_emergencial.update_layout(
+    title='<b>Valor médio do auxílio emergencial recebido entre infectados por faixa de rendimento</b>',
+    showlegend=False,
+    width=800, 
+    height=600
+)
+fig_testes_positivos_valor_medio_auxilio_emergencial.update_xaxes(tickangle=45)
+
+#trabalho
+
+#qtd
+df_qtd_teste_positivos_tipo_trabalho = spark.sql(
+    '''
+        SELECT questao_tipo_trabalho_realizado, count(teste_covid) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo' AND questao_tipo_trabalho_realizado != 'Não aplicável' AND questao_tipo_trabalho_realizado != 'Outros'
+        GROUP BY questao_tipo_trabalho_realizado
+    '''
+).toPandas()
+fig_qtd_teste_positivos_tipo_trabalho = px.bar(
+    data_frame=df_qtd_teste_positivos_tipo_trabalho.sort_values('qtd_testes_positivos', ascending=False),
+    x='qtd_testes_positivos',
+    y='questao_tipo_trabalho_realizado', 
+    color='questao_tipo_trabalho_realizado',
+    color_discrete_sequence=['#67000d'],
+    labels={
+        'qtd_testes_positivos':'Quantidade',
+        'questao_tipo_trabalho_realizado':'Tipo de trabalho realizado'
+    }
+)
+fig_qtd_teste_positivos_tipo_trabalho.update_layout(
+    title='<b>Quantidade de infectados por tipo de trabalho realizado</b>',
+    showlegend=False,
+    width=1200, 
+    height=800
+)
+#percentual
+df_qtd_testes_validos_tipo_trabalho = spark.sql(
+    '''
+        SELECT questao_tipo_trabalho_realizado, count(teste_covid) AS qtd_testes_validos
+        FROM df_temp 
+        WHERE teste_covid = 'Sim' AND (resultado_teste = 'Positivo' OR resultado_teste = 'Negativo') AND questao_tipo_trabalho_realizado != 'Não aplicável' AND questao_tipo_trabalho_realizado != 'Outros'
+        GROUP BY questao_tipo_trabalho_realizado
+    '''
+).toPandas()
+df_taxa_incidencia_tipo_trabalho = pd.merge(df_qtd_testes_validos_tipo_trabalho, df_qtd_teste_positivos_tipo_trabalho, on='questao_tipo_trabalho_realizado')
+df_taxa_incidencia_tipo_trabalho['taxa_incidencia_mil_habitantes'] = ((df_taxa_incidencia_tipo_trabalho['qtd_testes_positivos'] / df_taxa_incidencia_tipo_trabalho['qtd_testes_validos']) * 1000).round().astype(int)
+fig_taxa_incidencia_tipo_trabalho = px.bar(
+    data_frame=df_taxa_incidencia_tipo_trabalho.sort_values('taxa_incidencia_mil_habitantes', ascending=False),
+    x='taxa_incidencia_mil_habitantes',
+    y='questao_tipo_trabalho_realizado', 
+    color='questao_tipo_trabalho_realizado',
+    color_discrete_sequence=['#67000d'],
+    labels={
+        'taxa_incidencia_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
+        'questao_tipo_trabalho_realizado': 'Tipo de trabalho realizado'
+    }
+)
+fig_taxa_incidencia_tipo_trabalho.update_layout(
+    title='<b>Taxa de incidência por tipo de trabalho</b>',
+    showlegend=False,
+    width=1200, 
+    height=800
+)
+
+#afastamento
+
+#percentual
+df_percentual_motivo_afastamento = spark.sql(
+    '''
+        SELECT questao_motivo_afastamento, count(resultado_teste) AS qtd_testes_positivos
+        FROM df_temp 
+        WHERE resultado_teste = 'Positivo' AND questao_motivo_afastamento != 'Não aplicável'
+        GROUP BY questao_motivo_afastamento
+    '''
+).toPandas()
+df_percentual_motivo_afastamento['percentual_motivo_afastamento'] = ((df_percentual_motivo_afastamento.qtd_testes_positivos / sum(df_percentual_motivo_afastamento.qtd_testes_positivos)) * 100).round(decimals=2)
+fig_percentual_motivo_afastamento = px.bar(
+    data_frame=df_percentual_motivo_afastamento.sort_values('percentual_motivo_afastamento', ascending=False), 
+    x = 'questao_motivo_afastamento', 
+    y = 'percentual_motivo_afastamento',
+    color='questao_motivo_afastamento',
+    color_discrete_sequence=px.colors.sequential.Reds_r,
+    labels={
+        'percentual_motivo_afastamento': 'Percentual',
+        'questao_motivo_afastamento': 'Motivo do afastamento'
+    }
+)
+fig_percentual_motivo_afastamento.update_layout(
+    title='<b>Diferença percentual entre infectados por motivo do afastamento do trabalho</b>',
+    yaxis_title='%',
+    legend_title='Legenda',
+    xaxis_visible=False,
+    xaxis_showticklabels=False,
+    width=1200, 
+    height=600
+)
 
 #visualização no streamlit
 
@@ -678,14 +1072,24 @@ st.title('DASHBOARD PNAD-COVID-19 IBGE :microscope:')
 #layout do aplicativo
 aba1, aba2, aba3, aba4, aba5 = st.tabs(['Características gerais', 'Características clínicas', 'Características comportamentais', 'Características econômicas', 'Caracteríticas geoespaciais'])
 
-#aba características gerais
 with aba1:
-    #sexo
+    st.metric('Total de infectados', df_qtd_testes_positivos['qtd_testes_positivos'])
     coluna1, coluna2 = st.columns(2)
     with coluna1:
+        st.metric('Total de infectados sintomáticos', df_qtd_infectados_sintomaticos['qtd_testes_positivos'])
+    with coluna2:
+        st.metric('Total de infectados assintomáticos', df_qtd_infectados_assintomaticos['qtd_testes_positivos'])
+    coluna3, coluna4 = st.columns(2)
+    with coluna3:
+        st.metric('Total de infectados internados', df_qtd_infectados_internados['qtd_testes_positivos'])
+    with coluna4:
+        st.metric('Total de infectados internador com respiração artificial', df_qtd_infectados_internados_respiracao_artificial['qtd_testes_positivos'])
+    #sexo
+    coluna5, coluna6 = st.columns(2)
+    with coluna5:
         #bar
         st.plotly_chart(fig_qtd_testes_positivos_sexo, use_container_width=True)
-    with coluna2:
+    with coluna6:
         #pie
         st.plotly_chart(fig_taxa_incidencia_sexo, use_container_width=True)
     st.markdown(
@@ -694,7 +1098,7 @@ with aba1:
         '''
     )
     #cor/raça
-    coluna3, coluna4 = st.columns(2)
+    coluna7, coluna8 = st.columns(2)
     with coluna3:
         #bar
         st.plotly_chart(fig_qtd_testes_positivos_cor_raca, use_container_width=True)
@@ -712,6 +1116,24 @@ with aba1:
 #aba características clínicas
 with aba2:
     st.plotly_chart(fig_percentual_testes_positivos_sintomaticos, use_container_width=True)
+    st.markdown(
+        '''
+            texto.
+        '''
+    )
+    st.plotly_chart(fig_percentual_testes_positivos_fator_risco, use_container_width=True)
+    st.markdown(
+        '''
+            texto.
+        '''
+    )
+    st.plotly_chart(fig_percentual_testes_positivos_tipo_sintoma, use_container_width=True)
+    st.markdown(
+        '''
+            texto.
+        '''
+    )
+    st.plotly_chart(fig_testes_positivos_respiracao_artificial, use_container_width=True)
     st.markdown(
         '''
             texto.
@@ -757,8 +1179,27 @@ with aba3:
 
 #aba características econômicas
 with aba4:
-    #m
-    st.plotly_chart(fig_taxa_incidencia_sexo, use_container_width=True)
+    #faixa de rendimento
+    st.plotly_chart(fig_qtd_testes_positivos_faixa_rendimento, use_container_width=True)
+    st.plotly_chart(fig_taxa_incidencia_faixa_rendimento, use_container_width=True)
+    #auxilio_emergencial
+    st.plotly_chart(fig_testes_positivos_valor_medio_auxilio_emergencial, use_container_width=True)
+    #tipo_trabalho
+    st.plotly_chart(fig_qtd_teste_positivos_tipo_trabalho, use_container_width=True)
+    st.plotly_chart(fig_taxa_incidencia_tipo_trabalho, use_container_width=True)
+    #motivo_afastamento
+    st.plotly_chart(fig_percentual_motivo_afastamento, use_container_width=True)
+    #tipo teste
+    with coluna3:
+        #bar
+        st.plotly_chart(fig_qtd_sintomaticos_permaneceu_casa, use_container_width=True)
+    with coluna4:
+        #pie
+        st.plotly_chart(fig_percentual_sintomaticos_permaneceu_casa, use_container_width=True)
+    st.markdown(
+        '''
+            texto.
+        '''
 
 #aba características geoespaciais
 with aba5:
@@ -789,7 +1230,7 @@ with aba5:
         st.plotly_chart(fig_taxa_incidencia_regiao, use_container_width=True)
     st.markdown(
         '''
-            As regiões norte obteve...
+            As regiões norte obtev...
         '''
     )
     #estado
