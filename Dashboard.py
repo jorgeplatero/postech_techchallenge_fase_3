@@ -1032,7 +1032,7 @@ fig_testes_positivos_valor_medio_auxilio_emergencial.update_xaxes(tickangle=45)
 #trabalho
 
 #qtd
-df_qtd_teste_positivos_tipo_trabalho = spark.sql(
+df_qtd_testes_positivos_tipo_trabalho = spark.sql(
     '''
         SELECT questao_tipo_trabalho_realizado, count(teste_covid) AS qtd_testes_positivos
         FROM df_temp 
@@ -1040,8 +1040,8 @@ df_qtd_teste_positivos_tipo_trabalho = spark.sql(
         GROUP BY questao_tipo_trabalho_realizado
     '''
 ).toPandas()
-fig_qtd_teste_positivos_tipo_trabalho = px.bar(
-    data_frame=df_qtd_teste_positivos_tipo_trabalho.sort_values('qtd_testes_positivos', ascending=False),
+fig_qtd_testes_positivos_tipo_trabalho = px.bar(
+    data_frame=df_qtd_testes_positivos_tipo_trabalho.sort_values('qtd_testes_positivos', ascending=False),
     x='qtd_testes_positivos',
     y='questao_tipo_trabalho_realizado', 
     color='questao_tipo_trabalho_realizado',
@@ -1051,12 +1051,13 @@ fig_qtd_teste_positivos_tipo_trabalho = px.bar(
         'questao_tipo_trabalho_realizado':'Tipo de trabalho realizado'
     }
 )
-fig_qtd_teste_positivos_tipo_trabalho.update_layout(
+fig_qtd_testes_positivos_tipo_trabalho.update_layout(
     title='<b>Quantidade de infectados por tipo de trabalho realizado</b>',
     showlegend=False,
     width=1200, 
     height=800
 )
+
 #percentual
 df_qtd_testes_validos_tipo_trabalho = spark.sql(
     '''
@@ -1066,7 +1067,7 @@ df_qtd_testes_validos_tipo_trabalho = spark.sql(
         GROUP BY questao_tipo_trabalho_realizado
     '''
 ).toPandas()
-df_taxa_incidencia_tipo_trabalho = pd.merge(df_qtd_testes_validos_tipo_trabalho, df_qtd_teste_positivos_tipo_trabalho, on='questao_tipo_trabalho_realizado')
+df_taxa_incidencia_tipo_trabalho = pd.merge(df_qtd_testes_validos_tipo_trabalho, df_qtd_testes_positivos_tipo_trabalho, on='questao_tipo_trabalho_realizado')
 df_taxa_incidencia_tipo_trabalho['taxa_incidencia_mil_habitantes'] = ((df_taxa_incidencia_tipo_trabalho['qtd_testes_positivos'] / df_taxa_incidencia_tipo_trabalho['qtd_testes_validos']) * 1000).round().astype(int)
 fig_taxa_incidencia_tipo_trabalho = px.bar(
     data_frame=df_taxa_incidencia_tipo_trabalho.sort_values('taxa_incidencia_mil_habitantes', ascending=False),
@@ -1131,7 +1132,7 @@ df_qtd_tipo_teste = spark.sql(
     '''
 ).toPandas()
 fig_qtd_tipo_teste = px.bar(
-    data_frame=df_qtd_tipo_teste_covid.sort_values('qtd_tipo_teste', ascending=False), 
+    data_frame=df_qtd_tipo_teste.sort_values('qtd_tipo_teste', ascending=False), 
     x='tipo_teste',
     y='qtd_tipo_teste',
     color='tipo_teste',
@@ -1150,7 +1151,7 @@ fig_qtd_tipo_teste.update_layout(
 fig_qtd_tipo_teste.update_xaxes(tickangle=45)
 #diferença percentual de testes aplicados
 fig_percentual_tipo_teste = px.pie(
-    data_frame=df_qtd_tipo_teste_covid.sort_values('qtd_tipo_teste', ascending=False), 
+    data_frame=df_qtd_tipo_teste.sort_values('qtd_tipo_teste', ascending=False), 
     values='qtd_tipo_teste',
     names='tipo_teste',
     color_discrete_sequence=px.colors.sequential.Reds_r,
@@ -1235,7 +1236,7 @@ df_qtd_testes_inconclusivos_tipo_teste = spark.sql(
     '''
 ).toPandas()
 fig_qtd_testes_inconclusivos_tipo_teste = px.bar(
-    data_frame=df_qtd_testes_inconclusivos_tipo_teste_inconclusivo.sort_values('qtd_testes_inconclusivos', ascending=False), 
+    data_frame=df_qtd_testes_inconclusivos_tipo_teste.sort_values('qtd_testes_inconclusivos', ascending=False), 
     x='tipo_teste',
     y='qtd_testes_inconclusivos',
     color='tipo_teste',
@@ -1279,12 +1280,6 @@ fig_taxa_incidencia_tipo_teste_inconclusivo.update_layout(
     width=600, 
     height=400
 )
-
-#qtd
-fig_qtd_tipo_teste, fig_percentual_tipo_teste
-fig_qtd_testes_positivos_tipo_teste, fig_taxa_incidencia_tipo_teste
-fig_qtd_testes_inconclusivos_tipo_teste,  fig_taxa_incidencia_tipo_teste_inconclusivo
-#taxa
 
 #visualização no streamlit
 
@@ -1335,8 +1330,8 @@ with aba1:
             Verifica-se que houve mais contaminação no grupo de mulheres validamente testadas.
         '''
     )
-    st.plotly_chart(fig_qtd_testes_positivos_escolaridade, use_container_width =False)
-    st.plotly_chart(fig_taxa_incidencia_escolaridade, use_container_width =False)
+    st.plotly_chart(fig_qtd_testes_positivos_escolaridade, use_container_width =True)
+    st.plotly_chart(fig_taxa_incidencia_escolaridade, use_container_width =True)
 
 #aba características clínicas
 with aba2:
@@ -1346,7 +1341,7 @@ with aba2:
             texto.
         '''
     )
-    st.plotly_chart(fig_percentual_testes_positivos_fator_risco, use_container_width=True)
+    st.plotly_chart(fig_percentual_testes_positivos_fator_risco, use_container_width=False)
     st.markdown(
         '''
             texto.
@@ -1365,13 +1360,12 @@ with aba2:
         '''
     )
     #taxa de infectados por faixa etária esquema vacinal
-    st.plotly_chart(fig_taxa_incidencia_faixa_etaria_esquema_vacinal, use_container_width=True)
+    st.plotly_chart(fig_taxa_incidencia_faixa_etaria_esquema_vacinal, use_container_width=False)
     st.markdown(
         '''
             texto.
         '''
     )
-
 
 #aba características comportamentais
 with aba3:
@@ -1418,7 +1412,7 @@ with aba4:
     #auxilio_emergencial
     st.plotly_chart(fig_testes_positivos_valor_medio_auxilio_emergencial, use_container_width=True)
     #tipo_trabalho
-    st.plotly_chart(fig_qtd_teste_positivos_tipo_trabalho, use_container_width=True)
+    st.plotly_chart(fig_qtd_testes_positivos_tipo_trabalho, use_container_width=True)
     st.plotly_chart(fig_taxa_incidencia_tipo_trabalho, use_container_width=True)
     #motivo_afastamento
     st.plotly_chart(fig_percentual_motivo_afastamento, use_container_width=True)
