@@ -1,0 +1,205 @@
+regiao,uf,faixa_rendimento,qtd_testes_positivos
+Centro-Oeste,Goiás,801 - 1.600,529
+Centro-Oeste,Goiás,1.601 - 3.000,417
+Centro-Oeste,Mato Grosso,801 - 1.600,278
+Centro-Oeste,Mato Grosso,1.601 - 3.000,270
+Centro-Oeste,Distrito Federal,3.001 - 10.000,212
+Centro-Oeste,Goiás,3.001 - 10.000,199
+Centro-Oeste,Distrito Federal,801 - 1.600,185
+Centro-Oeste,Mato Grosso,3.001 - 10.000,172
+Centro-Oeste,Mato Grosso do Sul,801 - 1.600,169
+Centro-Oeste,Distrito Federal,1.601 - 3.000,157
+Centro-Oeste,Mato Grosso do Sul,1.601 - 3.000,119
+Centro-Oeste,Mato Grosso do Sul,3.001 - 10.000,89
+Centro-Oeste,Distrito Federal,10.001 - 50.000,75
+Centro-Oeste,Goiás,301 - 600,35
+Centro-Oeste,Goiás,601 - 800,27
+Centro-Oeste,Goiás,10.001 - 50.000,27
+Centro-Oeste,Mato Grosso,10.001 - 50.000,18
+Centro-Oeste,Distrito Federal,301 - 600,16
+Centro-Oeste,Distrito Federal,601 - 800,13
+Centro-Oeste,Mato Grosso do Sul,601 - 800,10
+Centro-Oeste,Mato Grosso do Sul,10.001 - 50.000,10
+Centro-Oeste,Mato Grosso,301 - 600,9
+Centro-Oeste,Mato Grosso,601 - 800,5
+Centro-Oeste,Goiás,101 - 300,5
+Centro-Oeste,Mato Grosso,101 - 300,4
+Centro-Oeste,Distrito Federal,101 - 300,3
+Centro-Oeste,Mato Grosso do Sul,101 - 300,2
+Centro-Oeste,Mato Grosso do Sul,301 - 600,1
+Centro-Oeste,Goiás,0 - 100,1
+Nordeste,Maranhão,801 - 1.600,545
+Nordeste,Ceará,801 - 1.600,336
+Nordeste,Bahia,801 - 1.600,309
+Nordeste,Piauí,801 - 1.600,272
+Nordeste,Alagoas,801 - 1.600,246
+Nordeste,Sergipe,801 - 1.600,218
+Nordeste,Pernambuco,801 - 1.600,205
+Nordeste,Paraíba,801 - 1.600,187
+Nordeste,Maranhão,1.601 - 3.000,186
+Nordeste,Rio Grande do Norte,801 - 1.600,174
+Nordeste,Ceará,1.601 - 3.000,171
+Nordeste,Maranhão,3.001 - 10.000,157
+Nordeste,Bahia,1.601 - 3.000,118
+Nordeste,Pernambuco,1.601 - 3.000,113
+Nordeste,Paraíba,1.601 - 3.000,110
+Nordeste,Pernambuco,3.001 - 10.000,106
+Nordeste,Ceará,3.001 - 10.000,105
+Nordeste,Sergipe,1.601 - 3.000,93
+Nordeste,Bahia,3.001 - 10.000,91
+Nordeste,Sergipe,3.001 - 10.000,88
+Nordeste,Alagoas,1.601 - 3.000,85
+Nordeste,Piauí,1.601 - 3.000,80
+Nordeste,Paraíba,3.001 - 10.000,80
+Nordeste,Rio Grande do Norte,3.001 - 10.000,74
+Nordeste,Alagoas,3.001 - 10.000,64
+Nordeste,Piauí,3.001 - 10.000,61
+Nordeste,Maranhão,301 - 600,61
+Nordeste,Rio Grande do Norte,1.601 - 3.000,57
+Nordeste,Ceará,301 - 600,52
+Nordeste,Maranhão,601 - 800,37
+Nordeste,Maranhão,101 - 300,37
+Nordeste,Ceará,101 - 300,34
+Nordeste,Paraíba,301 - 600,33
+Nordeste,Rio Grande do Norte,301 - 600,31
+Nordeste,Bahia,301 - 600,31
+Nordeste,Alagoas,301 - 600,31
+Nordeste,Sergipe,301 - 600,26
+Nordeste,Ceará,601 - 800,22
+Nordeste,Pernambuco,301 - 600,21
+Nordeste,Sergipe,101 - 300,21
+Nordeste,Rio Grande do Norte,601 - 800,19
+Nordeste,Pernambuco,10.001 - 50.000,19
+Nordeste,Piauí,10.001 - 50.000,19
+Nordeste,Paraíba,101 - 300,19
+Nordeste,Paraíba,601 - 800,18
+Nordeste,Piauí,101 - 300,16
+Nordeste,Piauí,301 - 600,16
+Nordeste,Maranhão,10.001 - 50.000,16
+Nordeste,Bahia,101 - 300,14
+Nordeste,Bahia,10.001 - 50.000,13
+Nordeste,Pernambuco,601 - 800,12
+Nordeste,Pernambuco,101 - 300,12
+Nordeste,Paraíba,10.001 - 50.000,12
+Nordeste,Ceará,10.001 - 50.000,11
+Nordeste,Alagoas,601 - 800,11
+Nordeste,Ceará,0 - 100,11
+Nordeste,Alagoas,10.001 - 50.000,9
+Nordeste,Alagoas,101 - 300,9
+Nordeste,Sergipe,601 - 800,9
+Nordeste,Rio Grande do Norte,101 - 300,9
+Nordeste,Piauí,601 - 800,8
+Nordeste,Bahia,601 - 800,8
+Nordeste,Sergipe,10.001 - 50.000,8
+Nordeste,Maranhão,0 - 100,6
+Nordeste,Rio Grande do Norte,10.001 - 50.000,5
+Nordeste,Piauí,0 - 100,4
+Nordeste,Pernambuco,0 - 100,2
+Nordeste,Bahia,0 - 100,1
+Nordeste,Rio Grande do Norte,0 - 100,1
+Norte,Amazonas,801 - 1.600,306
+Norte,Pará,801 - 1.600,306
+Norte,Roraima,801 - 1.600,292
+Norte,Amazonas,1.601 - 3.000,193
+Norte,Acre,801 - 1.600,175
+Norte,Pará,1.601 - 3.000,172
+Norte,Pará,3.001 - 10.000,167
+Norte,Roraima,1.601 - 3.000,161
+Norte,Rondônia,801 - 1.600,161
+Norte,Tocantins,801 - 1.600,150
+Norte,Amapá,801 - 1.600,113
+Norte,Roraima,3.001 - 10.000,104
+Norte,Rondônia,1.601 - 3.000,102
+Norte,Amazonas,3.001 - 10.000,95
+Norte,Tocantins,1.601 - 3.000,86
+Norte,Acre,1.601 - 3.000,85
+Norte,Amapá,1.601 - 3.000,64
+Norte,Amazonas,301 - 600,62
+Norte,Acre,3.001 - 10.000,62
+Norte,Rondônia,3.001 - 10.000,61
+Norte,Tocantins,3.001 - 10.000,57
+Norte,Amapá,3.001 - 10.000,45
+Norte,Amazonas,601 - 800,35
+Norte,Pará,301 - 600,26
+Norte,Roraima,301 - 600,24
+Norte,Amazonas,101 - 300,23
+Norte,Pará,10.001 - 50.000,22
+Norte,Roraima,10.001 - 50.000,20
+Norte,Pará,101 - 300,19
+Norte,Roraima,601 - 800,14
+Norte,Amapá,301 - 600,14
+Norte,Acre,301 - 600,13
+Norte,Roraima,101 - 300,13
+Norte,Tocantins,601 - 800,12
+Norte,Pará,601 - 800,12
+Norte,Amazonas,10.001 - 50.000,11
+Norte,Tocantins,301 - 600,11
+Norte,Tocantins,10.001 - 50.000,9
+Norte,Acre,601 - 800,9
+Norte,Acre,101 - 300,7
+Norte,Tocantins,101 - 300,6
+Norte,Amapá,601 - 800,6
+Norte,Pará,0 - 100,5
+Norte,Rondônia,301 - 600,5
+Norte,Amapá,101 - 300,5
+Norte,Amapá,10.001 - 50.000,5
+Norte,Acre,10.001 - 50.000,4
+Norte,Roraima,0 - 100,4
+Norte,Rondônia,601 - 800,3
+Norte,Acre,0 - 100,3
+Norte,Rondônia,101 - 300,2
+Norte,Tocantins,0 - 100,1
+Sudeste,São Paulo,1.601 - 3.000,498
+Sudeste,Rio de Janeiro,801 - 1.600,472
+Sudeste,São Paulo,801 - 1.600,442
+Sudeste,Espírito Santo,801 - 1.600,377
+Sudeste,Minas Gerais,801 - 1.600,362
+Sudeste,Rio de Janeiro,1.601 - 3.000,305
+Sudeste,São Paulo,3.001 - 10.000,304
+Sudeste,Rio de Janeiro,3.001 - 10.000,300
+Sudeste,Minas Gerais,1.601 - 3.000,292
+Sudeste,Espírito Santo,1.601 - 3.000,272
+Sudeste,Minas Gerais,3.001 - 10.000,198
+Sudeste,Espírito Santo,3.001 - 10.000,141
+Sudeste,Rio de Janeiro,10.001 - 50.000,86
+Sudeste,São Paulo,10.001 - 50.000,70
+Sudeste,Minas Gerais,10.001 - 50.000,50
+Sudeste,Espírito Santo,301 - 600,34
+Sudeste,Rio de Janeiro,301 - 600,23
+Sudeste,Rio de Janeiro,601 - 800,22
+Sudeste,São Paulo,301 - 600,22
+Sudeste,Minas Gerais,301 - 600,22
+Sudeste,Espírito Santo,601 - 800,22
+Sudeste,Espírito Santo,10.001 - 50.000,18
+Sudeste,São Paulo,601 - 800,18
+Sudeste,Minas Gerais,601 - 800,16
+Sudeste,Espírito Santo,101 - 300,7
+Sudeste,Minas Gerais,50.001 - 100.000,3
+Sudeste,Minas Gerais,101 - 300,3
+Sudeste,São Paulo,101 - 300,2
+Sudeste,Rio de Janeiro,101 - 300,1
+Sul,Santa Catarina,1.601 - 3.000,427
+Sul,Santa Catarina,801 - 1.600,326
+Sul,Paraná,801 - 1.600,275
+Sul,Rio Grande do Sul,1.601 - 3.000,243
+Sul,Rio Grande do Sul,801 - 1.600,235
+Sul,Santa Catarina,3.001 - 10.000,207
+Sul,Paraná,1.601 - 3.000,199
+Sul,Rio Grande do Sul,3.001 - 10.000,194
+Sul,Paraná,3.001 - 10.000,162
+Sul,Rio Grande do Sul,10.001 - 50.000,35
+Sul,Santa Catarina,10.001 - 50.000,26
+Sul,Paraná,10.001 - 50.000,25
+Sul,Paraná,301 - 600,17
+Sul,Paraná,601 - 800,14
+Sul,Rio Grande do Sul,301 - 600,13
+Sul,Santa Catarina,301 - 600,12
+Sul,Rio Grande do Sul,601 - 800,9
+Sul,Santa Catarina,601 - 800,8
+Sul,Rio Grande do Sul,101 - 300,5
+Sul,Paraná,50.001 - 100.000,3
+Sul,Rio Grande do Sul,0 - 100,3
+Sul,Santa Catarina,0 - 100,2
+Sul,Rio Grande do Sul,50.001 - 100.000,1
+Sul,Paraná,101 - 300,1
+Sul,Paraná,0 - 100,1
