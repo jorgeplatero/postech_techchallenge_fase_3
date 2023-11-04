@@ -1,9 +1,8 @@
 import streamlit as st
 
-st.title('Home')
+st.title('O que os dados da COVID-19 nos revelam? Lições aprendidas para fortalecer o sistema de saúde')
 st.markdown(
     '''
-    O que os dados da COVID-19 nos revelam? Lições aprendidas para fortalecer o sistema de saúde
     A pandemia da COVID-19 representou um teste de estresse sem precedentes para os sistemas de saúde em todo o mundo. No Brasil, mostrou diversas fragilidades na infraestrutura dos hospitais particulares e do SUS, mostrando que não estávamos preparados para um surto dessa magnitude. Diante disso, é fundamental extrairmos as lições aprendidas e nos prepararmos melhor para possíveis novas ondas que possam vir a aparecer.
     Nesse contexto, dados confiáveis são fundamentais para entender os principais gargalos e necessidades da população durante a pandemia. A PNAD COVID-19, realizada pelo IBGE, é uma das principais fontes de informação sobre os brasileiros para análise. Neste trabalho, você irá conferir alguns insights e ações que os hospitais podem tomar para o caso de um novo surto.
     
