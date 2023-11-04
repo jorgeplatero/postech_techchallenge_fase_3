@@ -817,7 +817,7 @@ df_qtd_testes_positivos_internacao = spark.sql(
         GROUP BY questao_internacao
     '''
 ).toPandas()
-fig = px.pie(
+fig_qtd_testes_positivos_internacao = px.pie(
     data_frame=df_qtd_testes_positivos_internacao.sort_values('qtd_testes_positivos', ascending=False),
     values='qtd_testes_positivos',
     names='questao_internacao',
@@ -827,11 +827,11 @@ fig = px.pie(
         'questao_internacao':'Condição'
     }
 )
-fig.update_traces(
+fig_qtd_testes_positivos_internacao.update_traces(
     pull=[0.3, 0],
     texttemplate='%{percent:.2%}'
 )
-fig.update_layout(
+fig_qtd_testes_positivos_internacao.update_layout(
     title='<b>Percentual de infectados internados</b>',
     legend_title='Legenda',
     width=800,
@@ -880,15 +880,15 @@ fig_testes_positivos_respiracao_artificial.update_layout(
 df_qtd_testes_validos_faixa_etaria_esquema_vacinal = spark.sql(
     '''
         SELECT
-                (CASE
-                    WHEN idade BETWEEN  1 AND 4 THEN '6 meses a 4 anos de idade'
-                    WHEN idade BETWEEN 3 AND 4 THEN '3 e 4 anos de idade'
-                    WHEN idade BETWEEN 5 AND 11 THEN '5 a 11 anos de idade'
-                    WHEN idade BETWEEN 12 AND 39 THEN '12 a 39 anos de idade'
-                    WHEN idade BETWEEN 40 AND 59 THEN '40 a 59 anos de idade'
-                    WHEN idade >= 60 THEN 'Mais de 60 anos de idade'
-                END) AS faixa_etaria,
-                count(teste_covid) AS qtd_testes_validos
+            (CASE
+                WHEN idade BETWEEN  1 AND 4 THEN '6 meses a 4 anos de idade'
+                WHEN idade BETWEEN 3 AND 4 THEN '3 e 4 anos de idade'
+                WHEN idade BETWEEN 5 AND 11 THEN '5 a 11 anos de idade'
+                WHEN idade BETWEEN 12 AND 39 THEN '12 a 39 anos de idade'
+                WHEN idade BETWEEN 40 AND 59 THEN '40 a 59 anos de idade'
+                WHEN idade >= 60 THEN 'Mais de 60 anos de idade'
+            END) AS faixa_etaria,
+            count(teste_covid) AS qtd_testes_validos
         FROM df_temp 
         WHERE teste_covid = 'Sim' AND (resultado_teste = 'Positivo' OR resultado_teste = 'Negativo')
         GROUP BY faixa_etaria
@@ -897,15 +897,15 @@ df_qtd_testes_validos_faixa_etaria_esquema_vacinal = spark.sql(
 df_qtd_testes_positivos_faixa_etaria_esquema_vacinal = spark.sql(
     '''
         SELECT
-                (CASE
-                    WHEN idade BETWEEN  1 AND 4 THEN '6 meses a 4 anos de idade'
-                    WHEN idade BETWEEN 3 AND 4 THEN '3 e 4 anos de idade'
-                    WHEN idade BETWEEN 5 AND 11 THEN '5 a 11 anos de idade'
-                    WHEN idade BETWEEN 12 AND 39 THEN '12 a 39 anos de idade'
-                    WHEN idade BETWEEN 40 AND 59 THEN '40 a 59 anos de idade'
-                    WHEN idade >= 60 THEN 'Mais de 60 anos de idade'
-                END) AS faixa_etaria,
-                count(teste_covid) AS qtd_testes_positivos
+            (CASE
+                WHEN idade BETWEEN  1 AND 4 THEN '6 meses a 4 anos de idade'
+                WHEN idade BETWEEN 3 AND 4 THEN '3 e 4 anos de idade'
+                WHEN idade BETWEEN 5 AND 11 THEN '5 a 11 anos de idade'
+                WHEN idade BETWEEN 12 AND 39 THEN '12 a 39 anos de idade'
+                WHEN idade BETWEEN 40 AND 59 THEN '40 a 59 anos de idade'
+                WHEN idade >= 60 THEN 'Mais de 60 anos de idade'
+            END) AS faixa_etaria,
+            count(teste_covid) AS qtd_testes_positivos
         FROM df_temp 
         WHERE teste_covid = 'Sim' AND resultado_teste = 'Positivo'
         GROUP BY faixa_etaria
@@ -1187,14 +1187,14 @@ fig_qtd_testes_positivos_tipo_teste = px.bar(
         'tipo_teste': 'Tipo de teste'
     }
 )
-fig.update_layout(
+fig_qtd_testes_positivos_tipo_teste.update_layout(
     title='<b>Quantidade de testes positivos por tipo de teste</b>',
     legend_title='Legenda',
     yaxis_title='%',
     width=600, 
     height=400
 )
-fig.update_xaxes(tickangle=45)
+fig_qtd_testes_positivos_tipo_teste.update_xaxes(tickangle=45)
 #taxa de incidência
 df_qtd_testes_validos_tipo_teste = spark.sql(
     '''
@@ -1314,37 +1314,55 @@ with aba1:
         st.plotly_chart(fig_taxa_incidencia_sexo, use_container_width=True)
     st.markdown(
         '''
-            Verifica-se que houve mais contaminação no grupo de mulheres validamente testadas.
+            Podemos observar que o número total de casos confirmados foi maior entre mulheres do que entre homens e que a taxa de incidência foi 3% superior em mulheres na comparação com homens. Alguns fatores que podem explicar essa diferença são:
+            
+            - A maior parte dos profissionais de saúde são mulheres: isso pode aumentar a exposição ao vírus por trabalharem na linha de frente no combate à pandemia.
+            - Busca por teste: as mulheres tendem a ser mais proativas do que os homens em procurar testagem ao desenvolverem sintomas.
+            - Responsabilidades domésticas: ao cuidarem da casa e da família, as mulheres podem se expor mais ao contágio por membros infectados.
+            - Distribuição etária: como as mulheres têm expectativa de vida maior, elas correspondem à maioria dos idosos, grupo de risco mais afetado pela COVID-19.
         '''
     )
     #cor/raça
     coluna7, coluna8 = st.columns(2)
     with coluna3:
-        #bar
         st.plotly_chart(fig_qtd_testes_positivos_cor_raca, use_container_width=True)
     with coluna4:
-        #pie
         st.plotly_chart(fig_taxa_incidencia_cor_raca, use_container_width=True)
     st.markdown(
         '''
-            Verifica-se que houve mais contaminação no grupo de mulheres validamente testadas.
+            Podemos observar que o número de casos confirmados de COVID-19 apresentou o maior número de casos na população parda, onde houve uma taxa de 28%. Isso pode ocorrer devido a piores condições socioeconômicas, como moradia e saneamento básico precários, o que facilita a disseminação de doenças infecciosas.
         '''
     )
     st.plotly_chart(fig_qtd_testes_positivos_escolaridade, use_container_width =True)
     st.plotly_chart(fig_taxa_incidencia_escolaridade, use_container_width =True)
+    st.markdown(
+        '''
+            Podemos observar que o número total de confirmados são relativamente maiores nos casos de ‘Médio completo’ e ‘Fundamental Incompleto’, alguns fatores que podem explicar este resultado são:
+            
+            - Pessoas com médio completo já tem idade suficiente para trabalhar, e com muita probabilidade não puderam ficar em casa durante a pandemia.
+            - Trabalhos com maior contato ao público devido a escolaridade. Exemplo: comerciante, vendedor, cabeleireiro.
+            - Analisando os dados, as maiores idades de infectadas estão no range de 30 a 49 anos, e segundo os dados do IBGE, a maior taxa de escolaridade entre maiores de idades no brasil é de ‘Ensino médio completo’, ou seja, a maioria dos brasileiros se encaixam neste nível de escolaridade.
+        '''        
+    )
 
 #aba características clínicas
 with aba2:
     st.plotly_chart(fig_percentual_testes_positivos_sintomaticos, use_container_width=True)
     st.markdown(
         '''
-            texto.
+            Nota-se que os casos assintomáticos são a maioria nesta análise. Neste cenário, podemos entender que esse indicador pode afetar a taxa de contaminação, pois sem a consciência do caso positivo, as pessoas podem ter circulado disseminando a doença. 
+            
+            Outro ponto que podemos levar em consideração é a necessidade de testagem constante para pessoas que estavam trabalhando presencialmente, como por exemplos profissionais da saúde.
         '''
     )
     st.plotly_chart(fig_percentual_testes_positivos_fator_risco, use_container_width=False)
     st.markdown(
         '''
-            texto.
+            O grupo de risco é constituído por um conjunto de causas que agravam uma doença, neste caso, fazendo com que a pessoa fique suscetível a ser mais afetada pela covid. 
+            
+            Além disso, pessoas em grupos de risco costumam ser pessoas em tratamento, fazendo com que a imunidade esteja mais baixa que a maioria.
+            
+            Analisando os principais sintomas, temos a hipertensão que atinge mais de 26% dos brasileiros, idosos que são em torno de 14% e mais suscetíveis à covid, e a diabetes que representa 6,9% da população brasileira.
         '''
     )
     st.plotly_chart(fig_percentual_testes_positivos_tipo_sintoma, use_container_width=True)
@@ -1353,10 +1371,20 @@ with aba2:
             texto.
         '''
     )
+    st.plotly_chart(fig_qtd_testes_positivos_internacao, use_container_width=True)
+    st.markdown(
+        '''
+            Observamos que a representatividade de pessoas não internadas é a maioria.
+            
+            Analisando a pequena taxa dos casos internados, nota-se que a maior parte dos internados são do grupo de risco, ou seja, pessoas mais suscetíveis a contaminação.
+        '''
+    )
     st.plotly_chart(fig_testes_positivos_respiracao_artificial, use_container_width=True)
     st.markdown(
         '''
-            texto.
+            Observamos que a maior representatividade está no grupo que não precisou de ajuda para respirar.
+            
+            Detalhando apenas o grupo que precisou de ajuda, conseguimos concluir que 72% das pessoas pertencem ao grupo de risco. (51 ‘grupo de risco’ contra 20 ‘não aplicável’) 
         '''
     )
     #taxa de infectados por faixa etária esquema vacinal
@@ -1372,10 +1400,8 @@ with aba3:
     #busca por orientação médica
     coluna1, coluna2 = st.columns(2)
     with coluna1:
-        #bar
         st.plotly_chart(fig_qtd_sintomaticos_estabelecimento_saude, use_container_width=True)
     with coluna2:
-        #pie
         st.plotly_chart(fig_percentual_sintomaticos_estabelecimento_saude, use_container_width=True)
     st.markdown(
         '''
@@ -1385,10 +1411,8 @@ with aba3:
     #medidas de isolamento social
     coluna3, coluna4 = st.columns(2)
     with coluna3:
-        #bar
         st.plotly_chart(fig_qtd_sintomaticos_permaneceu_casa, use_container_width=True)
     with coluna4:
-        #pie
         st.plotly_chart(fig_percentual_sintomaticos_permaneceu_casa, use_container_width=True)
     st.markdown(
         '''
@@ -1403,6 +1427,11 @@ with aba3:
         '''
     )
     st.plotly_chart(fig_testes_positivos_medicacao, use_container_width=False)
+    st.markdown(
+        '''
+            Observamos que a maior parte das pessoas se automedicaram durante a contaminação da covid.
+        '''
+    )
 
 #aba características econômicas
 with aba4:
@@ -1419,10 +1448,8 @@ with aba4:
     #tipo teste
     coluna1, coluna2 = st.columns(2)
     with coluna1:
-        #bar
         st.plotly_chart(fig_qtd_tipo_teste, use_container_width=True)
     with coluna2:
-        #pie
         st.plotly_chart(fig_percentual_tipo_teste, use_container_width=True)
     st.markdown(
         '''
@@ -1431,10 +1458,8 @@ with aba4:
     )
     coluna3, coluna4 = st.columns(2)
     with coluna3:
-        #bar
         st.plotly_chart(fig_qtd_testes_positivos_tipo_teste, use_container_width=True)
     with coluna4:
-        #pie
         st.plotly_chart(fig_taxa_incidencia_tipo_teste, use_container_width=True)
     st.markdown(
         '''
@@ -1443,10 +1468,8 @@ with aba4:
     )
     coluna5, coluna6 = st.columns(2)
     with coluna5:
-        #bar
         st.plotly_chart(fig_qtd_testes_inconclusivos_tipo_teste, use_container_width=True)
     with coluna6:
-        #pie
         st.plotly_chart(fig_taxa_incidencia_tipo_teste_inconclusivo, use_container_width=True)
     st.markdown(
         '''
@@ -1467,31 +1490,24 @@ with aba5:
     #zona de domicílio
     coluna1, coluna2 = st.columns(2)
     with coluna1:
-        #bar
         st.plotly_chart(fig_qtd_testes_positivos_zona, use_container_width=True)
     with coluna2:
-        #pie
         st.plotly_chart(fig_taxa_incidencia_zona, use_container_width=True)
     #região
     st.metric('Média da taxa de incidência nas regiões', df_taxa_incidencia_regiao['taxa_incidencia_mil_habitantes'].mean().astype(int))
     coluna3, coluna4 = st.columns(2)
     with coluna3:
-        #bar
         st.plotly_chart(fig_qtd_testes_positivos_regiao, use_container_width=True)
     with coluna4:
-        #pie
         st.plotly_chart(fig_taxa_incidencia_regiao, use_container_width=True)
     st.markdown(
         '''
             As regiões norte obtev...
         '''
     )
-
     #estado
     st.metric('Média da taxa de incidência nos estados', df_taxa_incidencia_estado['taxa_incidencia_mil_habitantes'].mean().astype(int))
-    #bar
     st.plotly_chart(fig_qtd_testes_positivos_estado, use_container_width=False)
-    #choropleth
     #mapa de risco
     st.plotly_chart(fig_mapa_risco_taxa_de_incidencia_estado, use_container_width=True)
 
