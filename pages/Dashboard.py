@@ -436,9 +436,6 @@ fig_qtd_testes_positivos_regiao_estado_faixa_rendimento = px.treemap(
     values = 'qtd_testes_positivos', 
     color='qtd_testes_positivos',
     color_continuous_scale=px.colors.sequential.Reds,
-    labels={
-        'qtd_testes_positivos': 'Quantidade',
-    }
 )
 fig_qtd_testes_positivos_regiao_estado_faixa_rendimento.update_layout(
     title='Quantidade de infectados por faixa de rendimento nas regiões e estados',
