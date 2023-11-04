@@ -938,7 +938,7 @@ with aba3:
 with aba4:
     st.markdown(
         '''
-            ## Indicadores econômicos :dollar:
+            ## Indicadores econômicos :moneybag:
         '''
     )
     st.plotly_chart(fig_qtd_testes_positivos_faixa_rendimento, use_container_width=False)
