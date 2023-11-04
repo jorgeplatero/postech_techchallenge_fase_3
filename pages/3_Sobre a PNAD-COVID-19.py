@@ -2,7 +2,7 @@ import streamlit as st
 
 
 st.image('img/fiap.png')
-st.title('PNAD-COVID-19')
+st.title('Sobre a PNAD-COVID-19')
 st.markdown(
 '''
     Objetiva estimar o número de pessoas com sintomas referidos associados à síndrome gripal e monitorar os impactos da pandemia da COVID-19 no mercado de trabalho brasileiro.
