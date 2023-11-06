@@ -1205,7 +1205,7 @@ with aba5:
         '''
             <div style='text-align: justify;'>
                 <p>
-                    As regiões Nordeste e Sudeste e Norte lideram, respectivamente, em números absolutos. Contudo, a região Norte passa a liderar em taxa de incidência com 29,8%, enquanto o Sudeste fica em quarto lugar, com uma diferença percentual 15,3% menor, ainda que possua uma população consideravelmente maior. Esse comportamento dos dados podem ser explicados pelo emprego de estratégias de saúde pública mais adequadas e pela diferença econômica entre as regiões.
+                    As regiões Nordeste, Sudeste e Norte lideram, respectivamente, em números absolutos. Contudo, a região Norte passa a liderar em taxa de incidência, enquanto o Sudeste fica em quarto lugar, com uma diferença percentual 15,3% menor que a região Norte, ainda que possua uma população consideravelmente maior. Esse comportamento dos dados podem ser explicados pelo emprego de estratégias de saúde pública mais adequadas e pela diferença econômica entre as regiões.
                 </p>
             </div>
         ''',
