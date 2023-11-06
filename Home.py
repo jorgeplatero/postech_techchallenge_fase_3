@@ -21,11 +21,11 @@ st.markdown(
             <p>    
                 O Head de Dados pediu para que você entrasse na base de dados do PNAD-COVID-19 do IBGE e organizasse esta base para análise, utilizando Banco de Dados em Nuvem e trazendo as seguintes características:
                 <ul>
-                    <li>a. Utilização de no máximo 20 questionamentos realizados na pesquisa;</li>
-                    <li>b. Utilizar 3 meses para construção da solução;</li>
-                    <li>c. Caracterização dos sintomas clínicos da população;</li>
-                    <li>d. Comportamento da população na época da COVID-19;</li>
-                    <li>e. Características econômicas da Sociedade;</li>
+                    <li>Utilização de no máximo 20 questionamentos realizados na pesquisa;</li>
+                    <li>Utilizar 3 meses para construção da solução;</li>
+                    <li>Caracterização dos sintomas clínicos da população;</li>
+                    <li>Comportamento da população na época da COVID-19;</li>
+                    <li>Características econômicas da Sociedade;</li>
                 </ul>
             </p>
             <p>
