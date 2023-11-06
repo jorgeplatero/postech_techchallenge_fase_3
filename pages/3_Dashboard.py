@@ -1047,9 +1047,9 @@ with aba4:
                 <p>
                     Podemos observar que, em números absolutos, o grupo mais atingido pela COVID no período é aquele cuja faixa de rendimento é ligeiramente superior a um salário-mínimo. Entre as razões, estão:
                         <ul>
-                            <li>Tipos de trabalho, pessoas que precisam estar mais em exposição .</li>
+                            <li>O tipo de trabalho realizado exige estar em contato com o público.</li>
                             <li>Pessoas que não tiveram a oportunidade de ficar em isolamento.</li>
-                            <li>Pouco concientização em relação aos riscos da doença. </li>
+                            <li>Pouca concientização em relação aos riscos da doença. </li>
                         <ul>
                 </p>
             </div>
