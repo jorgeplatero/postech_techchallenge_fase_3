@@ -399,7 +399,7 @@ fig_testes_positivos_medicacao.update_layout(
     legend_title='Legenda',
     yaxis_title='Quantidade',
     xaxis_visible=False,
-    width=700,
+    width=600,
     height=500
 )
 fig_testes_positivos_medicacao.data[0].marker.color = ['#67000d',] * 2
@@ -778,12 +778,12 @@ fig_mapa_risco_taxa_incidencia_estado = px.choropleth(
     geojson=geojson,
     locations='sigla',
     color='taxa_incidencia_mil_habitantes',
-    hover_name='sigla',
+    hover_name='uf',
     scope='south america',
     color_continuous_scale=px.colors.sequential.Reds,
     labels={
         'taxa_incidencia_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
-        'sigla': 'Estado'
+        'sigla': 'Sigla'
     }
 )
 fig_mapa_risco_taxa_incidencia_estado.add_scattergeo(
@@ -798,16 +798,10 @@ fig_mapa_risco_taxa_incidencia_estado.add_scattergeo(
         
     )
 )
+fig_mapa_risco_taxa_incidencia_estado.update_geos(fitbounds='locations', visible=False)
 fig_mapa_risco_taxa_incidencia_estado.update_layout(
     title='<b>Mapa de risco de acordo com a taxa de incidência nos estados</b>',
-    autosize=False,
-    margin = dict(
-        l=0,
-        r=0,
-        b=0,
-        autoexpand=True
-    ),
-    width=1200, 
+    width=1000, 
     height=800
 )
 
