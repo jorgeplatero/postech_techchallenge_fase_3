@@ -836,13 +836,19 @@ with aba1:
         st.plotly_chart(fig_taxa_incidencia_sexo, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que o número total de casos confirmados foi maior entre mulheres do que entre homens e que a taxa de incidência foi 3% superior em mulheres. Entre os fatores que podem explicar essa diferença, estão:
-            
-            - A maior parte dos profissionais de saúde são mulheres: isso pode aumentar a exposição ao vírus por trabalharem na linha de frente no combate à pandemia.
-            - Busca por teste: as mulheres tendem a ser mais proativas do que os homens em procurar testagem ao desenvolverem sintomas.
-            - Responsabilidades domésticas: ao cuidarem da casa e da família, as mulheres podem se expor mais ao contágio por membros infectados.
-            - Distribuição etária: como as mulheres têm expectativa de vida maior, elas correspondem à maioria dos idosos, grupo de risco mais afetado pela COVID-19.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Podemos observar que o número total de casos confirmados é maior entre mulheres do que entre homens e que a taxa de incidência foi 3% superior em mulheres. Entre os fatores que podem explicar essa diferença, estão:
+                        <ul>
+                            <li>A maior parte dos profissionais de saúde são mulheres: isso pode aumentar a exposição ao vírus por trabalharem na linha de frente no combate à pandemia.</li>
+                            <li>Busca por teste: as mulheres tendem a ser mais proativas do que os homens em procurar testagem ao desenvolverem sintomas.</li>
+                            <li>Responsabilidades domésticas: ao cuidarem da casa e da família, as mulheres podem se expor mais ao contágio por membros infectados.</li>
+                            <li>Distribuição etária: como as mulheres têm expectativa de vida maior, elas correspondem à maioria dos idosos, grupo de risco mais afetado pela COVID-19.</li>
+                        <ul>
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     coluna5, coluna6 = st.columns(2)
     with coluna5:
@@ -850,19 +856,30 @@ with aba1:
     with coluna6:
         st.plotly_chart(fig_taxa_incidencia_cor_raca, use_container_width=True)
     st.markdown(
-        '''
-            Podemos observar que os casos confirmados de COVID-19 apresentou o maior número na população parda, onde houve uma taxa de 21.5%. Contudo, o grupo proporcionalmente mais impactado é o de indígenas, 28%. Isso pode ocorrer devido as condições socioeconômicas singulares, como moradia e saneamento básico precários, o que facilita a disseminação de doenças infecciosas. Essas condições também estão bastante evidenciadas entre pardos e pretos, o que reforça sua correlação com a taxa de incidência. 
-        '''
+        ''' 
+            <div style='text-align: justify;'>
+                <p>
+                    Podemos observar que os casos confirmados de COVID-19 apresentou o maior número na população parda, onde houve uma taxa de 21.5%. Contudo, o grupo proporcionalmente mais impactado é o de indígenas, 28%. Isso pode ocorrer devido as condições socioeconômicas singulares, como moradia e saneamento básico precários, o que facilita a disseminação de doenças infecciosas. Essas condições também estão bastante evidenciadas entre pardos e pretos, o que reforça sua correlação com a taxa de incidência. 
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_qtd_testes_positivos_escolaridade, use_container_width=True)
     st.plotly_chart(fig_taxa_incidencia_escolaridade, use_container_width=True)
     st.markdown(
         '''
-            Observa-se que o número de casos confirmados é relativamente maior nos grupos com ensino médio completo e incompleto. Entre os fatores que podem explicar esse resultado, estão:
-            
-            - Pessoas com ensino médio completo estão em idade para o trabalho regular e, muito provavelmente, não puderam ficar em casa durante a pandemia.
-            - Os indivíduos entrevistados nesse grupo executam trabalhos com maior contato ao público. Exemplo: comerciante, vendedor, cabeleireiro.
-        '''        
+            <div style='text-align: justify;'>
+                <p>
+                    Observa-se que o número de casos confirmados é relativamente maior nos grupos com ensino médio completo e incompleto. Entre os fatores que podem explicar esse resultado, estão:
+                        <ul>
+                            <li>Pessoas com ensino médio completo estão em idade para o trabalho regular e, muito provavelmente, não puderam ficar em casa durante a pandemia.</li>
+                            <li>Os indivíduos entrevistados nesse grupo executam trabalhos com maior contato ao público. Exemplo: comerciante, vendedor, cabeleireiro.</li>
+                        <ul>
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
 
 #aba características clínicas
@@ -880,40 +897,66 @@ with aba2:
     st.plotly_chart(fig_percentual_testes_positivos_sintomaticos, use_container_width=True)
     st.markdown(
         '''
-            Nota-se que os casos assintomáticos de COVID-19 são a ampla maioria. Nesse cenário, esse fato pode ter contribuído para o aumento da taxa de contaminação, pois, sem a consciência de estar contaminado, o indivíduo tende a negligenciar medidas de isolamento. 
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Nota-se que os casos assintomáticos de COVID-19 são a ampla maioria. Nesse cenário, esse fato pode ter contribuído para o aumento da taxa de contaminação, pois, sem a consciência de estar contaminado, o indivíduo tende a negligenciar medidas de isolamento. 
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_percentual_testes_positivos_fator_risco, use_container_width=True)
     st.markdown(
         '''
-            O grupo de risco é constituído por um conjunto de doenças que podem agravar os efeitos da COVID-19. 
-            
-            Pessoas classificadas no grupos de risco não raramente estão em tratamento, caso em que sua imunidade tende a estar mais baixa. É importante pontuar que a hipertensão atinge mais de 26% dos brasileiros, já a diabetes, 6,9%. Ademais, idosos, pertecentes ao grupo de risco, constituem 14% da população.
-
-            Dentre os indivíduos classificados no grupo de risco e que tiveram caso confirmado de COVID-19, lideram aqueles que possuem hipertensão, idosos, e que sofrem de diabetes. Esse indicador é importante para a triagem de casos face a COVID-19, pois indivíduos no grupo de risco devem receber atendimento prioritário e com cuidados compatíveis à sua condição.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    O grupo de risco é constituído por um conjunto de doenças que podem agravar os efeitos da COVID-19. 
+                </p>
+                <p>
+                    Pessoas classificadas no grupos de risco não raramente estão em tratamento, caso em que sua imunidade tende a estar mais baixa. É importante pontuar que a hipertensão atinge mais de 26% dos brasileiros, já a diabetes, 6,9%. Ademais, idosos, pertecentes ao grupo de risco, constituem 14% da população.
+                </p>
+                <p>
+                    Dentre os indivíduos classificados no grupo de risco e que tiveram caso confirmado de COVID-19, lideram aqueles que possuem hipertensão, idosos, e que sofrem de diabetes. Esse indicador é importante para a triagem de casos face a COVID-19, pois indivíduos no grupo de risco devem receber atendimento prioritário e com cuidados compatíveis à sua condição.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_percentual_testes_positivos_tipo_sintoma, use_container_width=False)
     st.metric('**Total de infectados internados**', df_qtd_infectados_internados.values)
     st.plotly_chart(fig_qtd_testes_positivos_internacao, use_container_width=True)
     st.markdown(
-        '''       
-            
-            Apenas 0.69% dos contaminados precisaram ser internados e, dentro os indivíduos internados, verifica-se que a maioria são do grupo de risco.
         '''
+            <div style='text-align: justify;'>
+                <p>
+                    Apenas 0.69% dos contaminados precisaram ser internados e, dentro os indivíduos internados, verifica-se que a maioria são do grupo de risco.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.metric('**Total de internados com respiração artificial**', df_qtd_infectados_internados_respiracao_artificial.values)
     st.plotly_chart(fig_qtd_testes_positivos_respiracao_artificial, use_container_width=True)
     st.markdown(
         '''
-            A maioria dos internados não precisaram de respiração artificial. Dentre aqueles que receberam respiração artificial, 72% pertencem ao grupo de risco. 
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    A maioria dos internados não precisaram de respiração artificial. Dentre aqueles que receberam respiração artificial, 72% pertencem ao grupo de risco. 
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
-    st.plotly_chart(fig_taxa_incidencia_faixa_etaria_esquema_vacinal, use_container_width=False)
+    st.plotly_chart(fig_taxa_incidencia_faixa_etaria_esquema_vacinal, use_container_width=True)
     st.markdown(
         '''
-            Indicadores relativos a faixa etária do esquema vacinal são importantes, pois podem auxiliar na otimização de alocação de recursos.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Indicadores relativos a faixa etária do esquema vacinal são importantes, pois podem auxiliar na otimização de alocação de recursos.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
 
 #aba características comportamentais
@@ -930,13 +973,21 @@ with aba3:
         st.plotly_chart(fig_percentual_sintomaticos_estabelecimento_saude, use_container_width=True)
     st.markdown(
         '''
-            Analisando os dados, observa-se uma baixa busca por atendimento médico entre aqueles que tiveram sintomas de COVID-19. O levantamento apontou que 33.141 sintomáticos não buscaram atendimento, enquanto apenas 11.796 buscaram algum tipo de assistência de saúde. Em termos percentuais, isso significa que 73,7% das pessoas com sinais da doença não procuraram atendimento médico.
-            
-            A baixa procura por serviços de saúde, mesmo diante de sintomas, pode ser devido a fatores como: 
-            - Barreiras no acesso ao sistema de saúde durante a pandemia.
-            - Restrições financeiras para buscar atendimento.
-            - Pouco concientização em relação aos riscos da doença. 
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Analisando os dados, observa-se uma baixa busca por atendimento médico entre aqueles que tiveram sintomas de COVID-19. O levantamento apontou que 33.141 sintomáticos não buscaram atendimento, enquanto apenas 11.796 buscaram algum tipo de assistência de saúde. Em termos percentuais, isso significa que 73,7% das pessoas com sinais da doença não procuraram atendimento médico.
+                </p>
+                <p>
+                    A baixa procura por serviços de saúde, mesmo diante de sintomas, pode ser devido a fatores como: 
+                        <ul>
+                            <li>Barreiras no acesso ao sistema de saúde durante a pandemia.</li>
+                            <li>Restrições financeiras para buscar atendimento.</li>
+                            <li>Pouco concientização em relação aos riscos da doença. </li>
+                        <ul>
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     coluna3, coluna4 = st.columns(2)
     with coluna3:
@@ -945,27 +996,47 @@ with aba3:
         st.plotly_chart(fig_percentual_sintomaticos_permaneceu_casa, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que um pouco mais de 1039 infectados adotaram algum isolamento, enquanto 333 não adotaram. Isso mostra que 75,7% das pessoas infectadas adotaram alguma medida de isolamento, enquanto, 24,3% não.
-            
-            Apesar da maioria dos infectados ter adotado alguma medida de isolamento social, ainda há uma parcela importante de negligentes potencialmente transmitindo o vírus.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Podemos observar que um pouco mais de 1039 infectados adotaram algum isolamento, enquanto 333 não adotaram. Isso mostra que 75,7% das pessoas infectadas adotaram alguma medida de isolamento, enquanto, 24,3% não.
+                </p>
+                <p>
+                    Apesar da maioria dos infectados ter adotado alguma medida de isolamento social, ainda há uma parcela importante de negligentes potencialmente transmitindo o vírus.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_sintomaticos_permaneceu_casa_regiao, use_container_width=True)
     st.markdown(
         '''
-            O gráfico demonstra variações regionais significativas quanto à adoção de isolamento social. Podemos observar que o Nordeste de destaca com maior adesão ao isolamento, enquanto o Sul aparece com a menor taxa proporcional. 
-            
-            Essas diferenças podem refletir:
-            - Diferenças socioeconômicas.
-            - Eficiencia de políticas públicas de combate a pandemia.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    O gráfico demonstra variações regionais significativas quanto à adoção de isolamento social. Podemos observar que o Nordeste de destaca com maior adesão ao isolamento, enquanto o Sul aparece com a menor taxa proporcional. 
+                </p>
+                <p>
+                    Essas diferenças podem refletir: 
+                        <ul>
+                            <li>Diferenças socioeconômicas.</li>
+                            <li>Eficiência de políticas públicas de combate a pandemia.</li>
+                            <li>Pouco concientização em relação aos riscos da doença. </li>
+                        <ul>
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_sintomaticos_permaneceu_casa_estado, use_container_width=True)
     st.plotly_chart(fig_testes_positivos_medicacao, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que a maioria das pessoas se automedicaram, ou seja, fizeram uso de medicamentos por conta própria, sem prescrição. Isso pode ser reflexo da circulação de informações falsas a respeito da doença e ineficiência de políticas públicas de concientização.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Podemos observar que a maioria das pessoas se automedicaram, ou seja, fizeram uso de medicamentos por conta própria, sem prescrição. Isso pode ser reflexo da circulação de informações falsas a respeito da doença e ineficiência de políticas públicas de concientização.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
 
 #aba características econômicas
@@ -978,48 +1049,88 @@ with aba4:
     st.plotly_chart(fig_qtd_testes_positivos_faixa_rendimento, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que, em números absolutos, o grupo mais atingido pela COVID no período é aquele cuja faixa de rendimento é ligeiramente superior a um salário-mínimo. Entre as razões, estão:
-            - Tipos de trabalho, pessoas que precisam estar mais em exposição 
-            - Pessoas que não tiveram a oportunidade de ficar em isolamento
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Podemos observar que, em números absolutos, o grupo mais atingido pela COVID no período é aquele cuja faixa de rendimento é ligeiramente superior a um salário-mínimo. Entre as razões, estão:
+                        <ul>
+                            <li>Tipos de trabalho, pessoas que precisam estar mais em exposição .</li>
+                            <li>Pessoas que não tiveram a oportunidade de ficar em isolamento.</li>
+                            <li>Pouco concientização em relação aos riscos da doença. </li>
+                        <ul>
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_qtd_testes_positivos_regiao_estado_faixa_rendimento, use_container_width=True)
     st.markdown(
         '''
-            Na maioria dos estados brasileiros, os indivíduos mais afetados são aqueles que vivem com rendimento menor ou pouco superior ao salário-mínimo, com exceção aos que vivem São Paulo e Santa Catarina, onde a faixa de rendimento tem um piso superior ao salário-mínimo.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Na maioria dos estados brasileiros, os indivíduos mais afetados são aqueles que vivem com rendimento menor ou pouco superior ao salário-mínimo, com exceção aos que vivem São Paulo e Santa Catarina, onde a faixa de rendimento tem um piso superior ao salário-mínimo.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_taxa_incidencia_faixa_rendimento, use_container_width=False)
     st.markdown(
         '''
-            Por fim, observa-se que a taxa de incidência é tanto maior quanto mais vunerável financeiramente é o grupo.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Por fim, observa-se que a taxa de incidência é tanto maior quanto mais vunerável financeiramente é o grupo.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_testes_positivos_valor_medio_auxilio_emergencial, use_container_width=False)
     st.markdown(
         '''
-            Vê-se que a distribuição do valor médio do auxílio emergencial concedido segue uma ordem quase inversamente proporcional à faixa de rendimento do grupo.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Vê-se que a distribuição do valor médio do auxílio emergencial concedido segue uma ordem quase inversamente proporcional à faixa de rendimento do grupo.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_qtd_testes_positivos_tipo_trabalho, use_container_width=True)
     st.markdown(
         '''
-            Em relação aos infectados por tipo de trabalho, observa-se resultados relevantes em duas categorias:
-            - Profissões de nível superior (Onde se englobou diversas funções na hora de responder a pesquisa)  
-            - Área da saúde (Técnicos, médicos e enfermeiros), que a análise inteira diz por si só, foram pessoas que estavam na linha de frente ao combate da doença.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Em relação aos infectados por tipo de trabalho, observa-se resultados relevantes em duas categorias:
+                        <ul>
+                            <li>Profissões de nível superior (Onde se englobou diversas funções na hora de responder a pesquisa).</li>
+                            <li>Área da saúde (Técnicos, médicos e enfermeiros), que a análise inteira diz por si só, foram pessoas que estavam na linha de frente ao combate da doença.</li>
+                        <ul>
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_taxa_incidencia_tipo_trabalho, use_container_width=True)
     st.markdown(
         '''
-            A taxa de incidência mostra que, apesar de expostos à doença, profissionais de saúde não lideram os grupos proporcionalmente mais afetados.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    A taxa de incidência mostra que, apesar de expostos à doença, profissionais de saúde não lideram os grupos proporcionalmente mais afetados.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.plotly_chart(fig_percentual_motivo_afastamento, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que o principal motivo de afastamento decorre de medidas em prol do isolamento social. 
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Podemos observar que o principal motivo de afastamento decorre de medidas em prol do isolamento social. 
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     coluna1, coluna2 = st.columns(2)
     with coluna1:
@@ -1028,10 +1139,16 @@ with aba4:
         st.plotly_chart(fig_percentual_tipo_teste, use_container_width=True)
     st.markdown(
         '''
-            No início da pandemia, um dos testes mais aplicados era o teste de sorologia IgM e IgG (Sangue - Furo dedo), que detecta os anticorpos produzidos pelo sistema imunológico para combater a infecção, portanto em relação a quantidade ele aparece em primeiro lugar. Em seguida temos o teste SWAB, que basicamente é uma coleta por meio das vias nasais e faríngea, para detectar proteínas produzidas na base de replicação viral.
-            
-            E por último o exame de sangue, que também faz a testagem dos anticorpos produzidos pelo sistema imunológico.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    No início da pandemia, um dos testes mais aplicados era o teste de sorologia IgM e IgG (Sangue - Furo dedo), que detecta os anticorpos produzidos pelo sistema imunológico para combater a infecção, portanto em relação a quantidade ele aparece em primeiro lugar. Em seguida temos o teste SWAB, que basicamente é uma coleta por meio das vias nasais e faríngea, para detectar proteínas produzidas na base de replicação viral.
+                </p>
+                <p>
+                    E por último o exame de sangue, que também faz a testagem dos anticorpos produzidos pelo sistema imunológico. 
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     coluna3, coluna4 = st.columns(2)
     with coluna3:
@@ -1040,8 +1157,13 @@ with aba4:
         st.plotly_chart(fig_taxa_incidencia_tipo_teste, use_container_width=True)
     st.markdown(
         '''
-            O teste que mais apresentou casos positivos foi o SWAB, o que pode ser pelo fato de o teste detectar no momento da realização a infecção, fazendo com que seja mais procurado por sintomáticos e mais eficaz segundo as pesquisas. Como os testes de sangue apresentam os anticorpos produzidos, o resultado pode ser interpretado tanto como "Já teve a doença" ou "Está com a doença", de acordo com os sintomas sentidos no momento.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    O teste que mais apresentou casos positivos foi o SWAB, o que pode ser pelo fato de o teste detectar no momento da realização a infecção, fazendo com que seja mais procurado por sintomáticos e mais eficaz segundo as pesquisas. Como os testes de sangue apresentam os anticorpos produzidos, o resultado pode ser interpretado tanto como "Já teve a doença" ou "Está com a doença", de acordo com os sintomas sentidos no momento.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     coluna5, coluna6 = st.columns(2)
     with coluna5:
@@ -1064,8 +1186,13 @@ with aba5:
         st.plotly_chart(fig_taxa_incidencia_zona, use_container_width=True)
     st.markdown(
         '''
-            Apesar da incidência maior em áreas urbanas dado a densidade populacional, a taxa de incidência entre os entrevistados se mostrou ligeiramente maior.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    Apesar da incidência maior em áreas urbanas dado a densidade populacional, a taxa de incidência entre os entrevistados se mostrou ligeiramente maior.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     #região
     st.metric('**Média da taxa de incidência nas regiões**', df_taxa_incidencia_regiao['taxa_incidencia_mil_habitantes'].mean().astype(int))
@@ -1076,8 +1203,13 @@ with aba5:
         st.plotly_chart(fig_taxa_incidencia_regiao, use_container_width=True)
     st.markdown(
         '''
-            As regiões Nordeste e Sudeste e Norte lideram, respectivamente, em números absolutos. Contudo, a região Norte passa a liderar em taxa de incidência com 29,8%, enquanto o Sudeste fica em quarto lugar, com uma diferença percentual 15,3% menor, ainda que possua uma população consideravelmente maior. Esse comportamento dos dados podem ser explicados pelo emprego de estratégias de saúde pública mais adequadas e pela diferença econômica entre as regiões.
-        '''
+            <div style='text-align: justify;'>
+                <p>
+                    As regiões Nordeste e Sudeste e Norte lideram, respectivamente, em números absolutos. Contudo, a região Norte passa a liderar em taxa de incidência com 29,8%, enquanto o Sudeste fica em quarto lugar, com uma diferença percentual 15,3% menor, ainda que possua uma população consideravelmente maior. Esse comportamento dos dados podem ser explicados pelo emprego de estratégias de saúde pública mais adequadas e pela diferença econômica entre as regiões.
+                </p>
+            </div>
+        ''',
+            unsafe_allow_html=True
     )
     st.metric('**Média da taxa de incidência nos estados**', df_taxa_incidencia_estado['taxa_incidencia_mil_habitantes'].mean().astype(int))
     st.plotly_chart(fig_qtd_testes_positivos_estado, use_container_width=True)
