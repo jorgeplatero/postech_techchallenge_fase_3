@@ -22,7 +22,7 @@ st.markdown(
         Os resultados da PNAD COVID19 são pioneiros no sentido de constituírem a primeira divulgação de Estatísticas Experimentais elaboradas pelo IBGE, as quais estão alinhadas com a estratégia de modernização do Instituto e permitem a ampliação das ofertas de informação para atender às necessidades de seus usuários.
         </p>
         <p>
-        Para mais informações acesse: <a>https://covid19.ibge.gov.br/pnad-covid/</a>
+        Para mais informações acesse o <b><a style='text-decoration:none', href='https://covid19.ibge.gov.br/pnad-covid/'>link</a></b>.
         </p>
     </div>
 ''',

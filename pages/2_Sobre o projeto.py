@@ -72,7 +72,7 @@ st.markdown(
     '''
     <div style='text-align: justify;'>
         <p>
-            Para mais informações acesse o dicionário de dados da PNAD-COVID-19 em:  <a>https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_PNAD_COVID19/Microdados/Documentacao.</a>
+            Para mais informações acesse o <b><a style='text-decoration:none', href='https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_PNAD_COVID19/Microdados/Documentacao'>dicionário</a></b> de dados da PNAD-COVID-19.
         </p> 
     ''',
     unsafe_allow_html=True
@@ -80,7 +80,6 @@ st.markdown(
 st.markdown(
     '''
         <div style='text-align: justify;'>
-            <h4>Inserção dos dados</h4>
             <p>
                 Em síntese, o banco de dados foi modelado visando integridade e flexibilidade para as consultas. As tabelas auxiliares e a view agregam valor ao permitir padronização e consulta orientada para análise. A estrutura foi pensada para receber dados de pesquisas futuras, garantindo a continuidade do uso do banco.
             </p>
@@ -110,10 +109,10 @@ st.markdown(
 st.markdown(
     '''
         <div style='text-align: justify;'>
-            <h4>Inserção dos dados</h4>
             <p>
                 Para melhorar a performance diante da grande quantidade de dados a serem processados, utilizou-se o framework Apache Spark para leitura, pré-processamento dos dados brutos e seguimentação dos mesmos. Assim foi possível realizar a inserção dos dados por meio da conexão python.
             </p>
+        </div>
     ''',
     unsafe_allow_html=True
 )
@@ -153,4 +152,13 @@ st.markdown(
     ''',
     unsafe_allow_html=True
 )
-st.markdown('Repositório no GitHub: https://github.com/jorgeplatero/postech_techchallenge_fase_3')
+st.markdown(
+    '''
+        <div style='text-align: justify;'>
+            <p>
+                Acesse o <b><a style='text-decoration:none', href='https://github.com/jorgeplatero/postech_techchallenge_fase_3'>repositório</a></b> no GitHub para mais informações.
+            </p>
+        </div>
+    ''',
+    unsafe_allow_html=True
+)

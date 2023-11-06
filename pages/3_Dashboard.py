@@ -52,7 +52,7 @@ fig_taxa_incidencia_sexo = px.pie(
     }
 )
 fig_taxa_incidencia_sexo.update_layout(
-    title='<b>Taxa de incidência de COVID-19 por sexo</b>',
+    title='<b>Diferença percentual da taxa de incidência por sexo</b>',
     legend_title='Legenda',
     width=600, 
     height=400
@@ -89,7 +89,7 @@ fig_taxa_incidencia_cor_raca = px.pie(
     }
 )
 fig_taxa_incidencia_cor_raca.update_layout(
-    title='<b>Taxa de incidência de COVID-19 segundo cor/raça</b>',
+    title='<b>Diferença percentual da taxa de incidência por cor/raça</b>',
     legend_title='Legenda',
     width=600, 
     height=400
@@ -128,7 +128,7 @@ fig_taxa_incidencia_escolaridade = px.pie(
     }
 )
 fig_taxa_incidencia_escolaridade.update_layout(
-    title='<b>Taxa de incidência de COVID-19 por escolaridade</b>',
+    title='<b>Diferença percentual da taxa de incidência por escolaridade</b>',
     yaxis_title='%',
     legend_title='Legenda',
     xaxis_visible=False,
@@ -169,7 +169,7 @@ fig_percentual_testes_positivos_sintomaticos.update_layout(
     width=600,
     height=400
 )
-#percentual de infectados por fator de risco 
+#percentual dos fatores de risco nos grupos de risco
 df_percentual_testes_positivos_fator_risco = pd.read_csv('dados/dados_streamlit/df_percentual_testes_positivos_fator_risco.csv', sep=',')
 fig_percentual_testes_positivos_fator_risco = px.bar(
     data_frame = df_percentual_testes_positivos_fator_risco,
@@ -183,14 +183,14 @@ fig_percentual_testes_positivos_fator_risco = px.bar(
     }
 )
 fig_percentual_testes_positivos_fator_risco.update_layout(
-    title='<b>Percentual de entrevistados com fator de risco com casos confirmados de COVID-19</b>',
+    title='<b>Percentual dos fatores de risco em casos confirmados de COVID-19 nos grupos de risco</b>',
     showlegend=False,
     yaxis_title='%',
     width=600,
     height=500
 )
 fig_percentual_testes_positivos_fator_risco.update_xaxes(tickangle=45)
-#percentual de infectados por tipo de sintoma 
+#distribuição dos tipos de sintomas em infectados
 df_percentual_testes_positivos_tipo_sintoma = pd.read_csv('dados/dados_streamlit/df_percentual_testes_positivos_tipo_sintoma.csv', sep=',')
 fig_percentual_testes_positivos_tipo_sintoma = px.bar(
     data_frame = df_percentual_testes_positivos_tipo_sintoma,
@@ -235,7 +235,7 @@ fig_qtd_testes_positivos_internacao.update_layout(
 )
 #percentual internados e internados com respiração artificial
 df_testes_positivos_respiracao_artificial = pd.read_csv('dados/dados_streamlit/df_testes_positivos_respiracao_artificial.csv', sep=',')
-fig_testes_positivos_respiracao_artificial = px.pie(
+fig_qtd_testes_positivos_respiracao_artificial = px.pie(
     data_frame=df_testes_positivos_respiracao_artificial.sort_values('qtd_testes_positivos', ascending=False),
     values='qtd_testes_positivos',
     names='questao_internacao_ajuda_respirar',
@@ -245,10 +245,10 @@ fig_testes_positivos_respiracao_artificial = px.pie(
         'questao_internacao_ajuda_respirar':'Condição'
     }
 )
-fig_testes_positivos_respiracao_artificial.update_traces(
+fig_qtd_testes_positivos_respiracao_artificial.update_traces(
     texttemplate='%{percent:.2%}'
 )
-fig_testes_positivos_respiracao_artificial.update_layout(
+fig_qtd_testes_positivos_respiracao_artificial.update_layout(
     title='<b>Pacientes internados por COVID-19: percentual com e sem respiração artificial</b>',
     legend_title='Legenda',
     width=600,
@@ -308,7 +308,7 @@ fig_percentual_sintomaticos_estabelecimento_saude = px.pie(
     }
 )
 fig_percentual_sintomaticos_estabelecimento_saude.update_layout(
-    title='<b>Percentual de casos sintomáticos de COVID-19 que buscaram atendimento médico</b>',
+    title='<b>Percentual de casos suspeitos de COVID-19 que buscaram atendimento médico</b>',
     width=600,
     height=400
 )
@@ -331,7 +331,7 @@ fig_qtd_sintomaticos_permaneceu_casa.update_layout(
     width=600, 
     height=400
 )
-#percentual de sintomáticos que adotaram medida de isolamento social
+#percentual de infectados que adotaram medida de isolamento social
 fig_percentual_sintomaticos_permaneceu_casa = px.pie(
     data_frame=df_qtd_infectados_permaneceu_casa, 
     values = 'qtd_testes_validos', 
@@ -348,15 +348,15 @@ fig_percentual_sintomaticos_permaneceu_casa.update_layout(
     width=600, 
     height=400
 )
-#percentual sintomáticos que adotaram medida de isolamento social por região
+#percentual de infectados que adotaram medida de isolamento social por região
 df_qtd_infectados_permaneceu_casa_regiao = pd.read_csv('dados/dados_streamlit/df_qtd_infectados_permaneceu_casa_regiao.csv', sep=',')
 fig_sintomaticos_permaneceu_casa_regiao = px.pie(
     data_frame=df_qtd_infectados_permaneceu_casa_regiao, 
-    values = 'qtd_testes_validos', 
+    values = 'qtd_testes_positivos', 
     names = 'regiao',
     color_discrete_sequence=px.colors.sequential.Reds_r,
     labels={
-        'qtd_testes_validos': 'Quantidade',
+        'qtd_testes_positivos': 'Quantidade',
         'regiao': 'Região'
     }
 )
@@ -408,7 +408,7 @@ fig_testes_positivos_medicacao.data[2].marker.color = ['#FB6A4A',] * 2
 
 #aba características econômicas
 
-#qtd de infectados por faixa de redimento
+#qtd de infectados por faixa de rendimento
 df_qtd_testes_positivos_faixa_rendimento = pd.read_csv('dados/dados_streamlit/df_qtd_testes_positivos_faixa_rendimento.csv', sep=',')
 fig_qtd_testes_positivos_faixa_rendimento = px.bar(
     data_frame=df_qtd_testes_positivos_faixa_rendimento.sort_values('qtd_testes_positivos', ascending=False),
@@ -436,6 +436,10 @@ fig_qtd_testes_positivos_regiao_estado_faixa_rendimento = px.treemap(
     values = 'qtd_testes_positivos', 
     color='qtd_testes_positivos',
     color_continuous_scale=px.colors.sequential.Reds,
+    labels={
+        'qtd_testes_positivos': 'Quantidade',
+        'faixa_rendimento': 'Faixa de rendimento (R$)'
+    }
 )
 fig_qtd_testes_positivos_regiao_estado_faixa_rendimento.update_layout(
     title='Casos confirmados de COVID-19 por faixa de rendimento em regiões e estados',
@@ -513,10 +517,12 @@ fig_taxa_incidencia_tipo_trabalho = px.bar(
     x='taxa_incidencia_mil_habitantes',
     y='questao_tipo_trabalho_realizado', 
     color='questao_tipo_trabalho_realizado',
+    hover_data='qtd_testes_positivos',
     color_discrete_sequence=['#67000d'],
     labels={
         'taxa_incidencia_mil_habitantes': 'Taxa de incidência (por mil habitantes)',
-        'questao_tipo_trabalho_realizado': 'Tipo de trabalho realizado'
+        'questao_tipo_trabalho_realizado': 'Tipo de trabalho realizado',
+        'qtd_testes_positivos':'Quantidade',
     }
 )
 fig_taxa_incidencia_tipo_trabalho.update_layout(
@@ -525,17 +531,19 @@ fig_taxa_incidencia_tipo_trabalho.update_layout(
     width=1200, 
     height=800
 )
-#diferença percentual entre infectados por motivo do afastamento do trabalho
+#percentual entre infectados por motivo do afastamento do trabalho
 df_percentual_motivo_afastamento = pd.read_csv('dados/dados_streamlit/df_percentual_motivo_afastamento.csv', sep=',')
 fig_percentual_motivo_afastamento = px.bar(
     data_frame=df_percentual_motivo_afastamento.sort_values('percentual_motivo_afastamento', ascending=False), 
     x = 'questao_motivo_afastamento', 
     y = 'percentual_motivo_afastamento',
     color='questao_motivo_afastamento',
+    hover_data='qtd_testes_positivos',
     color_discrete_sequence=px.colors.sequential.Reds_r,
     labels={
         'percentual_motivo_afastamento': 'Percentual',
-        'questao_motivo_afastamento': 'Motivo do afastamento'
+        'questao_motivo_afastamento': 'Motivo do afastamento',
+        'qtd_testes_positivos':'Quantidade',
     }
 )
 fig_percentual_motivo_afastamento.update_layout(
@@ -567,7 +575,7 @@ fig_qtd_tipo_teste.update_layout(
     height=400
 )
 fig_qtd_tipo_teste.update_xaxes(tickangle=45)
-#diferença percentual de testes aplicados por tipo de teste
+#percentual de testes aplicados por tipo de teste
 fig_percentual_tipo_teste = px.pie(
     data_frame=df_qtd_tipo_teste.sort_values('qtd_tipo_teste', ascending=False), 
     values='qtd_tipo_teste',
@@ -579,7 +587,7 @@ fig_percentual_tipo_teste = px.pie(
     }
 )
 fig_percentual_tipo_teste.update_layout(
-    title='<b>Diferença percentual de testes aplicados por tipo de teste</b>',
+    title='<b>Percentual de testes aplicados por tipo de teste</b>',
     legend_title='Legenda',
     width=600, 
     height=400
@@ -599,7 +607,7 @@ fig_qtd_testes_positivos_tipo_teste = px.bar(
     }
 )
 fig_qtd_testes_positivos_tipo_teste.update_layout(
-    title='<b>Quantidade de testes positivos por tipo de teste</b>',
+    title='<b>Casos confirmados de COVID-19 por tipo de teste</b>',
     legend_title='Legenda',
     yaxis_title='%',
     width=600, 
@@ -625,7 +633,7 @@ fig_taxa_incidencia_tipo_teste.update_layout(
     width=600, 
     height=400
 )
-#qtd de inconclusivos
+#qtd de testes inconclusivos
 df_qtd_testes_inconclusivos_tipo_teste = pd.read_csv('dados/dados_streamlit/df_qtd_testes_inconclusivos_tipo_teste.csv', sep=',')
 fig_qtd_testes_inconclusivos_tipo_teste = px.bar(
     data_frame=df_qtd_testes_inconclusivos_tipo_teste.sort_values('qtd_testes_inconclusivos', ascending=False), 
@@ -634,12 +642,12 @@ fig_qtd_testes_inconclusivos_tipo_teste = px.bar(
     color='tipo_teste',
     color_discrete_sequence=px.colors.sequential.Reds_r,
     labels={
-        'qtd_testes_validos': 'Quantidade',
+        'qtd_testes_inconclusivos': 'Quantidade',
         'tipo_teste': 'Tipo de teste'
     }
 )
 fig_qtd_testes_inconclusivos_tipo_teste.update_layout(
-    title='<b>Quantidade de testes inconclusivos</b>',
+    title='<b>Casos inconclusivos de COVID-19 por tipo de teste</b>',
     legend_title='Legenda',
     width=600, 
     height=400
@@ -657,7 +665,7 @@ fig_taxa_incidencia_tipo_teste_inconclusivo = px.pie(
     }
 )
 fig_taxa_incidencia_tipo_teste_inconclusivo.update_layout(
-    title='<b>Diferença percentual da taxa de incidência de testes com resultado inconclusivo por tipo de teste</b>',
+    title='<b>Diferença percentual da taxa de incidência de testes inconclusivos por tipo de teste</b>',
     legend_title='Legenda',
     width=600, 
     height=400
@@ -699,7 +707,7 @@ fig_taxa_incidencia_zona = px.pie(
     }
 )
 fig_taxa_incidencia_zona.update_layout(
-    title='<b>Percentual da taxa de incidência por zona de domicílio</b>',
+    title='<b>Diferença percentual da taxa de incidência por zona de domicílio</b>',
     legend_title='Legenda',
     width=600, 
     height=400
@@ -737,7 +745,7 @@ fig_taxa_incidencia_regiao = px.pie(
     }
 )
 fig_taxa_incidencia_regiao.update_layout(
-    title='<b>Percentual da taxa de incidência por região</b>',
+    title='<b>Diferença percentual da taxa de incidência por região</b>',
     width=600, 
     height=400
 )
@@ -828,7 +836,7 @@ with aba1:
         st.plotly_chart(fig_taxa_incidencia_sexo, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que o número total de casos confirmados foi maior entre mulheres do que entre homens e que a taxa de incidência foi 3% superior em mulheres na comparação com homens. Alguns fatores que podem explicar essa diferença são:
+            Podemos observar que o número total de casos confirmados foi maior entre mulheres do que entre homens e que a taxa de incidência foi 3% superior em mulheres. Entre os fatores que podem explicar essa diferença, estão:
             
             - A maior parte dos profissionais de saúde são mulheres: isso pode aumentar a exposição ao vírus por trabalharem na linha de frente no combate à pandemia.
             - Busca por teste: as mulheres tendem a ser mais proativas do que os homens em procurar testagem ao desenvolverem sintomas.
@@ -843,18 +851,17 @@ with aba1:
         st.plotly_chart(fig_taxa_incidencia_cor_raca, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que o número de casos confirmados de COVID-19 apresentou o maior número de casos na população parda, onde houve uma taxa de 28%. Isso pode ocorrer devido a piores condições socioeconômicas, como moradia e saneamento básico precários, o que facilita a disseminação de doenças infecciosas.
+            Podemos observar que os casos confirmados de COVID-19 apresentou o maior número na população parda, onde houve uma taxa de 21.5%. Contudo, o grupo proporcionalmente mais impactado é o de indígenas, 28%. Isso pode ocorrer devido as condições socioeconômicas singulares, como moradia e saneamento básico precários, o que facilita a disseminação de doenças infecciosas. Essas condições também estão bastante evidenciadas entre pardos e pretos, o que reforça sua correlação com a taxa de incidência. 
         '''
     )
     st.plotly_chart(fig_qtd_testes_positivos_escolaridade, use_container_width=True)
     st.plotly_chart(fig_taxa_incidencia_escolaridade, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que o número total de confirmados são relativamente maiores nos casos de ‘Médio completo’ e ‘Fundamental Incompleto’, alguns fatores que podem explicar este resultado são:
+            Observa-se que o número de casos confirmados é relativamente maior nos grupos com ensino médio completo e incompleto. Entre os fatores que podem explicar esse resultado, estão:
             
-            - Pessoas com médio completo já tem idade suficiente para trabalhar, e com muita probabilidade não puderam ficar em casa durante a pandemia.
-            - Trabalhos com maior contato ao público devido a escolaridade. Exemplo: comerciante, vendedor, cabeleireiro.
-            - Analisando os dados, as maiores idades de infectadas estão no range de 30 a 49 anos, e segundo os dados do IBGE, a maior taxa de escolaridade entre maiores de idades no brasil é de ‘Ensino médio completo’, ou seja, a maioria dos brasileiros se encaixam neste nível de escolaridade.
+            - Pessoas com ensino médio completo estão em idade para o trabalho regular e, muito provavelmente, não puderam ficar em casa durante a pandemia.
+            - Os indivíduos entrevistados nesse grupo executam trabalhos com maior contato ao público. Exemplo: comerciante, vendedor, cabeleireiro.
         '''        
     )
 
@@ -873,44 +880,39 @@ with aba2:
     st.plotly_chart(fig_percentual_testes_positivos_sintomaticos, use_container_width=True)
     st.markdown(
         '''
-            Nota-se que os casos assintomáticos são a maioria nesta análise. Neste cenário, podemos entender que esse indicador pode afetar a taxa de contaminação, pois sem a consciência do caso positivo, as pessoas podem ter circulado disseminando a doença. 
-            
-            Outro ponto que podemos levar em consideração é a necessidade de testagem constante para pessoas que estavam trabalhando presencialmente, como por exemplos profissionais da saúde.
+            Nota-se que os casos assintomáticos de COVID-19 são a ampla maioria. Nesse cenário, esse fato pode ter contribuído para o aumento da taxa de contaminação, pois, sem a consciência de estar contaminado, o indivíduo tende a negligenciar medidas de isolamento. 
         '''
     )
-    st.plotly_chart(fig_percentual_testes_positivos_fator_risco, use_container_width=False)
+    st.plotly_chart(fig_percentual_testes_positivos_fator_risco, use_container_width=True)
     st.markdown(
         '''
-            O grupo de risco é constituído por um conjunto de causas que agravam uma doença, neste caso, fazendo com que a pessoa fique suscetível a ser mais afetada pela covid. 
+            O grupo de risco é constituído por um conjunto de doenças que podem agravar os efeitos da COVID-19. 
             
-            Além disso, pessoas em grupos de risco costumam ser pessoas em tratamento, fazendo com que a imunidade esteja mais baixa que a maioria.
-            
-            Analisando os principais sintomas, temos a hipertensão que atinge mais de 26% dos brasileiros, idosos que são em torno de 14% e mais suscetíveis à covid, e a diabetes que representa 6,9% da população brasileira.
+            Pessoas classificadas no grupos de risco não raramente estão em tratamento, caso em que sua imunidade tende a estar mais baixa. É importante pontuar que a hipertensão atinge mais de 26% dos brasileiros, já a diabetes, 6,9%. Ademais, idosos, pertecentes ao grupo de risco, constituem 14% da população.
+
+            Dentre os indivíduos classificados no grupo de risco e que tiveram caso confirmado de COVID-19, lideram aqueles que possuem hipertensão, idosos, e que sofrem de diabetes. Esse indicador é importante para a triagem de casos face a COVID-19, pois indivíduos no grupo de risco devem receber atendimento prioritário e com cuidados compatíveis à sua condição.
         '''
     )
     st.plotly_chart(fig_percentual_testes_positivos_tipo_sintoma, use_container_width=False)
     st.metric('**Total de infectados internados**', df_qtd_infectados_internados.values)
     st.plotly_chart(fig_qtd_testes_positivos_internacao, use_container_width=True)
     st.markdown(
-        '''
-            Observamos que a maior representatividade está no grupo que não precisou de ajuda para respirar.
+        '''       
             
-            Analisando a pequena taxa dos casos internados, nota-se que a maior parte dos internados são do grupo de risco, ou seja, pessoas mais suscetíveis a contaminação.
+            Apenas 0.69% dos contaminados precisaram ser internados e, dentro os indivíduos internados, verifica-se que a maioria são do grupo de risco.
         '''
     )
     st.metric('**Total de internados com respiração artificial**', df_qtd_infectados_internados_respiracao_artificial.values)
-    st.plotly_chart(fig_testes_positivos_respiracao_artificial, use_container_width=True)
+    st.plotly_chart(fig_qtd_testes_positivos_respiracao_artificial, use_container_width=True)
     st.markdown(
         '''
-            Observamos que a maior representatividade está no grupo que não precisou de ajuda para respirar.
-            
-            Detalhando apenas o grupo que precisou de ajuda, conseguimos concluir que 72% das pessoas pertencem ao grupo de risco. (51 ‘grupo de risco’ contra 20 ‘não aplicável’) 
+            A maioria dos internados não precisaram de respiração artificial. Dentre aqueles que receberam respiração artificial, 72% pertencem ao grupo de risco. 
         '''
     )
     st.plotly_chart(fig_taxa_incidencia_faixa_etaria_esquema_vacinal, use_container_width=False)
     st.markdown(
         '''
-            A maior incidência de COVID são de pessoas que tinham a necessidade de sair para trabalhar ou para fazer serviços domésticos, seguidos de pessoas com a idade de ir a escola, o que também facilita o contagio da doença devido a interação diária com outras pessoas. 
+            Indicadores relativos a faixa etária do esquema vacinal são importantes, pois podem auxiliar na otimização de alocação de recursos.
         '''
     )
 
@@ -930,10 +932,10 @@ with aba3:
         '''
             Analisando os dados, observa-se uma baixa busca por atendimento médico entre aqueles que tiveram sintomas de COVID-19. O levantamento apontou que 33.141 sintomáticos não buscaram atendimento, enquanto apenas 11.796 buscaram algum tipo de assistência de saúde. Em termos percentuais, isso significa que 73,7% das pessoas com sinais da doença não procuraram atendimento médico.
             
-            Essa baixa procura por serviços de saúde, mesmo diante de sintomas, pode ser devido alguns motivos, como: 
-            - Diversas barreiras no acesso ao sistema de saúde durante a pandemia.
+            A baixa procura por serviços de saúde, mesmo diante de sintomas, pode ser devido a fatores como: 
+            - Barreiras no acesso ao sistema de saúde durante a pandemia.
             - Restrições financeiras para buscar atendimento.
-            - Problemas de disponibilidade ou distância aos serviços de saúde.
+            - Pouco concientização em relação aos riscos da doença. 
         '''
     )
     coluna3, coluna4 = st.columns(2)
@@ -943,9 +945,9 @@ with aba3:
         st.plotly_chart(fig_percentual_sintomaticos_permaneceu_casa, use_container_width=True)
     st.markdown(
         '''
-            O gráfico mostra a quantidade de pessoas que relataram ter adotado alguma medida de isolamento social frente aquelas que não adotaram. Podemos observar que um pouco mais de 1039 infectados adotaram algum isolamento, enquanto 333 não adotaram. Isso mostra que 75,7% das pessoas adotaram alguma médica de isolamento, enquanto 24,3% não adotaram.
+            Podemos observar que um pouco mais de 1039 infectados adotaram algum isolamento, enquanto 333 não adotaram. Isso mostra que 75,7% das pessoas infectadas adotaram alguma medida de isolamento, enquanto, 24,3% não.
             
-            Apesar da maioria dos infectados ter adotado algum isolamento, ainda há uma parcela importante que continuou circulando e potencialmente transmitindo o vírus.
+            Apesar da maioria dos infectados ter adotado alguma medida de isolamento social, ainda há uma parcela importante de negligentes potencialmente transmitindo o vírus.
         '''
     )
     st.plotly_chart(fig_sintomaticos_permaneceu_casa_regiao, use_container_width=True)
@@ -954,20 +956,15 @@ with aba3:
             O gráfico demonstra variações regionais significativas quanto à adoção de isolamento social. Podemos observar que o Nordeste de destaca com maior adesão ao isolamento, enquanto o Sul aparece com a menor taxa proporcional. 
             
             Essas diferenças podem refletir:
-            - Variações socioeconômicas.
-            - Diferentes políticas públicas para conscientização da população durante a pandemia.
+            - Diferenças socioeconômicas.
+            - Eficiencia de políticas públicas de combate a pandemia.
         '''
     )
     st.plotly_chart(fig_sintomaticos_permaneceu_casa_estado, use_container_width=True)
+    st.plotly_chart(fig_testes_positivos_medicacao, use_container_width=True)
     st.markdown(
         '''
-            O gráfico mostra a distribuição da quantidade de sintomáticos que adotaram alguma medida de isolamento social por estado brasileiro. Essa análise por estado complementa a visão dos percentuais regionais para um entendimento sobre os padrões de isolamento social no Brasil.
-        '''
-    )
-    st.plotly_chart(fig_testes_positivos_medicacao, use_container_width=False)
-    st.markdown(
-        '''
-            Podemos observar que a maioria das pessoas se automedicaram, ou seja, fizeram uso de medicamentos por conta própria, sem prescrição. Isso pode ser reflexo de alguns motivos como notícias falsas na internet, boatos de pessoas que melhoraram sem um embasamento científico e políticas públicas que não foram bem estruturadas.
+            Podemos observar que a maioria das pessoas se automedicaram, ou seja, fizeram uso de medicamentos por conta própria, sem prescrição. Isso pode ser reflexo da circulação de informações falsas a respeito da doença e ineficiência de políticas públicas de concientização.
         '''
     )
 
@@ -978,10 +975,10 @@ with aba4:
             ## Indicadores econômicos :moneybag:
         '''
     )
-    st.plotly_chart(fig_qtd_testes_positivos_faixa_rendimento, use_container_width=False)
+    st.plotly_chart(fig_qtd_testes_positivos_faixa_rendimento, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar que a faixa mais atingida pela COVID é a que recebe menor ou igual a um salário-mínimo, isso pode ser por conta de:
+            Podemos observar que, em números absolutos, o grupo mais atingido pela COVID no período é aquele cuja faixa de rendimento é ligeiramente superior a um salário-mínimo. Entre as razões, estão:
             - Tipos de trabalho, pessoas que precisam estar mais em exposição 
             - Pessoas que não tiveram a oportunidade de ficar em isolamento
         '''
@@ -989,27 +986,25 @@ with aba4:
     st.plotly_chart(fig_qtd_testes_positivos_regiao_estado_faixa_rendimento, use_container_width=True)
     st.markdown(
         '''
-            Em complemento a análise anterior, podemos concluir que na maioria das regiões as pessoas mais afetadas são as que vivem em situação de faixa salarial menor ou igual ao salário-mínimo.
-            
-            Exceto em São Paulo e Santa Catarina que a faixa é um pouco maior comparada com as outras.
+            Na maioria dos estados brasileiros, os indivíduos mais afetados são aqueles que vivem com rendimento menor ou pouco superior ao salário-mínimo, com exceção aos que vivem São Paulo e Santa Catarina, onde a faixa de rendimento tem um piso superior ao salário-mínimo.
         '''
     )
     st.plotly_chart(fig_taxa_incidencia_faixa_rendimento, use_container_width=False)
     st.markdown(
         '''
-            Observa-se que a taxa de incidência é tanto maior quanto mais vunerável é o grupo financeiramente.
+            Por fim, observa-se que a taxa de incidência é tanto maior quanto mais vunerável financeiramente é o grupo.
         '''
     )
     st.plotly_chart(fig_testes_positivos_valor_medio_auxilio_emergencial, use_container_width=False)
     st.markdown(
         '''
-            Vê-se que o valor médio do auxílio emergencial é inversamente proporcional à faixa de rendimento do grupo.
+            Vê-se que a distribuição do valor médio do auxílio emergencial concedido segue uma ordem quase inversamente proporcional à faixa de rendimento do grupo.
         '''
     )
     st.plotly_chart(fig_qtd_testes_positivos_tipo_trabalho, use_container_width=True)
     st.markdown(
         '''
-            Em relação aos infectados por tipo de trabalho, podemos concluir que se acumulou um resultado relevante em duas categorias:
+            Em relação aos infectados por tipo de trabalho, observa-se resultados relevantes em duas categorias:
             - Profissões de nível superior (Onde se englobou diversas funções na hora de responder a pesquisa)  
             - Área da saúde (Técnicos, médicos e enfermeiros), que a análise inteira diz por si só, foram pessoas que estavam na linha de frente ao combate da doença.
         '''
@@ -1017,15 +1012,13 @@ with aba4:
     st.plotly_chart(fig_taxa_incidencia_tipo_trabalho, use_container_width=True)
     st.markdown(
         '''
-            Esses resultados nos apresentam basicamente pessoas que ficaram extremamente expostas ao público em geral durante a pandemia, portanto se fomos considerar a incidência de todos os testes realizados, a maioria se apresenta como vendedores.
+            A taxa de incidência mostra que, apesar de expostos à doença, profissionais de saúde não lideram os grupos proporcionalmente mais afetados.
         '''
     )
     st.plotly_chart(fig_percentual_motivo_afastamento, use_container_width=True)
     st.markdown(
         '''
-            Esse gráfico se refere as pessoas que estavam afastadas durante a pandemia.
-            
-            Podemos observar que o principal motivo é devido ao isolamento e distanciamento social. Muitas empresas que tinham a possibilidade de realizar o home-office, colocaram seus funcionários nesta jornada de trabalho para mitigar o risco de contaminação.
+            Podemos observar que o principal motivo de afastamento decorre de medidas em prol do isolamento social. 
         '''
     )
     coluna1, coluna2 = st.columns(2)
@@ -1035,7 +1028,7 @@ with aba4:
         st.plotly_chart(fig_percentual_tipo_teste, use_container_width=True)
     st.markdown(
         '''
-            No início da pandemia um dos testes mais aplicados era o teste de sorologia IgM e IgG (Sangue - Furo dedo), que detecta os anticorpos produzidos pelo sistema imunológico para combater a infecção, portanto em relação a quantidade ele aparece em primeiro lugar. Em seguida temos o teste SWAB, que basicamente é uma coleta por meio das vias nasais e faríngea, para detectar proteínas produzidas na base de replicação viral.
+            No início da pandemia, um dos testes mais aplicados era o teste de sorologia IgM e IgG (Sangue - Furo dedo), que detecta os anticorpos produzidos pelo sistema imunológico para combater a infecção, portanto em relação a quantidade ele aparece em primeiro lugar. Em seguida temos o teste SWAB, que basicamente é uma coleta por meio das vias nasais e faríngea, para detectar proteínas produzidas na base de replicação viral.
             
             E por último o exame de sangue, que também faz a testagem dos anticorpos produzidos pelo sistema imunológico.
         '''
@@ -1063,7 +1056,7 @@ with aba5:
             ## Indicadores geoespaciais :world_map:
         '''
     )
-    st.metric('**Média da taxa de incidência nos estados**', df_taxa_incidencia['taxa_incidencia_mil_habitantes'].mean().astype(int))
+    st.metric('**Média da taxa de incidência nacional**', df_taxa_incidencia['taxa_incidencia_mil_habitantes'].mean().astype(int))
     coluna1, coluna2 = st.columns(2)
     with coluna1:
         st.plotly_chart(fig_qtd_testes_positivos_zona, use_container_width=True)
@@ -1071,7 +1064,7 @@ with aba5:
         st.plotly_chart(fig_taxa_incidencia_zona, use_container_width=True)
     st.markdown(
         '''
-            O gráfico mostra o total de pessoas infectadas separados entre aqueles que residem em áreas urbanas e rurais. Foram 27.784 infectados em áreas urbanas e 4.273 em áreas rurais. A taxa de incidência foi 50,7% para áreas urbanas e 49,3% para rurais. Isso é um reflexo da quantidade de pessoas serem maiores em áreas urbanas. 
+            Apesar da incidência maior em áreas urbanas dado a densidade populacional, a taxa de incidência entre os entrevistados se mostrou ligeiramente maior.
         '''
     )
     #região
@@ -1083,17 +1076,11 @@ with aba5:
         st.plotly_chart(fig_taxa_incidencia_regiao, use_container_width=True)
     st.markdown(
         '''
-            Podemos observar a distribuição de pessoas infectadas em diferentes regiões do Brasil. A região Nordeste lidera em números absolutos. Já em taxas de incidência temos o Norte com 29,8% e Sudeste em quarto lugar com 15,3% mesmo apesar de ter uma população total maior. Esse é um reflexo de como a estratégia da saúde pública no sudeste foi melhor em relação ao nordeste.
+            As regiões Nordeste e Sudeste e Norte lideram, respectivamente, em números absolutos. Contudo, a região Norte passa a liderar em taxa de incidência com 29,8%, enquanto o Sudeste fica em quarto lugar, com uma diferença percentual 15,3% menor, ainda que possua uma população consideravelmente maior. Esse comportamento dos dados podem ser explicados pelo emprego de estratégias de saúde pública mais adequadas e pela diferença econômica entre as regiões.
         '''
     )
-
     st.metric('**Média da taxa de incidência nos estados**', df_taxa_incidencia_estado['taxa_incidencia_mil_habitantes'].mean().astype(int))
     st.plotly_chart(fig_qtd_testes_positivos_estado, use_container_width=True)
-    st.markdown(
-        '''
-            Analisando o gráfico podemos notar que São Paulo aparece com a maior quantidade, seguido por Maranhão, Rio de Janeiro, Goiás, Santa Catarina, e assim sucessivamente, porém, ao analisar a incidência podemos contatar que está maior na região norte do país, complementando os indicadores anteriores.
-        '''
-    )
     st.plotly_chart(fig_mapa_risco_taxa_incidencia_estado, use_container_width=True)
 
 
