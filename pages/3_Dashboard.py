@@ -1073,7 +1073,7 @@ with aba4:
         ''',
             unsafe_allow_html=True
     )
-    st.plotly_chart(fig_taxa_incidencia_faixa_rendimento, use_container_width=False)
+    st.plotly_chart(fig_taxa_incidencia_faixa_rendimento, use_container_width=True)
     st.markdown(
         '''
             <div style='text-align: justify;'>
@@ -1084,7 +1084,7 @@ with aba4:
         ''',
             unsafe_allow_html=True
     )
-    st.plotly_chart(fig_testes_positivos_valor_medio_auxilio_emergencial, use_container_width=False)
+    st.plotly_chart(fig_testes_positivos_valor_medio_auxilio_emergencial, use_container_width=True)
     st.markdown(
         '''
             <div style='text-align: justify;'>
