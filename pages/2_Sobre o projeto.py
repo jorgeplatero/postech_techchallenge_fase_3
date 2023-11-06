@@ -99,6 +99,9 @@ st.markdown(
 st.markdown(
     '''
         ```
+        from sqlalchemy import create_engine
+
+        
         def mysql_connection(host, user, passwd, database=None):
             engine = create_engine(f'mysql+pymysql://{user}:{passwd}@{host}/{database}')
             return engine.connect()
@@ -119,6 +122,9 @@ st.markdown(
 st.markdown(
     '''
         ```
+        from sqlalchemy.sql import text
+
+        
         df.to_sql('dados_covid', mysql, if_exists='append', index=False)
         mysql.execute(text('COMMIT'))
         ```

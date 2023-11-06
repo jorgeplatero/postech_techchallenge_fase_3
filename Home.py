@@ -15,11 +15,11 @@ st.markdown(
             <p>    
                 O projeto conta com as seguintes características:
                 <ul>
-                    <li>Utilização de no máximo 20 questionamentos realizados na pesquisa;</li>
-                    <li>Utilizar 3 meses para construção da solução;</li>
-                    <li>Caracterização dos sintomas clínicos da população;</li>
-                    <li>Comportamento da população diante da COVID-19;</li>
-                    <li>Características econômicas da sociedade;</li>
+                    <li>Utilização de no máximo 20 questionamentos realizados na pesquisa.</li>
+                    <li>Utilização de 3 meses para construção da solução.</li>
+                    <li>Caracterização dos sintomas clínicos da população.</li>
+                    <li>Caracterização do comportamento da população diante da doença.</li>
+                    <li>Caracterização de aspectos socioeconômicos.</li>
                     <li>Características geoespaciais.</li>
                 </ul>
             </p>
