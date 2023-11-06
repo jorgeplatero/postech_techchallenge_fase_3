@@ -922,7 +922,7 @@ with aba2:
         ''',
             unsafe_allow_html=True
     )
-    st.plotly_chart(fig_percentual_testes_positivos_tipo_sintoma, use_container_width=False)
+    st.plotly_chart(fig_percentual_testes_positivos_tipo_sintoma, use_container_width=True)
     st.metric('**Total de infectados internados**', df_qtd_infectados_internados.values)
     st.plotly_chart(fig_qtd_testes_positivos_internacao, use_container_width=True)
     st.markdown(
