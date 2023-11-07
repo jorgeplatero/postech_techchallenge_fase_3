@@ -1,5 +1,7 @@
 import streamlit as st
 
+
+st.image('img/fiap.png')
 st.title('Conclusão')
 st.markdown(
     '''
