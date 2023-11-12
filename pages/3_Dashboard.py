@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 
 
 #layout
-st.set_page_config(layout = 'wide')
+st.set_page_config(layout='wide')
 
 #figuras
 
@@ -801,6 +801,7 @@ fig_mapa_risco_taxa_incidencia_estado.add_scattergeo(
 fig_mapa_risco_taxa_incidencia_estado.update_geos(fitbounds='locations', visible=False)
 fig_mapa_risco_taxa_incidencia_estado.update_layout(
     title='<b>Mapa de risco de acordo com a taxa de incidência de COVID-19 nos estados</b>',
+    geo=dict(bgcolor= 'rgba(0,0,0,0)'),
     width=1000, 
     height=800
 )
