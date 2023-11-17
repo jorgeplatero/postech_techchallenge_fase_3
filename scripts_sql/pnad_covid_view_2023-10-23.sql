@@ -1,3 +1,6 @@
+-- mysqldump -u root -p <nome do banco> > <local> --> extrai o dump
+-- mysql -h 127.0.0.1 -u root -p <nome do banco> < <nome do arquivo> --> importa o dump
+
 -- CREATE TABLE `depara_resultado_covid` (
 -- `id` int NOT NULL AUTO_INCREMENT,
 --  `resultado_id` int DEFAULT NULL,
