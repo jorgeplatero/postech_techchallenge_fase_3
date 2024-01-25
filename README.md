@@ -41,21 +41,25 @@ id - chave primária;
 ano – ano da pesquisa;
 uf - sigla da unidade da federação;
 ...demais campos da pesquisa.
+
 depara_respostas - armazena as respostas padronizadas:
 
-id - chave primária;
-respostas_id - valores;
-name - "Sim", "Não", "Não sabe", "Ignorado", "Não aplicável".
+- id - chave primária;
+- respostas_id - valores;
+- name - "Sim", "Não", "Não sabe", "Ignorado", "Não aplicável".
+
 depara_resultado_covid - armazena os sintomas investigados:
 
-id - chave primária;
-respostas_id – valores;
-name - "Positivo", "Negativo", "Inconclusivo", "Ainda não recebeu o resultado" e "Ignorado".
+- id - chave primária;
+- respostas_id – valores;
+- name - "Positivo", "Negativo", "Inconclusivo", "Ainda não recebeu o resultado" e "Ignorado".
+
 V1022 – armazena a situação do domicílio depara_resultado_covid - armazena os sintomas investigados:
 
-id - chave primária;
-V1022_id – valores;
-name – “Urbana” e “Rural”.
+- id - chave primária;
+- V1022_id – valores;
+- name – “Urbana” e “Rural”.
+
 Para mais informações acesse o dicionário de dados da PNAD-COVID-19.
 
 Em síntese, o banco de dados foi modelado visando integridade e flexibilidade para as consultas. As tabelas auxiliares e a view agregam valor ao permitir padronização e consulta orientada para análise. A estrutura foi pensada para receber dados de pesquisas futuras, garantindo a continuidade do uso do banco.
@@ -104,7 +108,7 @@ Os indicadores gerados foram ilustrados por meio da biblioteca plotly. O plotly 
 
 ## Fontes de Dados
 
-Link para a base: https://covid19.ibge.gov.br/pnad-covid/
+Link para a base de dados: https://covid19.ibge.gov.br/pnad-covid/
 
 ## Link para a Aplicação
 
