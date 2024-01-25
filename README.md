@@ -37,10 +37,10 @@ A tabela “dados_covid” possui chaves estrangeiras que relacionam os campos q
 
 dados_covid - armazena os dados da pesquisa:
 
-id - chave primária;
-ano – ano da pesquisa;
-uf - sigla da unidade da federação;
-...demais campos da pesquisa.
+- id - chave primária;
+- ano – ano da pesquisa;
+- uf - sigla da unidade da federação;
+- ...demais campos da pesquisa.
 
 depara_respostas - armazena as respostas padronizadas:
 
