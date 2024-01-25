@@ -106,7 +106,7 @@ Os indicadores gerados foram ilustrados por meio da biblioteca plotly. O plotly 
 
 Link para a base: https://covid19.ibge.gov.br/pnad-covid/
 
-## Link para a aplicações
+## Link para a Aplicação
 
 Dashboard Streamlit: [https://postechtechchallengefase4-ceqwpwmwrl4eucsnvjjsjm.streamlit.app/](https://postechtechchallengefase3-nvadkgperqxqkzu835k6er.streamlit.app/)
 
