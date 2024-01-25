@@ -60,8 +60,6 @@ V1022 – armazena a situação do domicílio depara_resultado_covid - armazena 
 - V1022_id – valores;
 - name – “Urbana” e “Rural”.
 
-Para mais informações acesse o dicionário de dados da PNAD-COVID-19.
-
 Em síntese, o banco de dados foi modelado visando integridade e flexibilidade para as consultas. As tabelas auxiliares e a view agregam valor ao permitir padronização e consulta orientada para análise. A estrutura foi pensada para receber dados de pesquisas futuras, garantindo a continuidade do uso do banco.
 
 ### ETL dos dados
