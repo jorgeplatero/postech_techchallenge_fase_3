@@ -1,4 +1,4 @@
-# Análise de indicadores do PNAD-COVID-19 para o planejamento de ações de combate ao surto da doença
+# DataViz com análise de indicadores do PNAD-COVID-19 para o planejamento de ações de combate ao surto da doença
 
 ## Descrição do Projeto
 
