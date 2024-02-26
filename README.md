@@ -106,7 +106,7 @@ Os indicadores gerados foram ilustrados por meio da biblioteca plotly. O plotly 
 
 ## Fontes de Dados
 
-Link para a base de dados: https://covid19.ibge.gov.br/pnad-covid/
+Link para a base de dados: <a style="text-decoration:none;" href="https://covid19.ibge.gov.br/pnad-covid/" target="_blank">link</a>.
 
 ## Link para a Aplicação
 
