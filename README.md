@@ -66,7 +66,7 @@ Em síntese, o banco de dados foi modelado visando integridade e flexibilidade p
 
 Os dados foram inseridos no MySQL por meio de uma conexão python utilizando a biblioteca SQLAlchemy.
 
-```
+```python
 from sqlalchemy import create_engine
 
 
@@ -78,7 +78,7 @@ mysql = mysql_connection('127.0.0.1', 'root', '<senha>', 'pnad_covid')
 
 Para melhorar a performance diante da grande quantidade de dados a serem processados, utilizou-se o framework Apache Spark para leitura, pré-processamento dos dados brutos e seguimentação dos mesmos. Assim foi possível realizar a inserção dos dados por meio da conexão python.
 
-```
+```python
 from sqlalchemy.sql import text
 
 
@@ -110,7 +110,7 @@ Link para a base de dados: https://covid19.ibge.gov.br/pnad-covid/
 
 ## Link para a Aplicação
 
-Dashboard Streamlit: [https://postechtechchallengefase4-ceqwpwmwrl4eucsnvjjsjm.streamlit.app/](https://postechtechchallengefase3-nvadkgperqxqkzu835k6er.streamlit.app/)
+Dashboard Streamlit: <a style="text-decoration:none;" href="https://postechtechchallengefase3-nvadkgperqxqkzu835k6er.streamlit.app/" target="_blank">link</a>.
 
 ## Colaboradores
 
