@@ -98,7 +98,7 @@ st.markdown(
 )
 st.markdown(
     '''
-        ```
+        ```mysql
         from sqlalchemy import create_engine
 
         
@@ -121,7 +121,7 @@ st.markdown(
 )
 st.markdown(
     '''
-        ```
+        ```mysql
         from sqlalchemy.sql import text
 
         
